@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | LP FM AI</title>
+
+    <meta name="description"
+          content="LP FM AI Facility Management Reports">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Arial, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        header {
+            background: #0f172a;
+            color: white;
+            padding: 18px 22px;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            background: #2563eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .brand h1 {
+            font-size: 19px;
+        }
+
+        .brand p {
+            color: #cbd5e1;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .back {
+            color: white;
+            text-decoration: none;
+            background: #1e293b;
+            padding: 9px 14px;
+            border-radius: 9px;
+            font-size: 13px;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 28px 18px 50px;
+        }
+
+        .page-title {
+            margin-bottom: 24px;
+        }
+
+        .page-title h2 {
+            font-size: 27px;
+            margin-bottom: 6px;
+        }
+
+        .page-title p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .report-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 21px;
+            text-decoration: none;
+            color: #0f172a;
+            transition: 0.2s;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+        }
+
+        .report-card:hover {
+            transform: translateY(-3px);
+            border-color: #93c5fd;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.09);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            background: #eff6ff;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 14px;
+        }
+
+        .report-card h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .report-card p {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 11px;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .upload-section {
+            margin-top: 30px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 24px;
+        }
+
+        .upload-section h2 {
+            font-size: 18px;
+            margin-bottom: 7px;
+        }
+
+        .upload-section p {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            padding: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .report-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .header-inner {
+                align-items: flex-start;
+            }
+
+            .back {
+                font-size: 12px;
+            }
+
+            .report-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .report-card {
+                padding: 16px;
+            }
+
+            .page-title h2 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <div class="logo">
+                LP
+            </div>
+
+            <div>
+                <h1>LP FM AI</h1>
+                <p>Facility Management Reports</p>
+            </div>
+
+        </div>
+
+        <a href="index.html" class="back">
+            ← Dashboard
+        </a>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="page-title">
+
+        <h2>Reports</h2>
+
+        <p>
+            View and manage Facility Management & Store reports.
+        </p>
+
+    </section>
+
+
+    <section class="report-grid">
+
+
+        <a href="#" class="report-card">
+
+            <div class="icon">📦</div>
+
+            <h3>Current Stock</h3>
+
+            <p>
+                Material stock, quantity, UOM and stock status.
+            </p>
+
+            <span class="status">
+                Database Pending
+            </span>
+
+        </a>
+
+
+        <a href="#" class="report-card">
+
+            <div class="icon">📋</div>
+
+            <h3>PR Report</h3>
+
+            <p>
+                Purchase requisitions and PR status.
+            </p>
+
+            <span class="status">
+                Database Pending
+            </span>
+
+        </a>
+
+
+        <a href="#" class="report-card">
+
+            <div class="icon">🧾</div>
+
+            <h3>PO Report</h3>
+
+            <p>
+                Purchase orders, suppliers and PO status.
+            </p>
+
+            <span class="status">
+                Database Pending
+            </span>
+
+        </a>
+
+
+        <a href="#" class="report-card">
+
+            <div class="icon">📥</div>
+
+            <h3>GRN Report</h3>
+
+            <p>
+                Goods receipt and received material information.
+            </p>
+
+            <span class="status">
+                Database Pending
+            </span>
+
+        </a>
+
+
+        <a href="#" class="report-card">
+
+            <div class="icon">🚪</div>
+
+            <h3>Gate Entry</h3>
+
+            <p>
+                Material gate entry and movement details.
+            </p>
+
+            <span class="status">
+                Database Pending
+            </span>
+
+        </a>
+
+
+        <a href="#" class="report-card">
+
+            <div class="icon">📑</div>
+
+            <h3>Reservation</h3>
+
+            <p>
+                Material reservations and reservation status.
+            </p>
+
+            <span class="status">
+                Database Pending
+            </span>
+
+        </a>
+
+
+        <a href="#" class="report-card">
+
+            <div class="icon">🔄</div>
+
+            <h3>RGP Report</h3>
+
+            <p>
+                Returnable Gate Pass records and pending items.
+            </p>
+
+            <span class="status">
+                Database Pending
+            </span>
+
+        </a>
+
+
+        <a href="#" class="report-card">
+
+            <div class="icon">🔄</div>
+
+            <h3>NRGP Report</h3>
+
+            <p>
+                Non-Returnable Gate Pass records.
+            </p>
+
+            <span class="status">
+                Database Pending
+            </span>
+
+        </a>
+
+
+    </section>
+
+
+    <section class="upload-section">
+
+        <h2>Upload New Report</h2>
+
+        <p>
+            Upload PDF, Excel or CSV reports for processing.
+            Database connection will be added in the next stage.
+        </p>
+
+        <a href="upload.html" class="upload-btn">
+            ⬆️ Upload Report
+        </a>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    LP FM AI — Facility Management & Store Intelligence
+
+</footer>
+
+</body>
+</html>
