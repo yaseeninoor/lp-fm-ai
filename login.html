@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LP-Store | Login</title>
+    <title>LP-Store | Admin Login</title>
+
+    <meta name="description"
+          content="LP-Store Facility Management & Store Intelligence">
 
     <style>
         * {
@@ -24,21 +27,26 @@
                          "Segoe UI", Roboto, Arial, sans-serif;
 
             background: #0f172a;
-            color: #0f172a;
         }
 
         .login-card {
             width: 100%;
-            max-width: 400px;
-            background: white;
-            border-radius: 22px;
+            max-width: 420px;
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
             padding: 32px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.30);
         }
 
         .logo {
-            width: 62px;
-            height: 62px;
+            width: 68px;
+            height: 68px;
+
             margin: 0 auto 18px;
 
             display: flex;
@@ -46,47 +54,70 @@
             justify-content: center;
 
             background: #2563eb;
-            color: white;
+            color: #ffffff;
 
-            border-radius: 17px;
+            border-radius: 18px;
 
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
         }
 
         h1 {
             text-align: center;
-            font-size: 25px;
-            margin-bottom: 6px;
+
+            color: #0f172a;
+
+            font-size: 27px;
+
+            margin-bottom: 7px;
         }
 
         .subtitle {
             text-align: center;
+
             color: #64748b;
+
             font-size: 13px;
-            margin-bottom: 28px;
+
+            line-height: 1.5;
+
+            margin-bottom: 30px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 19px;
         }
 
         label {
             display: block;
+
+            color: #334155;
+
             font-size: 13px;
+
             font-weight: 700;
-            margin-bottom: 7px;
+
+            margin-bottom: 8px;
         }
 
         input {
             width: 100%;
-            padding: 13px 14px;
+
+            padding: 14px;
 
             border: 1px solid #cbd5e1;
-            border-radius: 10px;
 
-            font-size: 14px;
+            border-radius: 11px;
+
+            background: #ffffff;
+
+            color: #0f172a;
+
+            font-size: 15px;
+
             outline: none;
+
+            transition: border-color 0.2s;
         }
 
         input:focus {
@@ -95,83 +126,154 @@
 
         .login-button {
             width: 100%;
+
             border: 0;
 
             padding: 14px;
 
             background: #2563eb;
-            color: white;
 
-            border-radius: 10px;
+            color: #ffffff;
 
-            font-size: 14px;
+            border-radius: 11px;
+
+            font-size: 15px;
+
             font-weight: 700;
 
             cursor: pointer;
+
+            transition: background 0.2s;
         }
 
         .login-button:hover {
             background: #1d4ed8;
         }
 
+        .login-button:disabled {
+            background: #94a3b8;
+
+            cursor: not-allowed;
+        }
+
         .message {
             display: none;
 
-            margin-top: 15px;
-            padding: 12px;
+            margin-top: 16px;
 
-            border-radius: 9px;
+            padding: 13px;
 
-            font-size: 12px;
+            border-radius: 10px;
+
+            font-size: 13px;
+
             line-height: 1.5;
         }
 
-        .error {
+        .message.error {
+            display: block;
+
             background: #fef2f2;
+
             color: #b91c1c;
+
+            border: 1px solid #fecaca;
         }
 
-        .info {
-            margin-top: 22px;
+        .message.success {
+            display: block;
+
+            background: #f0fdf4;
+
+            color: #15803d;
+
+            border: 1px solid #bbf7d0;
+        }
+
+        .message.info {
+            display: block;
+
+            background: #eff6ff;
+
+            color: #1d4ed8;
+
+            border: 1px solid #bfdbfe;
+        }
+
+        .security {
+            margin-top: 24px;
+
             text-align: center;
 
             color: #94a3b8;
+
             font-size: 11px;
-            line-height: 1.5;
+
+            line-height: 1.6;
         }
 
         .back {
             display: block;
-            text-align: center;
 
             margin-top: 18px;
 
+            text-align: center;
+
             color: #64748b;
+
             text-decoration: none;
 
-            font-size: 12px;
+            font-size: 13px;
         }
 
         .back:hover {
             color: #2563eb;
         }
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .login-card {
+                padding: 26px 20px;
+
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+        }
     </style>
 </head>
+
 
 <body>
 
 <div class="login-card">
 
+    <!-- Logo -->
+
     <div class="logo">
         LP
     </div>
 
-    <h1>LP-Store</h1>
+
+    <!-- Title -->
+
+    <h1>
+        LP-Store
+    </h1>
 
     <p class="subtitle">
         Facility Management & Store Intelligence
     </p>
 
+
+    <!-- Login Form -->
 
     <form id="loginForm">
 
@@ -185,7 +287,7 @@
                 type="email"
                 id="email"
                 placeholder="Enter your email"
-                autocomplete="email"
+                autocomplete="username"
                 required
             >
 
@@ -211,6 +313,7 @@
 
         <button
             type="submit"
+            id="loginButton"
             class="login-button">
 
             Login
@@ -220,18 +323,21 @@
     </form>
 
 
+    <!-- Message -->
+
     <div
         id="message"
-        class="message error">
+        class="message">
     </div>
 
 
-    <p class="info">
+    <div class="security">
 
-        Authorized users only.<br>
+        🔐 Authorized users only.<br>
+
         LP-Store Facility Management System
 
-    </p>
+    </div>
 
 
     <a
@@ -245,46 +351,304 @@
 </div>
 
 
+<!-- =====================================================
+     FIREBASE SDK
+===================================================== -->
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+
 <script>
 
-document
-    .getElementById("loginForm")
-    .addEventListener("submit", function(event) {
+    /* =====================================================
+       FIREBASE CONFIGURATION
+    ===================================================== */
 
-        event.preventDefault();
+    const firebaseConfig = {
 
-        const email =
-            document.getElementById("email").value.trim();
+        apiKey:
+            "AIzaSyBDzbv1fTRPxfjmj3Nz4svl7ALWWARBuY0o",
 
-        const password =
-            document.getElementById("password").value;
+        authDomain:
+            "lp-store-23212.firebaseapp.com",
 
-        const message =
-            document.getElementById("message");
+        projectId:
+            "lp-store-23212",
+
+        storageBucket:
+            "lp-store-23212.firebasestorage.app",
+
+        messagingSenderId:
+            "200245726085",
+
+        appId:
+            "1:200245726085:web:846b39a873c06a1ebc12ec",
+
+        measurementId:
+            "G-51Q3ZZJQJD"
+
+    };
 
 
-        if (!email || !password) {
+    /* =====================================================
+       INITIALIZE FIREBASE
+    ===================================================== */
 
-            message.style.display = "block";
+    firebase.initializeApp(firebaseConfig);
 
-            message.textContent =
-                "Please enter your email and password.";
 
-            return;
+    /* =====================================================
+       FIREBASE AUTH
+    ===================================================== */
+
+    const auth = firebase.auth();
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const loginButton =
+        document.getElementById("loginButton");
+
+    const message =
+        document.getElementById("message");
+
+
+    /* =====================================================
+       CHECK EXISTING LOGIN
+    ===================================================== */
+
+    auth.onAuthStateChanged(function(user) {
+
+        if (user) {
+
+            window.location.href =
+                "dashboard.html";
+
         }
 
-
-        /*
-         * Firebase Authentication will be connected here
-         * in the next step.
-         */
-
-        message.style.display = "block";
-
-        message.textContent =
-            "Firebase Authentication is not connected yet.";
-
     });
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    loginForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const email =
+                document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+            const password =
+                document
+                .getElementById("password")
+                .value;
+
+
+            /* Validate */
+
+            if (!email || !password) {
+
+                showMessage(
+                    "Please enter your email and password.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* Disable button */
+
+            loginButton.disabled = true;
+
+            loginButton.textContent =
+                "Signing in...";
+
+
+            hideMessage();
+
+
+            try {
+
+                /* Firebase Login */
+
+                await auth.signInWithEmailAndPassword(
+                    email,
+                    password
+                );
+
+
+                /* Success */
+
+                showMessage(
+                    "Login successful. Opening LP-Store...",
+                    "success"
+                );
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }, 800);
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Firebase Authentication Error:",
+                    error
+                );
+
+
+                let errorMessage =
+                    "Login failed.";
+
+
+                switch (error.code) {
+
+
+                    case "auth/invalid-credential":
+
+                        errorMessage =
+                            "Invalid email or password.";
+
+                        break;
+
+
+                    case "auth/user-not-found":
+
+                        errorMessage =
+                            "This user does not exist in Firebase.";
+
+                        break;
+
+
+                    case "auth/wrong-password":
+
+                        errorMessage =
+                            "Incorrect password.";
+
+                        break;
+
+
+                    case "auth/invalid-email":
+
+                        errorMessage =
+                            "Please enter a valid email address.";
+
+                        break;
+
+
+                    case "auth/user-disabled":
+
+                        errorMessage =
+                            "This user account has been disabled.";
+
+                        break;
+
+
+                    case "auth/too-many-requests":
+
+                        errorMessage =
+                            "Too many login attempts. Please try again later.";
+
+                        break;
+
+
+                    case "auth/operation-not-allowed":
+
+                        errorMessage =
+                            "Email/Password authentication is not enabled in Firebase.";
+
+                        break;
+
+
+                    case "auth/network-request-failed":
+
+                        errorMessage =
+                            "Network error. Please check your internet connection.";
+
+                        break;
+
+
+                    default:
+
+                        errorMessage =
+                            error.code +
+                            " - " +
+                            error.message;
+
+                        break;
+
+                }
+
+
+                showMessage(
+                    errorMessage,
+                    "error"
+                );
+
+
+                /* Enable button */
+
+                loginButton.disabled = false;
+
+                loginButton.textContent =
+                    "Login";
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       SHOW MESSAGE
+    ===================================================== */
+
+    function showMessage(text, type) {
+
+        message.textContent = text;
+
+        message.className =
+            "message " + type;
+
+    }
+
+
+    /* =====================================================
+       HIDE MESSAGE
+    ===================================================== */
+
+    function hideMessage() {
+
+        message.textContent = "";
+
+        message.className =
+            "message";
+
+    }
 
 </script>
 
