@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LP-Store | Admin Login</title>
+    <title>LP-Store | Login</title>
 
     <meta name="description"
           content="LP-Store Facility Management & Store Intelligence">
@@ -23,8 +23,13 @@
             justify-content: center;
             padding: 20px;
 
-            font-family: -apple-system, BlinkMacSystemFont,
-                         "Segoe UI", Roboto, Arial, sans-serif;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
 
             background: #0f172a;
         }
@@ -116,8 +121,6 @@
             font-size: 15px;
 
             outline: none;
-
-            transition: border-color 0.2s;
         }
 
         input:focus {
@@ -142,8 +145,6 @@
             font-weight: 700;
 
             cursor: pointer;
-
-            transition: background 0.2s;
         }
 
         .login-button:hover {
@@ -152,7 +153,6 @@
 
         .login-button:disabled {
             background: #94a3b8;
-
             cursor: not-allowed;
         }
 
@@ -188,16 +188,6 @@
             color: #15803d;
 
             border: 1px solid #bbf7d0;
-        }
-
-        .message.info {
-            display: block;
-
-            background: #eff6ff;
-
-            color: #1d4ed8;
-
-            border: 1px solid #bfdbfe;
         }
 
         .security {
@@ -238,14 +228,12 @@
 
             .login-card {
                 padding: 26px 20px;
-
                 border-radius: 20px;
             }
 
             h1 {
                 font-size: 24px;
             }
-
         }
     </style>
 </head>
@@ -255,14 +243,14 @@
 
 <div class="login-card">
 
-    <!-- Logo -->
+    <!-- LP LOGO -->
 
     <div class="logo">
         LP
     </div>
 
 
-    <!-- Title -->
+    <!-- TITLE -->
 
     <h1>
         LP-Store
@@ -273,7 +261,7 @@
     </p>
 
 
-    <!-- Login Form -->
+    <!-- LOGIN FORM -->
 
     <form id="loginForm">
 
@@ -323,7 +311,7 @@
     </form>
 
 
-    <!-- Message -->
+    <!-- MESSAGE -->
 
     <div
         id="message"
@@ -363,7 +351,7 @@
 <script>
 
     /* =====================================================
-       FIREBASE CONFIGURATION
+       FIREBASE CONFIG
     ===================================================== */
 
     const firebaseConfig = {
@@ -400,14 +388,14 @@
 
 
     /* =====================================================
-       FIREBASE AUTH
+       AUTHENTICATION
     ===================================================== */
 
     const auth = firebase.auth();
 
 
     /* =====================================================
-       ELEMENTS
+       HTML ELEMENTS
     ===================================================== */
 
     const loginForm =
@@ -421,7 +409,7 @@
 
 
     /* =====================================================
-       CHECK EXISTING LOGIN
+       CHECK LOGIN STATUS
     ===================================================== */
 
     auth.onAuthStateChanged(function(user) {
@@ -460,13 +448,12 @@
                 .value;
 
 
-            /* Validate */
+            /* Check fields */
 
             if (!email || !password) {
 
-                showMessage(
-                    "Please enter your email and password.",
-                    "error"
+                showError(
+                    "Please enter your email and password."
                 );
 
                 return;
@@ -487,7 +474,7 @@
 
             try {
 
-                /* Firebase Login */
+                /* Firebase Email/Password Login */
 
                 await auth.signInWithEmailAndPassword(
                     email,
@@ -495,11 +482,10 @@
                 );
 
 
-                /* Success */
+                /* Successful */
 
-                showMessage(
-                    "Login successful. Opening LP-Store...",
-                    "success"
+                showSuccess(
+                    "Login successful. Opening LP-Store..."
                 );
 
 
@@ -516,7 +502,7 @@
             catch (error) {
 
                 console.error(
-                    "Firebase Authentication Error:",
+                    "Firebase Login Error:",
                     error
                 );
 
@@ -539,7 +525,7 @@
                     case "auth/user-not-found":
 
                         errorMessage =
-                            "This user does not exist in Firebase.";
+                            "User not found in Firebase.";
 
                         break;
 
@@ -555,7 +541,7 @@
                     case "auth/invalid-email":
 
                         errorMessage =
-                            "Please enter a valid email address.";
+                            "Invalid email address.";
 
                         break;
 
@@ -563,7 +549,7 @@
                     case "auth/user-disabled":
 
                         errorMessage =
-                            "This user account has been disabled.";
+                            "This user account is disabled.";
 
                         break;
 
@@ -579,7 +565,7 @@
                     case "auth/operation-not-allowed":
 
                         errorMessage =
-                            "Email/Password authentication is not enabled in Firebase.";
+                            "Email/Password authentication is not enabled.";
 
                         break;
 
@@ -604,13 +590,10 @@
                 }
 
 
-                showMessage(
-                    errorMessage,
-                    "error"
-                );
+                showError(errorMessage);
 
 
-                /* Enable button */
+                /* Enable button again */
 
                 loginButton.disabled = false;
 
@@ -624,15 +607,29 @@
 
 
     /* =====================================================
-       SHOW MESSAGE
+       SHOW ERROR
     ===================================================== */
 
-    function showMessage(text, type) {
+    function showError(text) {
 
         message.textContent = text;
 
         message.className =
-            "message " + type;
+            "message error";
+
+    }
+
+
+    /* =====================================================
+       SHOW SUCCESS
+    ===================================================== */
+
+    function showSuccess(text) {
+
+        message.textContent = text;
+
+        message.className =
+            "message success";
 
     }
 
