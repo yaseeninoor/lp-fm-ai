@@ -1,64 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0,user-scalable=no">
+
+<meta name="theme-color" content="#071a2f">
+
+<title>LP-Store | Secure Login</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --blue:#1677ff;
+    --blue2:#075dcc;
+    --cyan:#16c7ff;
+    --dark:#061426;
+    --dark2:#0a1f36;
+    --dark3:#102b46;
+    --white:#ffffff;
+    --muted:#91a8c2;
+    --border:rgba(255,255,255,.12);
+}
+
+html,body{
+    min-height:100%;
+}
+
+body{
+    min-height:100vh;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    color:var(--white);
+
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(22,119,255,.30),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(22,199,255,.16),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #03101e,
+            #08213a 50%,
+            #04111f
+        );
+
+    overflow-x:hidden;
+}
+
+
+/* ===============================
+   BACKGROUND GRID
+================================ */
+
+.background{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    opacity:.45;
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
+
+    background-size:42px 42px;
+}
+
+
+/* ===============================
+   PHARMA MATERIAL BOXES
+================================ */
+
+.inventory{
+    position:absolute;
+    right:-50px;
+    bottom:40px;
+    width:520px;
+    height:360px;
+    opacity:.18;
+}
+
+.shelf{
+    position:absolute;
+    left:0;
+    right:0;
+    height:3px;
+    background:#8eb5d9;
+}
+
+.shelf1{top:70px;}
+.shelf2{top:175px;}
+.shelf3{top:280px;}
+
+.box{
+    position:absolute;
+    width:65px;
+    height:65px;
+
+    border:1px solid
+        rgba(151,196,235,.35);
+
+    border-radius:6px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.025)
+        );
+}
+
+.box:after{
+    content:"";
+    position:absolute;
+    left:12px;
+    right:12px;
+    top:19px;
+    height:6px;
+    border-radius:4px;
+    background:
+        rgba(125,193,255,.25);
+}
+
+.x1{left:25px;top:5px;}
+.x2{left:115px;top:5px;}
+.x3{left:205px;top:5px;}
+.x4{left:310px;top:5px;}
+
+.x5{left:55px;top:110px;}
+.x6{left:160px;top:110px;}
+.x7{left:285px;top:110px;}
+.x8{left:405px;top:110px;}
+
+.x9{left:20px;top:215px;}
+.x10{left:120px;top:215px;}
+.x11{left:235px;top:215px;}
+.x12{left:365px;top:215px;}
+
+
+/* ===============================
+   HEADER
+================================ */
+
+.header{
+    position:relative;
+    z-index:5;
+
+    width:100%;
+    padding:20px 28px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2188ff,
+            #0755c5
+        );
+
+    box-shadow:
+        0 8px 25px
+        rgba(22,119,255,.35);
+
+    font-weight:900;
+    font-size:18px;
+}
+
+.brand-name{
+    font-size:19px;
+    font-weight:800;
+}
+
+.brand-sub{
+    margin-top:2px;
+    color:var(--muted);
+    font-size:10px;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    color:#9db4cc;
+    font-size:11px;
+}
+
+.dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:
+        0 0 12px
+        rgba(34,197,94,.8);
+}
+
+
+/* ===============================
+   MAIN
+================================ */
+
+.main{
+    position:relative;
+    z-index:2;
+
+    min-height:
+        calc(100vh - 90px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+}
+
+
+/* ===============================
+   LOGIN CARD
+================================ */
+
+.card{
+    width:100%;
+
+    padding:34px 30px 28px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,46,75,.94),
+            rgba(5,19,36,.97)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.45);
+
+    backdrop-filter:blur(22px);
+}
+
+
+/* ===============================
+   ICON
+================================ */
+
+.login-icon{
+    width:70px;
+    height:70px;
+
+    margin:0 auto 17px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2188ff,
+            #0758c8
+        );
+
+    box-shadow:
+        0 12px 35px
+        rgba(22,119,255,.32);
+
+    font-size:32px;
+}
+
+.title{
+    text-align:center;
+}
+
+.title h1{
+    font-size:25px;
+    margin-bottom:7px;
+}
+
+.title p{
+    color:#8ea5be;
+    font-size:13px;
+}
+
+
+/* ===============================
+   FORM
+================================ */
+
+.form{
+    margin-top:30px;
+}
+
+.group{
+    margin-bottom:18px;
+}
+
+.label{
+    display:block;
+    margin-bottom:8px;
+
+    color:#c8d6e6;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+.input-box{
+    position:relative;
+}
+
+.input-icon{
+    position:absolute;
+    left:15px;
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size:16px;
+    opacity:.75;
+}
+
+input{
+    width:100%;
+    height:52px;
+
+    padding:
+        0 45px 0 45px;
+
+    border-radius:12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    background:
+        rgba(255,255,255,.055);
+
+    color:#fff;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:.2s;
+}
+
+input::placeholder{
+    color:#647c96;
+}
+
+input:focus{
+    border-color:#2188ff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(33,136,255,.12);
+
+    background:
+        rgba(255,255,255,.075);
+}
+
+.show-password{
+    position:absolute;
+    right:13px;
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    border:0;
+    background:none;
+
+    color:#8ea7c0;
+
+    cursor:pointer;
+
+    font-size:17px;
+}
+
+
+/* ===============================
+   LOGIN BUTTON
+================================ */
+
+.login-button{
+    width:100%;
+    height:53px;
+
+    margin-top:5px;
+
+    border:0;
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2188ff,
+            #075dcc
+        );
+
+    color:white;
+
+    font-size:14px;
+    font-weight:800;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 12px 30px
+        rgba(22,119,255,.25);
+
+    transition:.2s;
+}
+
+.login-button:active{
+    transform:scale(.99);
+}
+
+.login-button:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+}
+
+
+/* ===============================
+   MESSAGE
+================================ */
+
+.message{
+    display:none;
+
+    margin-top:16px;
+
+    padding:13px 14px;
+
+    border-radius:11px;
+
+    font-size:12px;
+    line-height:1.5;
+}
+
+.message.error{
+    display:block;
+
+    color:#ffaaaa;
+
+    background:
+        rgba(239,68,68,.10);
+
+    border:
+        1px solid
+        rgba(239,68,68,.28);
+}
+
+.message.success{
+    display:block;
+
+    color:#91e8aa;
+
+    background:
+        rgba(34,197,94,.10);
+
+    border:
+        1px solid
+        rgba(34,197,94,.25);
+}
+
+
+/* ===============================
+   SECURITY
+================================ */
+
+.security{
+    margin-top:23px;
+    padding-top:18px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+    text-align:center;
+
+    color:#7089a3;
+
+    font-size:10px;
+    line-height:1.7;
+}
+
+.security strong{
+    color:#8ea9c4;
+}
+
+
+/* ===============================
+   BACK
+================================ */
+
+.back{
+    display:block;
+
+    margin-top:17px;
+
+    text-align:center;
+
+    color:#7891aa;
+
+    text-decoration:none;
+
+    font-size:11px;
+}
+
+.back:hover{
+    color:#55a9ff;
+}
+
+
+/* ===============================
+   FOOTER
+================================ */
+
+.footer{
+    position:relative;
+    z-index:4;
+
+    text-align:center;
+
+    padding:
+        0 20px 18px;
+
+    color:#506a84;
+
+    font-size:9px;
+}
+
+
+/* ===============================
+   MOBILE
+================================ */
+
+@media(max-width:600px){
+
+    .header{
+        padding:16px 16px;
+    }
+
+    .logo{
+        width:43px;
+        height:43px;
+        border-radius:12px;
+    }
+
+    .brand-name{
+        font-size:17px;
+    }
+
+    .brand-sub{
+        font-size:9px;
+    }
+
+    .status{
+        display:none;
+    }
+
+    .main{
+        padding:
+            12px 14px 25px;
+
+        align-items:center;
+    }
+
+    .card{
+        padding:
+            29px 19px 25px;
+
+        border-radius:22px;
+    }
+
+    .login-icon{
+        width:64px;
+        height:64px;
+    }
+
+    .title h1{
+        font-size:23px;
+    }
+
+    input{
+        height:51px;
+    }
+
+    .login-button{
+        height:52px;
+    }
+
+    .inventory{
+        right:-250px;
+        opacity:.09;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- BACKGROUND -->
+
+<div class="background">
+
+    <div class="grid"></div>
+
+    <div class="inventory">
+
+        <div class="shelf shelf1"></div>
+        <div class="shelf shelf2"></div>
+        <div class="shelf shelf3"></div>
+
+        <div class="box x1"></div>
+        <div class="box x2"></div>
+        <div class="box x3"></div>
+        <div class="box x4"></div>
+
+        <div class="box x5"></div>
+        <div class="box x6"></div>
+        <div class="box x7"></div>
+        <div class="box x8"></div>
+
+        <div class="box x9"></div>
+        <div class="box x10"></div>
+        <div class="box x11"></div>
+        <div class="box x12"></div>
+
+    </div>
+
+</div>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            LP
+        </div>
+
+        <div>
+
+            <div class="brand-name">
+                LP-Store
+            </div>
+
+            <div class="brand-sub">
+                Pharma Material Intelligence
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="status">
+
+        <span class="dot"></span>
+
+        Secure System
+
+    </div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="container">
+
+        <section class="card">
+
+
+            <div class="login-icon">
+                🔐
+            </div>
+
+
+            <div class="title">
+
+                <h1>
+                    Welcome Back
+                </h1>
+
+                <p>
+                    Sign in to LP-Store
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+
+            <form
+                class="form"
+                id="loginForm"
+                autocomplete="on">
+
+
+                <div class="group">
+
+                    <label
+                        class="label"
+                        for="email">
+
+                        Email Address
+
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            ✉️
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="username"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="group">
+
+                    <label
+                        class="label"
+                        for="password">
+
+                        Password
+
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            🔑
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            id="showPassword"
+                            aria-label="Show password">
+
+                            👁️
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton">
+
+                    Sign In to LP-Store
+
+                </button>
+
+            </form>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="message"
+                class="message">
+            </div>
+
+
+            <!-- SECURITY -->
+
+            <div class="security">
+
+                🔒 Secure Firebase Authentication
+
+                <br>
+
+                <strong>
+                    Authorized Facility Management users only
+                </strong>
+
+                <br>
+
+                LP-Store • Pharma Material & Store Intelligence
+
+            </div>
+
+
+            <a
+                href="index.html"
+                class="back">
+
+                ← Back to LP-Store
+
+            </a>
+
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    LP-Store © 2026
+
+</footer>
+
+
+<!-- FIREBASE -->
+
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
+
 <script>
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+
 const firebaseConfig = {
-    apiKey: "AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",
-    authDomain: "lp-store-23212.firebaseapp.com",
-    projectId: "lp-store-23212",
-    storageBucket: "lp-store-23212.firebasestorage.app",
-    messagingSenderId: "200245726085",
-    appId: "1:200245726085:web:846b39a873c06a1ebc12ec",
-    measurementId: "G-51Q3ZZJQJD"
+
+    apiKey:
+        "AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",
+
+    authDomain:
+        "lp-store-23212.firebaseapp.com",
+
+    projectId:
+        "lp-store-23212",
+
+    storageBucket:
+        "lp-store-23212.firebasestorage.app",
+
+    messagingSenderId:
+        "200245726085",
+
+    appId:
+        "1:200245726085:web:846b39a873c06a1ebc12ec",
+
+    measurementId:
+        "G-51Q3ZZJQJD"
 };
+
+
+/* =========================================================
+   INITIALIZE FIREBASE
+========================================================= */
 
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 
-const loginForm = document.getElementById("loginForm");
-const loginButton = document.getElementById("loginButton");
-const message = document.getElementById("message");
 
-loginForm.addEventListener("submit", async function(e) {
-    e.preventDefault();
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+const form =
+    document.getElementById("loginForm");
 
-    loginButton.disabled = true;
-    loginButton.textContent = "Signing in...";
+const email =
+    document.getElementById("email");
 
-    try {
-        await auth.signInWithEmailAndPassword(email, password);
+const password =
+    document.getElementById("password");
 
-        message.className = "message success";
-        message.textContent = "Login successful. Opening LP-Store...";
+const button =
+    document.getElementById("loginButton");
 
-        setTimeout(() => {
-            window.location.href = "dashboard.html";
-        }, 700);
+const message =
+    document.getElementById("message");
 
-    } catch (error) {
+const showPassword =
+    document.getElementById("showPassword");
 
-        console.error(error);
 
-        message.className = "message error";
+/* =========================================================
+   SHOW / HIDE PASSWORD
+========================================================= */
 
-        if (
-            error.code === "auth/invalid-credential" ||
-            error.code === "auth/wrong-password" ||
-            error.code === "auth/user-not-found"
-        ) {
-            message.textContent =
-                "Invalid email or password.";
-        } else {
-            message.textContent =
-                error.code + " - " + error.message;
+showPassword.addEventListener(
+    "click",
+    function(){
+
+        if(password.type === "password"){
+
+            password.type = "text";
+
+            showPassword.textContent = "🙈";
+
+        }else{
+
+            password.type = "password";
+
+            showPassword.textContent = "👁️";
+
         }
 
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In to LP-Store";
     }
-});
+);
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+auth.onAuthStateChanged(
+    function(user){
+
+        if(user){
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+form.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const userEmail =
+            email.value.trim();
+
+        const userPassword =
+            password.value;
+
+
+        if(!userEmail || !userPassword){
+
+            showError(
+                "Please enter your email and password."
+            );
+
+            return;
+        }
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "Signing in...";
+
+        hideMessage();
+
+
+        try{
+
+            await auth.signInWithEmailAndPassword(
+                userEmail,
+                userPassword
+            );
+
+
+            showSuccess(
+                "Login successful. Opening LP-Store..."
+            );
+
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                        "dashboard.html";
+
+                },
+                700
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "Firebase Login Error:",
+                error
+            );
+
+
+            let text =
+                "Login failed.";
+
+
+            switch(error.code){
+
+                case "auth/invalid-credential":
+
+                    text =
+                        "Invalid email or password.";
+
+                    break;
+
+
+                case "auth/user-not-found":
+
+                    text =
+                        "No account found with this email.";
+
+                    break;
+
+
+                case "auth/wrong-password":
+
+                    text =
+                        "Incorrect password.";
+
+                    break;
+
+
+                case "auth/invalid-email":
+
+                    text =
+                        "Please enter a valid email address.";
+
+                    break;
+
+
+                case "auth/user-disabled":
+
+                    text =
+                        "This account has been disabled.";
+
+                    break;
+
+
+                case "auth/too-many-requests":
+
+                    text =
+                        "Too many login attempts. Please try again later.";
+
+                    break;
+
+
+                case "auth/operation-not-allowed":
+
+                    text =
+                        "Email/Password sign-in is not enabled in Firebase.";
+
+                    break;
+
+
+                case "auth/network-request-failed":
+
+                    text =
+                        "Network error. Please check your internet connection.";
+
+                    break;
+
+
+                case "auth/api-key-not-valid":
+
+                    text =
+                        "Firebase API key is invalid. Please verify the Firebase Web App configuration.";
+
+                    break;
+
+
+                default:
+
+                    text =
+                        error.message ||
+                        "Unable to sign in.";
+
+            }
+
+
+            showError(text);
+
+
+            button.disabled = false;
+
+            button.textContent =
+                "Sign In to LP-Store";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MESSAGE FUNCTIONS
+========================================================= */
+
+function showError(text){
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message error";
+}
+
+
+function showSuccess(text){
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message success";
+}
+
+
+function hideMessage(){
+
+    message.textContent =
+        "";
+
+    message.className =
+        "message";
+}
+
 </script>
+
+</body>
+</html
