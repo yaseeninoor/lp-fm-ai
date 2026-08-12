@@ -1,429 +1,1030 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Reports | LP FM AI</title>
+<meta charset="UTF-8">
 
-    <meta name="description"
-          content="LP FM AI Facility Management Reports">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta name="theme-color"
+      content="#071426">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                         Roboto, Arial, sans-serif;
-            background: #f1f5f9;
-            color: #0f172a;
-        }
+<title>LP-Store | Reports</title>
 
-        header {
-            background: #0f172a;
-            color: white;
-            padding: 18px 22px;
-        }
+<style>
 
-        .header-inner {
-            max-width: 1200px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+:root{
 
-        .logo {
-            width: 44px;
-            height: 44px;
-            background: #2563eb;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-        }
+    --blue:#1677ff;
+    --blue2:#0759c9;
 
-        .brand h1 {
-            font-size: 19px;
-        }
+    --dark:#061322;
+    --dark2:#0b1d33;
+    --card:#102943;
 
-        .brand p {
-            color: #cbd5e1;
-            font-size: 12px;
-            margin-top: 3px;
-        }
+    --white:#ffffff;
+    --muted:#91a7c0;
 
-        .back {
-            color: white;
-            text-decoration: none;
-            background: #1e293b;
-            padding: 9px 14px;
-            border-radius: 9px;
-            font-size: 13px;
-        }
+    --border:rgba(255,255,255,.11);
+}
 
-        main {
-            max-width: 1200px;
-            margin: auto;
-            padding: 28px 18px 50px;
-        }
+body{
 
-        .page-title {
-            margin-bottom: 24px;
-        }
+    min-height:100vh;
 
-        .page-title h2 {
-            font-size: 27px;
-            margin-bottom: 6px;
-        }
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
 
-        .page-title p {
-            color: #64748b;
-            font-size: 14px;
-        }
+    color:var(--white);
 
-        .report-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
+    background:
 
-        .report-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 21px;
-            text-decoration: none;
-            color: #0f172a;
-            transition: 0.2s;
-            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
-        }
+    radial-gradient(
+        circle at 10% 10%,
+        rgba(22,119,255,.25),
+        transparent 30%
+    ),
 
-        .report-card:hover {
-            transform: translateY(-3px);
-            border-color: #93c5fd;
-            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.09);
-        }
+    radial-gradient(
+        circle at 90% 90%,
+        rgba(24,200,255,.12),
+        transparent 30%
+    ),
 
-        .icon {
-            width: 48px;
-            height: 48px;
-            background: #eff6ff;
-            border-radius: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 14px;
-        }
+    linear-gradient(
+        135deg,
+        #04101f,
+        #0a1b31,
+        #061322
+    );
 
-        .report-card h3 {
-            font-size: 16px;
-            margin-bottom: 6px;
-        }
+    overflow-x:hidden;
+}
 
-        .report-card p {
-            font-size: 12px;
-            color: #64748b;
-            line-height: 1.5;
-        }
 
-        .status {
-            display: inline-block;
-            margin-top: 14px;
-            font-size: 11px;
-            padding: 5px 9px;
-            border-radius: 20px;
-            background: #f1f5f9;
-            color: #64748b;
-        }
+/* HEADER */
 
-        .upload-section {
-            margin-top: 30px;
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 18px;
-            padding: 24px;
-        }
+.header{
 
-        .upload-section h2 {
-            font-size: 18px;
-            margin-bottom: 7px;
-        }
+    position:sticky;
+    top:0;
+    z-index:100;
 
-        .upload-section p {
-            color: #64748b;
-            font-size: 13px;
-            margin-bottom: 18px;
-        }
+    height:78px;
 
-        .upload-btn {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            padding: 12px 18px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 700;
-        }
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-        footer {
-            text-align: center;
-            color: #94a3b8;
-            font-size: 12px;
-            padding: 25px;
-        }
+    padding:0 28px;
 
-        @media (max-width: 900px) {
-            .report-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+    background:
+    rgba(5,18,34,.92);
 
-        @media (max-width: 550px) {
-            .header-inner {
-                align-items: flex-start;
-            }
+    border-bottom:
+    1px solid var(--border);
 
-            .back {
-                font-size: 12px;
-            }
+    backdrop-filter:blur(18px);
+}
 
-            .report-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
 
-            .report-card {
-                padding: 16px;
-            }
+.brand{
 
-            .page-title h2 {
-                font-size: 23px;
-            }
-        }
-    </style>
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+
+.logo{
+
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2188ff,
+        #0757c8
+    );
+
+    font-size:18px;
+    font-weight:900;
+
+    box-shadow:
+    0 8px 25px
+    rgba(22,119,255,.30);
+}
+
+
+.brand-title{
+
+    font-size:20px;
+    font-weight:800;
+}
+
+
+.brand-sub{
+
+    color:var(--muted);
+    font-size:11px;
+    margin-top:2px;
+}
+
+
+.user{
+
+    color:#b8c9dc;
+
+    font-size:12px;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+
+.user-dot{
+
+    width:30px;
+    height:30px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2188ff,
+        #0757c8
+    );
+
+    font-weight:800;
+}
+
+
+/* PAGE */
+
+.container{
+
+    width:100%;
+    max-width:1150px;
+
+    margin:auto;
+
+    padding:
+    45px 25px 70px;
+}
+
+
+.page-title{
+
+    font-size:
+    clamp(32px,5vw,50px);
+
+    line-height:1.1;
+
+    margin-bottom:12px;
+}
+
+
+.page-title span{
+
+    color:#42a5ff;
+}
+
+
+.description{
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    max-width:720px;
+
+    margin-bottom:30px;
+}
+
+
+/* SEARCH */
+
+.search-box{
+
+    width:100%;
+
+    height:52px;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 16px;
+
+    margin-bottom:30px;
+
+    border:
+    1px solid var(--border);
+
+    border-radius:13px;
+
+    background:
+    rgba(255,255,255,.045);
+
+    backdrop-filter:blur(12px);
+}
+
+
+.search-box span{
+
+    font-size:18px;
+
+    margin-right:10px;
+
+    opacity:.7;
+}
+
+
+.search-box input{
+
+    width:100%;
+
+    border:0;
+    outline:0;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:14px;
+}
+
+
+.search-box input::placeholder{
+
+    color:#647b94;
+}
+
+
+/* CATEGORY */
+
+.category{
+
+    margin-bottom:30px;
+}
+
+
+.category-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:14px;
+
+    font-size:18px;
+}
+
+
+.category-title .icon{
+
+    width:38px;
+    height:38px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:
+    rgba(22,119,255,.14);
+
+    border:
+    1px solid
+    rgba(22,119,255,.20);
+}
+
+
+/* REPORT LIST */
+
+.report-list{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:12px;
+}
+
+
+.report{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    padding:16px;
+
+    text-decoration:none;
+
+    color:white;
+
+    border:
+    1px solid var(--border);
+
+    border-radius:13px;
+
+    background:
+    rgba(255,255,255,.035);
+
+    transition:.2s;
+
+    backdrop-filter:blur(10px);
+}
+
+
+.report:hover{
+
+    transform:translateY(-2px);
+
+    border-color:
+    rgba(37,136,255,.5);
+
+    background:
+    rgba(22,119,255,.08);
+}
+
+
+.pdf-icon{
+
+    min-width:45px;
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ef4444,
+        #b91c1c
+    );
+
+    font-size:20px;
+}
+
+
+.report-info{
+
+    min-width:0;
+
+    flex:1;
+}
+
+
+.report-name{
+
+    font-size:13px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+
+.report-meta{
+
+    margin-top:4px;
+
+    color:#7188a1;
+
+    font-size:10px;
+}
+
+
+.open{
+
+    color:#4da1ff;
+
+    font-size:18px;
+}
+
+
+/* EMPTY */
+
+.empty{
+
+    display:none;
+
+    text-align:center;
+
+    padding:45px 20px;
+
+    color:#7188a1;
+
+    border:
+    1px dashed
+    rgba(255,255,255,.12);
+
+    border-radius:15px;
+}
+
+
+/* LOADING */
+
+.loading{
+
+    text-align:center;
+
+    padding:40px;
+
+    color:#7890a9;
+}
+
+
+/* FOOTER */
+
+.footer{
+
+    text-align:center;
+
+    color:#526a83;
+
+    font-size:10px;
+
+    padding-bottom:25px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .header{
+
+        height:70px;
+
+        padding:0 16px;
+    }
+
+    .logo{
+
+        width:42px;
+        height:42px;
+    }
+
+    .brand-title{
+
+        font-size:17px;
+    }
+
+    .user{
+
+        display:none;
+    }
+
+    .container{
+
+        padding:
+        32px 15px 50px;
+    }
+
+    .report-list{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<header>
 
-    <div class="header-inner">
+<header class="header">
 
-        <div class="brand">
+    <div class="brand">
 
-            <div class="logo">
-                LP
+        <div class="logo">
+            LP
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                LP-Store
             </div>
 
-            <div>
-                <h1>LP FM AI</h1>
-                <p>Facility Management Reports</p>
+            <div class="brand-sub">
+                Pharma Material Intelligence
             </div>
 
         </div>
 
-        <a href="index.html" class="back">
-            ← Dashboard
-        </a>
+    </div>
+
+
+    <div class="user">
+
+        <div class="user-dot">
+            Y
+        </div>
+
+        <span>
+            Facility Management
+        </span>
 
     </div>
 
 </header>
 
 
-<main>
 
-    <section class="page-title">
-
-        <h2>Reports</h2>
-
-        <p>
-            View and manage Facility Management & Store reports.
-        </p>
-
-    </section>
+<main class="container">
 
 
-    <section class="report-grid">
+    <h1 class="page-title">
+
+        Material
+        <span>Reports</span>
+
+    </h1>
 
 
-        <a href="#" class="report-card">
+    <p class="description">
 
-            <div class="icon">📦</div>
+        Pharmaceutical material inventory,
+        Facility Management and store reports
+        uploaded to LP-Store.
 
-            <h3>Current Stock</h3>
-
-            <p>
-                Material stock, quantity, UOM and stock status.
-            </p>
-
-            <span class="status">
-                Database Pending
-            </span>
-
-        </a>
+    </p>
 
 
-        <a href="#" class="report-card">
+    <!-- SEARCH -->
 
-            <div class="icon">📋</div>
+    <div class="search-box">
 
-            <h3>PR Report</h3>
+        <span>🔎</span>
 
-            <p>
-                Purchase requisitions and PR status.
-            </p>
+        <input
+            type="search"
+            id="search"
+            placeholder="Search reports..."
+        >
 
-            <span class="status">
-                Database Pending
-            </span>
-
-        </a>
+    </div>
 
 
-        <a href="#" class="report-card">
+    <!-- GATE ENTRY -->
 
-            <div class="icon">🧾</div>
+    <section class="category">
 
-            <h3>PO Report</h3>
+        <div class="category-title">
 
-            <p>
-                Purchase orders, suppliers and PO status.
-            </p>
+            <div class="icon">
+                🚪
+            </div>
 
-            <span class="status">
-                Database Pending
-            </span>
+            <strong>
+                Gate Entry Reports
+            </strong>
 
-        </a>
-
-
-        <a href="#" class="report-card">
-
-            <div class="icon">📥</div>
-
-            <h3>GRN Report</h3>
-
-            <p>
-                Goods receipt and received material information.
-            </p>
-
-            <span class="status">
-                Database Pending
-            </span>
-
-        </a>
+        </div>
 
 
-        <a href="#" class="report-card">
+        <div
+            id="gate-entry"
+            class="report-list">
 
-            <div class="icon">🚪</div>
+            <div class="loading">
+                Loading reports...
+            </div>
 
-            <h3>Gate Entry</h3>
-
-            <p>
-                Material gate entry and movement details.
-            </p>
-
-            <span class="status">
-                Database Pending
-            </span>
-
-        </a>
-
-
-        <a href="#" class="report-card">
-
-            <div class="icon">📑</div>
-
-            <h3>Reservation</h3>
-
-            <p>
-                Material reservations and reservation status.
-            </p>
-
-            <span class="status">
-                Database Pending
-            </span>
-
-        </a>
-
-
-        <a href="#" class="report-card">
-
-            <div class="icon">🔄</div>
-
-            <h3>RGP Report</h3>
-
-            <p>
-                Returnable Gate Pass records and pending items.
-            </p>
-
-            <span class="status">
-                Database Pending
-            </span>
-
-        </a>
-
-
-        <a href="#" class="report-card">
-
-            <div class="icon">🔄</div>
-
-            <h3>NRGP Report</h3>
-
-            <p>
-                Non-Returnable Gate Pass records.
-            </p>
-
-            <span class="status">
-                Database Pending
-            </span>
-
-        </a>
-
+        </div>
 
     </section>
 
 
-    <section class="upload-section">
+    <!-- PR PO -->
 
-        <h2>Upload New Report</h2>
+    <section class="category">
 
-        <p>
-            Upload PDF, Excel or CSV reports for processing.
-            Database connection will be added in the next stage.
-        </p>
+        <div class="category-title">
 
-        <a href="upload.html" class="upload-btn">
-            ⬆️ Upload Report
-        </a>
+            <div class="icon">
+                📋
+            </div>
+
+            <strong>
+                PR / PO Reports
+            </strong>
+
+        </div>
+
+
+        <div
+            id="pr-po"
+            class="report-list">
+
+            <div class="loading">
+                Loading reports...
+            </div>
+
+        </div>
 
     </section>
+
+
+    <!-- GRN -->
+
+    <section class="category">
+
+        <div class="category-title">
+
+            <div class="icon">
+                📦
+            </div>
+
+            <strong>
+                GRN Reports
+            </strong>
+
+        </div>
+
+
+        <div
+            id="grn"
+            class="report-list">
+
+            <div class="loading">
+                Loading reports...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STOCK -->
+
+    <section class="category">
+
+        <div class="category-title">
+
+            <div class="icon">
+                📊
+            </div>
+
+            <strong>
+                Stock Reports
+            </strong>
+
+        </div>
+
+
+        <div
+            id="stock"
+            class="report-list">
+
+            <div class="loading">
+                Loading reports...
+            </div>
+
+        </div>
+
+    </section>
+
 
 </main>
 
 
-<footer>
+<footer class="footer">
 
-    LP FM AI — Facility Management & Store Intelligence
+    LP-Store • Pharma Material & Facility Management Intelligence
 
 </footer>
 
+
+
+<script>
+
+/*
+==========================================================
+GITHUB SETTINGS
+==========================================================
+*/
+
+const GITHUB_USER =
+    "yaseeninoor";
+
+const GITHUB_REPO =
+    "lp-fm-ai";
+
+const GITHUB_BRANCH =
+    "main";
+
+
+/*
+==========================================================
+FOLDER LOCATIONS
+==========================================================
+*/
+
+const folders = {
+
+    "gate-entry":
+        "reports/gate-entry",
+
+    "pr-po":
+        "reports/pr-po",
+
+    "grn":
+        "reports/grn",
+
+    "stock":
+        "reports/stock"
+
+};
+
+
+/*
+==========================================================
+LOAD GITHUB FILES
+==========================================================
+*/
+
+async function loadReports(
+    elementId,
+    folder
+){
+
+    const container =
+        document.getElementById(elementId);
+
+
+    try {
+
+        const url =
+            `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${folder}?ref=${GITHUB_BRANCH}`;
+
+
+        const response =
+            await fetch(url);
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Unable to load reports"
+            );
+
+        }
+
+
+        const files =
+            await response.json();
+
+
+        container.innerHTML = "";
+
+
+        const pdfFiles =
+            files.filter(
+                file =>
+                file.type === "file" &&
+                file.name
+                .toLowerCase()
+                .endsWith(".pdf")
+            );
+
+
+        if(pdfFiles.length === 0){
+
+            container.innerHTML = `
+
+                <div class="empty"
+                     style="display:block">
+
+                    📂 No reports uploaded yet.
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        pdfFiles
+        .sort(
+            (a,b) =>
+            a.name.localeCompare(b.name)
+        )
+        .forEach(
+            file => {
+
+                const item =
+                    document.createElement("a");
+
+
+                item.className =
+                    "report";
+
+
+                item.href =
+                    file.html_url;
+
+
+                item.target =
+                    "_blank";
+
+
+                item.rel =
+                    "noopener";
+
+
+                item.innerHTML = `
+
+                    <div class="pdf-icon">
+                        PDF
+                    </div>
+
+                    <div class="report-info">
+
+                        <div class="report-name">
+
+                            ${escapeHtml(file.name)}
+
+                        </div>
+
+                        <div class="report-meta">
+
+                            GitHub • PDF Report
+
+                        </div>
+
+                    </div>
+
+                    <div class="open">
+                        →
+                    </div>
+
+                `;
+
+
+                container.appendChild(item);
+
+            }
+        );
+
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+
+        container.innerHTML = `
+
+            <div class="empty"
+                 style="display:block">
+
+                ⚠️ Unable to load reports.
+
+                <br><br>
+
+                Please check the GitHub folder.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/*
+==========================================================
+HTML SECURITY
+==========================================================
+*/
+
+function escapeHtml(text){
+
+    return text
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/*
+==========================================================
+LOAD ALL REPORT CATEGORIES
+==========================================================
+*/
+
+Object.entries(folders)
+.forEach(
+    ([id,folder]) => {
+
+        loadReports(
+            id,
+            folder
+        );
+
+    }
+);
+
+
+/*
+==========================================================
+SEARCH
+==========================================================
+*/
+
+document
+.getElementById("search")
+.addEventListener(
+    "input",
+    function(){
+
+        const keyword =
+            this.value
+            .toLowerCase()
+            .trim();
+
+
+        document
+        .querySelectorAll(".report")
+        .forEach(
+            report => {
+
+                const name =
+                    report
+                    .innerText
+                    .toLowerCase();
+
+
+                report.style.display =
+                    name.includes(keyword)
+                    ? "flex"
+                    : "none";
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+
 </body>
+
 </html>
