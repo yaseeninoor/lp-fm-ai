@@ -1,1128 +1,2168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#071426">
-
-    <title>LP-Store | Secure Login</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --blue: #1683ff;
-            --blue-dark: #075bc7;
-            --cyan: #22c7ff;
-            --dark: #061323;
-            --dark-card: #0d2239;
-            --text: #ffffff;
-            --muted: #91a8c0;
-            --green: #22c55e;
-        }
-
-        body {
-            min-height: 100vh;
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Arial,
-                sans-serif;
-
-            color: var(--text);
-
-            background:
-                radial-gradient(
-                    circle at 15% 15%,
-                    rgba(22,131,255,.28),
-                    transparent 32%
-                ),
-                radial-gradient(
-                    circle at 90% 85%,
-                    rgba(34,199,255,.14),
-                    transparent 30%
-                ),
-                linear-gradient(
-                    135deg,
-                    #03101f,
-                    #0a1d32 50%,
-                    #061321
-                );
-
-            overflow-x: hidden;
-        }
-
-        /* Background */
-
-        .background {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            opacity: .20;
-
-            background-image:
-                linear-gradient(
-                    rgba(255,255,255,.035) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,.035) 1px,
-                    transparent 1px
-                );
-
-            background-size: 44px 44px;
-        }
-
-        /* Header */
-
-        header {
-            position: relative;
-            z-index: 5;
-
-            height: 82px;
-            padding: 16px 30px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo {
-            width: 48px;
-            height: 48px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+<meta charset="UTF-8">
 
-            border-radius: 14px;
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--blue),
-                    var(--blue-dark)
-                );
+<meta name="theme-color" content="#06172b">
 
-            font-size: 18px;
-            font-weight: 900;
+<meta name="description"
+content="LP-Store - Pharmaceutical Material Intelligence & Facility Management Portal">
 
-            box-shadow:
-                0 8px 25px rgba(22,131,255,.35);
-        }
+<title>LP-Store | Home</title>
 
-        .brand-name {
-            font-size: 19px;
-            font-weight: 800;
-        }
+<style>
 
-        .brand-sub {
-            color: var(--muted);
-            font-size: 10px;
-            margin-top: 2px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .system-status {
-            display: flex;
-            align-items: center;
-            gap: 7px;
+html{
+    scroll-behavior:smooth;
+}
 
-            color: #a5bad0;
-            font-size: 11px;
-        }
+body{
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
 
-            background: var(--green);
+    background:
+    radial-gradient(
+        circle at 90% 0%,
+        rgba(0,120,255,.20),
+        transparent 30%
+    ),
+    radial-gradient(
+        circle at 0% 50%,
+        rgba(0,80,180,.18),
+        transparent 35%
+    ),
+    #03101f;
 
-            box-shadow:
-                0 0 12px rgba(34,197,94,.8);
-        }
+    color:#fff;
 
-        /* Main */
+    min-height:100vh;
 
-        main {
-            position: relative;
-            z-index: 2;
+    overflow-x:hidden;
+}
 
-            min-height:
-                calc(100vh - 82px);
+a{
+    text-decoration:none;
+    color:inherit;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+button,
+input{
+    font-family:inherit;
+}
 
-            padding: 20px 25px 45px;
-        }
 
-        .container {
-            width: 100%;
-            max-width: 1120px;
+/* =========================
+   HEADER
+========================= */
 
-            display: grid;
+header{
 
-            grid-template-columns:
-                minmax(0, 1fr)
-                420px;
+    position:sticky;
+    top:0;
+    z-index:999;
 
-            gap: 70px;
+    background:
+    rgba(3,15,30,.90);
 
-            align-items: center;
-        }
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
 
-        /* Hero */
+    border-bottom:
+    1px solid rgba(120,180,255,.12);
+}
 
-        .hero {
-            max-width: 600px;
-        }
+.nav{
 
-        .badge {
-            display: inline-block;
+    max-width:1250px;
 
-            padding: 8px 14px;
+    margin:auto;
 
-            border-radius: 30px;
+    min-height:78px;
 
-            color: #8bcaff;
+    padding:12px 20px;
 
-            background:
-                rgba(22,131,255,.10);
+    display:flex;
 
-            border:
-                1px solid rgba(80,170,255,.25);
+    align-items:center;
 
-            font-size: 10px;
-            font-weight: 700;
+    justify-content:space-between;
 
-            margin-bottom: 20px;
-        }
+    gap:15px;
+}
 
-        .hero h1 {
-            font-size: clamp(40px, 5vw, 62px);
+.brand{
 
-            line-height: 1.04;
+    display:flex;
 
-            letter-spacing: -2px;
+    align-items:center;
 
-            margin-bottom: 20px;
-        }
+    gap:12px;
+}
 
-        .hero h1 span {
-            color: #42a5ff;
-        }
+.logo{
 
-        .hero-description {
-            max-width: 560px;
+    width:52px;
+    height:52px;
 
-            color: #9db0c8;
+    border-radius:16px;
 
-            font-size: 15px;
+    display:flex;
 
-            line-height: 1.8;
+    align-items:center;
+    justify-content:center;
 
-            margin-bottom: 30px;
-        }
+    font-size:20px;
+    font-weight:900;
 
-        /* Modules */
+    background:
+    linear-gradient(
+        135deg,
+        #2294ff,
+        #0757d4
+    );
 
-        .modules {
-            display: grid;
+    box-shadow:
+    0 8px 30px rgba(0,120,255,.35);
+}
 
-            grid-template-columns:
-                repeat(3, 1fr);
+.brand h1{
 
-            gap: 10px;
+    font-size:20px;
 
-            max-width: 580px;
-        }
+    line-height:1;
+}
 
-        .module {
-            padding: 15px;
+.brand p{
 
-            border-radius: 12px;
+    color:#7891ad;
 
-            background:
-                rgba(255,255,255,.035);
+    font-size:11px;
 
-            border:
-                1px solid rgba(255,255,255,.09);
-        }
+    margin-top:5px;
+}
 
-        .module-icon {
-            font-size: 21px;
-            margin-bottom: 8px;
-        }
+.nav-right{
 
-        .module-title {
-            font-size: 11px;
-            font-weight: 700;
-        }
+    display:flex;
 
-        .module-text {
-            color: #718aa3;
-            font-size: 9px;
-            margin-top: 4px;
-        }
+    align-items:center;
 
-        /* Login card */
+    gap:9px;
+}
 
-        .login-card {
-            width: 100%;
+.nav-btn{
 
-            padding: 32px;
+    padding:10px 14px;
 
-            border-radius: 24px;
+    border-radius:11px;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(17,45,74,.95),
-                    rgba(5,18,34,.98)
-                );
+    color:#9db3ca;
 
-            border:
-                1px solid rgba(255,255,255,.13);
+    font-size:13px;
 
-            box-shadow:
-                0 30px 70px rgba(0,0,0,.45);
+    transition:.2s;
+}
 
-            backdrop-filter: blur(20px);
-        }
+.nav-btn:hover{
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+    background:
+    rgba(40,130,255,.12);
 
-        .login-icon {
-            width: 64px;
-            height: 64px;
+    color:white;
+}
 
-            margin: 0 auto 15px;
+.login{
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    background:
+    linear-gradient(
+        135deg,
+        #168aff,
+        #075cd8
+    );
 
-            border-radius: 18px;
+    color:white;
+}
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--blue),
-                    var(--blue-dark)
-                );
 
-            font-size: 27px;
+/* =========================
+   MAIN
+========================= */
 
-            box-shadow:
-                0 10px 30px
-                rgba(22,131,255,.30);
-        }
+.container{
 
-        .login-header h2 {
-            font-size: 23px;
-            margin-bottom: 5px;
-        }
+    max-width:1250px;
 
-        .login-header p {
-            color: #8197b0;
-            font-size: 12px;
-        }
+    margin:auto;
 
-        /* Form */
+    padding:
+    0 20px 70px;
+}
 
-        .form-group {
-            margin-bottom: 17px;
-        }
 
-        label {
-            display: block;
+/* =========================
+   HERO
+========================= */
 
-            color: #c9d6e5;
+.hero{
 
-            font-size: 12px;
-            font-weight: 700;
+    padding:
+    65px 0 45px;
 
-            margin-bottom: 7px;
-        }
+    display:grid;
 
-        .input-wrapper {
-            position: relative;
-        }
+    grid-template-columns:
+    1.1fr .9fr;
 
-        .input-icon {
-            position: absolute;
+    gap:35px;
 
-            left: 14px;
-            top: 50%;
+    align-items:center;
+}
 
-            transform:
-                translateY(-50%);
+.badge{
 
-            opacity: .65;
-        }
+    display:inline-flex;
 
-        input {
-            width: 100%;
-            height: 49px;
+    align-items:center;
 
-            padding:
-                0 14px 0 43px;
+    gap:8px;
 
-            border-radius: 10px;
+    padding:9px 14px;
 
-            border:
-                1px solid rgba(255,255,255,.12);
+    border-radius:999px;
 
-            background:
-                rgba(255,255,255,.055);
+    background:
+    rgba(20,120,255,.10);
 
-            color: white;
+    border:
+    1px solid rgba(50,150,255,.30);
 
-            font-size: 13px;
+    color:#80c2ff;
 
-            outline: none;
-        }
+    font-size:12px;
 
-        input::placeholder {
-            color: #607993;
-        }
+    font-weight:700;
 
-        input:focus {
-            border-color: #2588ff;
+    letter-spacing:.4px;
 
-            box-shadow:
-                0 0 0 3px
-                rgba(37,136,255,.12);
-        }
+    margin-bottom:20px;
+}
 
-        /* Login button */
+.dot{
 
-        .login-button {
-            width: 100%;
-            height: 50px;
+    width:8px;
+    height:8px;
 
-            border: none;
-            border-radius: 10px;
+    border-radius:50%;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--blue),
-                    var(--blue-dark)
-                );
+    background:#35a2ff;
 
-            color: white;
+    box-shadow:
+    0 0 12px #35a2ff;
+}
 
-            font-size: 13px;
-            font-weight: 800;
+.hero h2{
 
-            cursor: pointer;
+    font-size:
+    clamp(40px,6vw,70px);
 
-            margin-top: 4px;
+    line-height:1;
 
-            transition: .2s;
-        }
+    letter-spacing:-3px;
 
-        .login-button:hover {
-            transform: translateY(-1px);
-        }
+    margin-bottom:22px;
+}
 
-        .login-button:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-            transform: none;
-        }
+.blue{
 
-        /* Message */
+    background:
+    linear-gradient(
+        90deg,
+        #299aff,
+        #79c8ff
+    );
 
-        .message {
-            display: none;
+    -webkit-background-clip:text;
 
-            margin-top: 15px;
+    background-clip:text;
 
-            padding: 12px;
+    color:transparent;
+}
 
-            border-radius: 9px;
+.hero-text{
 
-            font-size: 11px;
+    color:#8ba4bf;
 
-            line-height: 1.5;
-        }
+    max-width:680px;
 
-        .message.error {
-            display: block;
+    line-height:1.8;
 
-            color: #ffaaaa;
+    font-size:16px;
 
-            background:
-                rgba(239,68,68,.10);
+    margin-bottom:25px;
+}
 
-            border:
-                1px solid rgba(239,68,68,.25);
-        }
+.hero-actions{
 
-        .message.success {
-            display: block;
+    display:flex;
 
-            color: #91e8aa;
+    flex-wrap:wrap;
 
-            background:
-                rgba(34,197,94,.10);
+    gap:10px;
+}
 
-            border:
-                1px solid rgba(34,197,94,.25);
-        }
+.primary{
 
-        .security {
-            text-align: center;
+    padding:14px 19px;
 
-            margin-top: 20px;
-            padding-top: 17px;
+    border-radius:13px;
 
-            border-top:
-                1px solid rgba(255,255,255,.08);
+    background:
+    linear-gradient(
+        135deg,
+        #198cff,
+        #075bd5
+    );
 
-            color: #637b95;
+    font-weight:800;
 
-            font-size: 10px;
+    box-shadow:
+    0 10px 28px rgba(0,110,255,.22);
+}
 
-            line-height: 1.7;
-        }
+.secondary{
 
-        .back {
-            display: block;
+    padding:14px 19px;
 
-            text-align: center;
+    border-radius:13px;
 
-            margin-top: 14px;
+    border:
+    1px solid rgba(130,180,230,.20);
 
-            color: #7d95ae;
+    background:
+    rgba(255,255,255,.04);
 
-            text-decoration: none;
+    color:#b7c9dc;
 
-            font-size: 11px;
-        }
+    font-weight:700;
+}
 
-        .back:hover {
-            color: #4da7ff;
-        }
 
-        /* Responsive */
+/* =========================
+   HERO PANEL
+========================= */
 
-        @media (max-width: 850px) {
+.hero-panel{
 
-            .container {
-                grid-template-columns: 1fr;
-                max-width: 450px;
-            }
+    padding:22px;
 
-            .hero {
-                display: none;
-            }
-        }
+    border-radius:27px;
 
-        @media (max-width: 600px) {
+    background:
+    linear-gradient(
+        145deg,
+        rgba(20,65,110,.85),
+        rgba(5,25,47,.90)
+    );
 
-            header {
-                padding: 17px 16px;
-            }
+    border:
+    1px solid rgba(120,190,255,.16);
 
-            .system-status {
-                display: none;
-            }
+    box-shadow:
+    0 30px 80px rgba(0,0,0,.35);
+}
 
-            main {
-                padding: 10px 14px 30px;
-            }
+.panel-top{
 
-            .login-card {
-                padding: 27px 20px;
-                border-radius: 21px;
-            }
-        }
+    display:flex;
 
-    </style>
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding-bottom:18px;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.08);
+}
+
+.online{
+
+    color:#62e8a2;
+
+    font-size:11px;
+
+    padding:7px 10px;
+
+    border-radius:9px;
+
+    background:
+    rgba(50,200,120,.08);
+}
+
+.hero-stats{
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:10px;
+
+    margin-top:15px;
+}
+
+.hero-stat{
+
+    padding:17px;
+
+    border-radius:16px;
+
+    background:
+    rgba(255,255,255,.045);
+
+    border:
+    1px solid rgba(255,255,255,.06);
+}
+
+.hero-stat span{
+
+    color:#8099b4;
+
+    font-size:11px;
+}
+
+.hero-stat strong{
+
+    display:block;
+
+    font-size:26px;
+
+    margin-top:5px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+
+    margin-top:50px;
+}
+
+.section-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:end;
+
+    margin-bottom:18px;
+}
+
+.section-title h3{
+
+    font-size:25px;
+}
+
+.section-title p{
+
+    color:#718ba6;
+
+    font-size:12px;
+
+    margin-top:5px;
+}
+
+.view{
+
+    color:#58adff;
+
+    font-size:13px;
+}
+
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:14px;
+}
+
+.stat-card{
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(18,55,92,.72),
+        rgba(7,27,49,.72)
+    );
+
+    border:
+    1px solid rgba(120,180,240,.12);
+
+    transition:.25s;
+}
+
+.stat-card:hover{
+
+    transform:
+    translateY(-4px);
+
+    border-color:
+    rgba(60,160,255,.35);
+}
+
+.stat-icon{
+
+    width:47px;
+    height:47px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+    rgba(30,130,255,.13);
+
+    font-size:22px;
+
+    margin-bottom:15px;
+}
+
+.stat-card strong{
+
+    display:block;
+
+    font-size:30px;
+}
+
+.stat-card span{
+
+    display:block;
+
+    color:#7891ac;
+
+    font-size:12px;
+
+    margin-top:4px;
+}
+
+.stat-change{
+
+    color:#61dca0;
+
+    font-size:11px;
+
+    margin-top:12px;
+}
+
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:14px;
+}
+
+.quick{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:19px;
+
+    border-radius:18px;
+
+    background:
+    rgba(14,48,82,.55);
+
+    border:
+    1px solid rgba(120,180,240,.12);
+
+    transition:.25s;
+}
+
+.quick:hover{
+
+    transform:
+    translateY(-4px);
+
+    background:
+    rgba(20,65,110,.65);
+}
+
+.quick-icon{
+
+    width:51px;
+    height:51px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:15px;
+
+    background:
+    rgba(25,130,255,.13);
+
+    font-size:23px;
+}
+
+.quick h4{
+
+    font-size:15px;
+
+    margin-bottom:4px;
+}
+
+.quick p{
+
+    color:#7891ac;
+
+    font-size:11px;
+}
+
+
+/* =========================
+   REPORT CATEGORIES
+========================= */
+
+.category-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:14px;
+}
+
+.category{
+
+    padding:22px;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(18,53,87,.65),
+        rgba(6,26,47,.75)
+    );
+
+    border:
+    1px solid rgba(120,180,240,.11);
+}
+
+.category-icon{
+
+    font-size:28px;
+
+    margin-bottom:15px;
+}
+
+.category h4{
+
+    font-size:16px;
+
+    margin-bottom:6px;
+}
+
+.category p{
+
+    color:#7891aa;
+
+    font-size:11px;
+
+    line-height:1.6;
+}
+
+.category-link{
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    color:#55aaff;
+
+    font-size:11px;
+}
+
+
+/* =========================
+   RECENT REPORTS
+========================= */
+
+.reports-box{
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    background:
+    rgba(9,35,62,.65);
+
+    border:
+    1px solid rgba(120,180,240,.12);
+}
+
+.report{
+
+    display:grid;
+
+    grid-template-columns:
+    55px 1fr auto;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:17px 20px;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.06);
+}
+
+.report:last-child{
+    border-bottom:0;
+}
+
+.file-icon{
+
+    width:45px;
+    height:45px;
+
+    border-radius:13px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+    rgba(30,130,255,.12);
+
+    font-size:21px;
+}
+
+.report h4{
+
+    font-size:14px;
+
+    margin-bottom:5px;
+
+    word-break:break-word;
+}
+
+.report p{
+
+    color:#7189a3;
+
+    font-size:10px;
+}
+
+.report-btn{
+
+    padding:9px 13px;
+
+    border-radius:9px;
+
+    color:#7ebdff;
+
+    background:
+    rgba(30,130,255,.08);
+
+    border:
+    1px solid rgba(50,150,255,.15);
+
+    font-size:11px;
+}
+
+
+/* =========================
+   WORKFLOW
+========================= */
+
+.workflow{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:10px;
+}
+
+.step{
+
+    text-align:center;
+
+    padding:23px 14px;
+
+    border-radius:18px;
+
+    background:
+    rgba(12,43,73,.55);
+
+    border:
+    1px solid rgba(120,180,240,.10);
+
+    position:relative;
+}
+
+.step-number{
+
+    width:36px;
+    height:36px;
+
+    margin:
+    0 auto 12px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #168cff,
+        #0759d1
+    );
+
+    font-weight:900;
+
+    font-size:13px;
+}
+
+.step h4{
+
+    font-size:14px;
+
+    margin-bottom:5px;
+}
+
+.step p{
+
+    color:#7089a3;
+
+    font-size:10px;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+.security{
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:15px;
+}
+
+.security-card{
+
+    padding:25px;
+
+    border-radius:22px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(12,62,105,.75),
+        rgba(5,28,50,.8)
+    );
+
+    border:
+    1px solid rgba(70,165,255,.16);
+}
+
+.security-card h3{
+
+    font-size:22px;
+
+    margin-bottom:10px;
+}
+
+.security-card p{
+
+    color:#829bb5;
+
+    line-height:1.7;
+
+    font-size:13px;
+}
+
+.security-list{
+
+    display:grid;
+
+    gap:9px;
+
+    margin-top:17px;
+}
+
+.security-list div{
+
+    padding:11px 13px;
+
+    border-radius:10px;
+
+    background:
+    rgba(255,255,255,.04);
+
+    color:#b8cce0;
+
+    font-size:12px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    margin-top:70px;
+
+    border-top:
+    1px solid rgba(120,180,240,.10);
+
+    background:
+    rgba(1,8,17,.80);
+}
+
+.footer-inner{
+
+    max-width:1250px;
+
+    margin:auto;
+
+    padding:
+    30px 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+.footer-logo{
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.footer p{
+
+    color:#607995;
+
+    font-size:11px;
+
+    margin-top:5px;
+}
+
+.footer-links{
+
+    display:flex;
+
+    gap:15px;
+}
+
+.footer-links a{
+
+    color:#7992ac;
+
+    font-size:11px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:950px){
+
+    .hero{
+
+        grid-template-columns:1fr;
+    }
+
+    .stats-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .category-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .workflow{
+
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .security{
+
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:650px){
+
+    .nav{
+
+        padding:10px 14px;
+    }
+
+    .nav-btn:not(.login){
+
+        display:none;
+    }
+
+    .container{
+
+        padding:
+        0 14px 50px;
+    }
+
+    .hero{
+
+        padding-top:45px;
+    }
+
+    .hero h2{
+
+        font-size:43px;
+
+        letter-spacing:-2px;
+    }
+
+    .hero-text{
+
+        font-size:14px;
+    }
+
+    .hero-actions{
+
+        flex-direction:column;
+    }
+
+    .primary,
+    .secondary{
+
+        text-align:center;
+
+        width:100%;
+    }
+
+    .stats-grid{
+
+        grid-template-columns:
+        1fr 1fr;
+
+        gap:10px;
+    }
+
+    .stat-card{
+
+        padding:16px;
+    }
+
+    .stat-card strong{
+
+        font-size:25px;
+    }
+
+    .quick-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .category-grid{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .workflow{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .report{
+
+        grid-template-columns:
+        45px 1fr;
+
+        gap:11px;
+    }
+
+    .report-btn{
+
+        grid-column:2;
+
+        width:max-content;
+    }
+
+    .footer-inner{
+
+        flex-direction:column;
+
+        text-align:center;
+    }
+}
+
+@media(max-width:390px){
+
+    .category-grid,
+    .workflow{
+
+        grid-template-columns:1fr;
+    }
+
+    .stats-grid{
+
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+</style>
+
 </head>
 
 
 <body>
 
-<div class="background"></div>
 
-
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
-    <div class="brand">
+<nav class="nav">
 
-        <div class="logo">
-            LP
-        </div>
+<a href="index.html"
+class="brand">
 
-        <div>
+<div class="logo">
+LP
+</div>
 
-            <div class="brand-name">
-                LP-Store
-            </div>
+<div>
 
-            <div class="brand-sub">
-                Pharma Material Intelligence
-            </div>
+<h1>LP-Store</h1>
 
-        </div>
+<p>
+Pharma Material Intelligence
+</p>
 
-    </div>
+</div>
+
+</a>
 
 
-    <div class="system-status">
+<div class="nav-right">
 
-        <span class="status-dot"></span>
+<a href="dashboard.html"
+class="nav-btn">
+Dashboard
+</a>
 
-        Secure System
+<a href="reports.html"
+class="nav-btn">
+Reports
+</a>
 
-    </div>
+<a href="login.html"
+class="nav-btn login">
+🔐 Login
+</a>
+
+</div>
+
+</nav>
 
 </header>
 
 
-<!-- MAIN -->
 
-<main>
+<main class="container">
 
-<div class="container">
 
+<!-- =========================
+     HERO
+========================= -->
 
-    <!-- LEFT -->
+<section class="hero">
 
-    <section class="hero">
+<div>
 
-        <div class="badge">
-            📦 MATERIAL INVENTORY MANAGEMENT
-        </div>
+<div class="badge">
 
+<span class="dot"></span>
 
-        <h1>
-
-            Smart Store.
-            <br>
-
-            <span>Smarter Inventory.</span>
-
-        </h1>
-
-
-        <p class="hero-description">
-
-            Centralized Facility Management and Store
-            Intelligence platform for pharmaceutical
-            materials, inventory, procurement and reports.
-
-        </p>
-
-
-        <div class="modules">
-
-            <div class="module">
-
-                <div class="module-icon">
-                    📦
-                </div>
-
-                <div class="module-title">
-                    Stock
-                </div>
-
-                <div class="module-text">
-                    Current Inventory
-                </div>
-
-            </div>
-
-
-            <div class="module">
-
-                <div class="module-icon">
-                    📋
-                </div>
-
-                <div class="module-title">
-                    PR / PO
-                </div>
-
-                <div class="module-text">
-                    Procurement
-                </div>
-
-            </div>
-
-
-            <div class="module">
-
-                <div class="module-icon">
-                    📥
-                </div>
-
-                <div class="module-title">
-                    GRN
-                </div>
-
-                <div class="module-text">
-                    Goods Receipt
-                </div>
-
-            </div>
-
-
-            <div class="module">
-
-                <div class="module-icon">
-                    🚪
-                </div>
-
-                <div class="module-title">
-                    Gate Entry
-                </div>
-
-                <div class="module-text">
-                    Material Movement
-                </div>
-
-            </div>
-
-
-            <div class="module">
-
-                <div class="module-icon">
-                    🔄
-                </div>
-
-                <div class="module-title">
-                    RGP / NRGP
-                </div>
-
-                <div class="module-text">
-                    Gate Pass
-                </div>
-
-            </div>
-
-
-            <div class="module">
-
-                <div class="module-icon">
-                    🤖
-                </div>
-
-                <div class="module-title">
-                    AI Assistant
-                </div>
-
-                <div class="module-text">
-                    Smart Reports
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- LOGIN -->
-
-    <section class="login-card">
-
-        <div class="login-header">
-
-            <div class="login-icon">
-                🔐
-            </div>
-
-            <h2>
-                Welcome Back
-            </h2>
-
-            <p>
-                Sign in to LP-Store
-            </p>
-
-        </div>
-
-
-        <form id="loginForm">
-
-            <div class="form-group">
-
-                <label for="email">
-                    Email Address
-                </label>
-
-                <div class="input-wrapper">
-
-                    <span class="input-icon">
-                        ✉️
-                    </span>
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        autocomplete="username"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <div class="input-wrapper">
-
-                    <span class="input-icon">
-                        🔑
-                    </span>
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        autocomplete="current-password"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <button
-                type="submit"
-                id="loginButton"
-                class="login-button">
-
-                Sign In to LP-Store
-
-            </button>
-
-        </form>
-
-
-        <div id="message" class="message"></div>
-
-
-        <div class="security">
-
-            🔒 Secure Firebase Authentication
-
-            <br>
-
-            Authorized Facility Management users only
-
-        </div>
-
-
-        <a href="index.html" class="back">
-            ← Back to LP-Store
-        </a>
-
-    </section>
+🏭 FACILITY MANAGEMENT
+&nbsp;•&nbsp;
+SECURE PORTAL
 
 </div>
+
+
+<h2>
+
+Welcome to
+
+<span class="blue">
+LP-Store
+</span>
+
+</h2>
+
+
+<p class="hero-text">
+
+Centralized pharmaceutical material inventory,
+procurement, warehouse reports and Facility
+Management intelligence — designed to keep
+your daily operations organized, accessible
+and digital.
+
+</p>
+
+
+<div class="hero-actions">
+
+<a href="dashboard.html"
+class="primary">
+
+📊 Open Dashboard
+
+</a>
+
+<a href="upload.html"
+class="secondary">
+
+📤 Upload Report
+
+</a>
+
+</div>
+
+</div>
+
+
+<div class="hero-panel">
+
+<div class="panel-top">
+
+<strong>
+LP-Store Overview
+</strong>
+
+<span class="online">
+● SYSTEM ONLINE
+</span>
+
+</div>
+
+
+<div class="hero-stats">
+
+<div class="hero-stat">
+
+<span>
+📁 REPORTS
+</span>
+
+<strong>
+01+
+</strong>
+
+</div>
+
+
+<div class="hero-stat">
+
+<span>
+📦 MATERIAL
+</span>
+
+<strong>
+01+
+</strong>
+
+</div>
+
+
+<div class="hero-stat">
+
+<span>
+🏭 FM MODULES
+</span>
+
+<strong>
+06
+</strong>
+
+</div>
+
+
+<div class="hero-stat">
+
+<span>
+🔐 ACCESS
+</span>
+
+<strong>
+SECURE
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     DASHBOARD SUMMARY
+========================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div>
+
+<h3>
+Dashboard Overview
+</h3>
+
+<p>
+LP-Store operational summary
+</p>
+
+</div>
+
+<a href="dashboard.html"
+class="view">
+View Dashboard →
+</a>
+
+</div>
+
+
+<div class="stats-grid">
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+📋
+</div>
+
+<strong>
+01+
+</strong>
+
+<span>
+Total Reports
+</span>
+
+<div class="stat-change">
+● Digital Records
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+🚪
+</div>
+
+<strong>
+01+
+</strong>
+
+<span>
+Gate Entry Reports
+</span>
+
+<div class="stat-change">
+● Available
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+📦
+</div>
+
+<strong>
+01+
+</strong>
+
+<span>
+Material Records
+</span>
+
+<div class="stat-change">
+● Inventory
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">
+📊
+</div>
+
+<strong>
+100%
+</strong>
+
+<span>
+Digital Portal
+</span>
+
+<div class="stat-change">
+● Active
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     QUICK ACTIONS
+========================= -->
+
+<section class="section"
+id="actions">
+
+<div class="section-title">
+
+<div>
+
+<h3>
+Quick Actions
+</h3>
+
+<p>
+Frequently used LP-Store functions
+</p>
+
+</div>
+
+</div>
+
+
+<div class="quick-grid">
+
+
+<a href="upload.html"
+class="quick">
+
+<div class="quick-icon">
+📤
+</div>
+
+<div>
+
+<h4>
+Upload Report
+</h4>
+
+<p>
+Add a new Facility Management report
+</p>
+
+</div>
+
+</a>
+
+
+<a href="reports.html"
+class="quick">
+
+<div class="quick-icon">
+📋
+</div>
+
+<div>
+
+<h4>
+View Reports
+</h4>
+
+<p>
+Browse uploaded reports
+</p>
+
+</div>
+
+</a>
+
+
+<a href="dashboard.html"
+class="quick">
+
+<div class="quick-icon">
+📊
+</div>
+
+<div>
+
+<h4>
+Dashboard
+</h4>
+
+<p>
+View complete portal overview
+</p>
+
+</div>
+
+</a>
+
+
+<a href="reports.html"
+class="quick">
+
+<div class="quick-icon">
+🚪
+</div>
+
+<div>
+
+<h4>
+Gate Entry
+</h4>
+
+<p>
+Gate entry documentation
+</p>
+
+</div>
+
+</a>
+
+
+<a href="reports.html"
+class="quick">
+
+<div class="quick-icon">
+📑
+</div>
+
+<div>
+
+<h4>
+PR / PO
+</h4>
+
+<p>
+Procurement records
+</p>
+
+</div>
+
+</a>
+
+
+<a href="reports.html"
+class="quick">
+
+<div class="quick-icon">
+📈
+</div>
+
+<div>
+
+<h4>
+Analytics
+</h4>
+
+<p>
+Reports and intelligence
+</p>
+
+</div>
+
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     REPORT CATEGORIES
+========================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div>
+
+<h3>
+Report Categories
+</h3>
+
+<p>
+Organized Facility Management records
+</p>
+
+</div>
+
+<a href="reports.html"
+class="view">
+All Reports →
+</a>
+
+</div>
+
+
+<div class="category-grid">
+
+
+<div class="category">
+
+<div class="category-icon">
+🚪
+</div>
+
+<h4>
+Gate Entry Reports
+</h4>
+
+<p>
+Gate entry and access-related
+Facility Management reports.
+</p>
+
+<a href="reports.html"
+class="category-link">
+Open Reports →
+</a>
+
+</div>
+
+
+<div class="category">
+
+<div class="category-icon">
+📑
+</div>
+
+<h4>
+PR / PO Reports
+</h4>
+
+<p>
+Purchase requisition and purchase
+order documentation.
+</p>
+
+<a href="reports.html"
+class="category-link">
+Open Reports →
+</a>
+
+</div>
+
+
+<div class="category">
+
+<div class="category-icon">
+📦
+</div>
+
+<h4>
+Material Stock
+</h4>
+
+<p>
+Material inventory and stock-related
+records.
+</p>
+
+<a href="reports.html"
+class="category-link">
+Open Stock →
+</a>
+
+</div>
+
+
+<div class="category">
+
+<div class="category-icon">
+🏭
+</div>
+
+<h4>
+Facility Management
+</h4>
+
+<p>
+Operational and facility management
+documentation.
+</p>
+
+<a href="reports.html"
+class="category-link">
+Open FM →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     RECENT REPORTS
+========================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div>
+
+<h3>
+Recent Reports
+</h3>
+
+<p>
+Latest available documents
+</p>
+
+</div>
+
+<a href="reports.html"
+class="view">
+View All →
+</a>
+
+</div>
+
+
+<div class="reports-box">
+
+
+<div class="report">
+
+<div class="file-icon">
+📄
+</div>
+
+<div>
+
+<h4>
+Gate entry from 01.07.2026 to 31.07.2026.pdf
+</h4>
+
+<p>
+Gate Entry • PDF • 119.9 KB
+</p>
+
+</div>
+
+<a href="reports.html"
+class="report-btn">
+View
+</a>
+
+</div>
+
+
+<div class="report">
+
+<div class="file-icon">
+📄
+</div>
+
+<div>
+
+<h4>
+July Month Gate Entry
+</h4>
+
+<p>
+Gate Entry • July 2026
+</p>
+
+</div>
+
+<a href="reports.html"
+class="report-btn">
+View
+</a>
+
+</div>
+
+
+<div class="report">
+
+<div class="file-icon">
+📁
+</div>
+
+<div>
+
+<h4>
+More reports will appear here
+</h4>
+
+<p>
+Upload new reports from Upload Report
+</p>
+
+</div>
+
+<a href="upload.html"
+class="report-btn">
+Upload
+</a>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     WORKFLOW
+========================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div>
+
+<h3>
+How LP-Store Works
+</h3>
+
+<p>
+Simple digital workflow
+</p>
+
+</div>
+
+</div>
+
+
+<div class="workflow">
+
+
+<div class="step">
+
+<div class="step-number">
+1
+</div>
+
+<h4>
+Upload
+</h4>
+
+<p>
+Upload your Facility Management report.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+2
+</div>
+
+<h4>
+Organize
+</h4>
+
+<p>
+Reports are organized by category.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+3
+</div>
+
+<h4>
+View
+</h4>
+
+<p>
+Open reports anytime from the portal.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="step-number">
+4
+</div>
+
+<h4>
+Manage
+</h4>
+
+<p>
+Maintain your digital FM information.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     SECURITY
+========================= -->
+
+<section class="section">
+
+<div class="security">
+
+
+<div class="security-card">
+
+<div class="badge">
+🔒 SECURE PORTAL
+</div>
+
+<h3>
+Controlled Digital Workspace
+</h3>
+
+<p>
+LP-Store provides a centralized digital
+workspace for Facility Management,
+material records and operational reports.
+</p>
+
+<div class="security-list">
+
+<div>
+🔐 Authorized access
+</div>
+
+<div>
+📁 Organized documents
+</div>
+
+<div>
+📱 Mobile optimized
+</div>
+
+<div>
+🌐 Accessible from anywhere
+</div>
+
+</div>
+
+</div>
+
+
+<div class="security-card">
+
+<div class="badge">
+🏭 FACILITY MANAGEMENT
+</div>
+
+<h3>
+One Portal. All Operations.
+</h3>
+
+<p>
+Keep your important Facility Management
+information organized and easy to access
+through one professional portal.
+</p>
+
+<div class="security-list">
+
+<div>
+📦 Material Inventory
+</div>
+
+<div>
+🚪 Gate Entry
+</div>
+
+<div>
+📑 PR / PO Records
+</div>
+
+<div>
+📊 Reports & Analytics
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
 
 </main>
 
 
-<!-- =====================================================
-     FIREBASE
-===================================================== -->
 
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<!-- =========================
+     FOOTER
+========================= -->
 
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<footer>
 
+<div class="footer-inner">
 
-<script>
+<div>
 
-const firebaseConfig = {
+<div class="footer-logo">
+LP-Store
+</div>
 
-    apiKey:
-        "AIzaSyBDzbv1fTRPxfjm3Nz4svl7ALWWARBuY0o",
+<p>
+Pharma Material Intelligence
+</p>
 
-    authDomain:
-        "lp-store-23212.firebaseapp.com",
+<p>
+© 2026 LP-Store • Facility Management Portal
+</p>
 
-    projectId:
-        "lp-store-23212",
+</div>
 
-    storageBucket:
-        "lp-store-23212.firebasestorage.app",
 
-    messagingSenderId:
-        "200245726085",
+<div class="footer-links">
 
-    appId:
-        "1:200245726085:web:081aa1315c64e5b4bc12ec",
+<a href="index.html">
+Home
+</a>
 
-    measurementId:
-        "G-21VPLM3N6S"
-};
+<a href="dashboard.html">
+Dashboard
+</a>
 
+<a href="upload.html">
+Upload
+</a>
 
-/* Initialize Firebase */
+<a href="reports.html">
+Reports
+</a>
 
-firebase.initializeApp(firebaseConfig);
+<a href="login.html">
+Login
+</a>
 
-const auth = firebase.auth();
+</div>
 
+</div>
 
-/* Elements */
+</footer>
 
-const loginForm =
-    document.getElementById("loginForm");
-
-const loginButton =
-    document.getElementById("loginButton");
-
-const message =
-    document.getElementById("message");
-
-
-/* Check existing session */
-
-auth.onAuthStateChanged(function(user) {
-
-    if (user) {
-
-        window.location.href =
-            "dashboard.html";
-
-    }
-
-});
-
-
-/* Login */
-
-loginForm.addEventListener(
-    "submit",
-    async function(event) {
-
-        event.preventDefault();
-
-
-        const email =
-            document
-            .getElementById("email")
-            .value
-            .trim();
-
-
-        const password =
-            document
-            .getElementById("password")
-            .value;
-
-
-        if (!email || !password) {
-
-            showMessage(
-                "Please enter your email and password.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        loginButton.disabled = true;
-
-        loginButton.textContent =
-            "Signing in...";
-
-        hideMessage();
-
-
-        try {
-
-            await auth.signInWithEmailAndPassword(
-                email,
-                password
-            );
-
-
-            showMessage(
-                "Login successful. Opening LP-Store...",
-                "success"
-            );
-
-
-            setTimeout(function() {
-
-                window.location.href =
-                    "dashboard.html";
-
-            }, 700);
-
-
-        } catch (error) {
-
-            console.error(
-                "Firebase Authentication Error:",
-                error
-            );
-
-
-            let text =
-                "Login failed.";
-
-
-            switch (error.code) {
-
-                case "auth/invalid-credential":
-
-                    text =
-                        "Invalid email or password.";
-
-                    break;
-
-
-                case "auth/user-not-found":
-
-                    text =
-                        "User not found.";
-
-                    break;
-
-
-                case "auth/wrong-password":
-
-                    text =
-                        "Incorrect password.";
-
-                    break;
-
-
-                case "auth/invalid-email":
-
-                    text =
-                        "Invalid email address.";
-
-                    break;
-
-
-                case "auth/user-disabled":
-
-                    text =
-                        "This account is disabled.";
-
-                    break;
-
-
-                case "auth/too-many-requests":
-
-                    text =
-                        "Too many attempts. Please try again later.";
-
-                    break;
-
-
-                case "auth/operation-not-allowed":
-
-                    text =
-                        "Email/Password authentication is not enabled in Firebase.";
-
-                    break;
-
-
-                case "auth/network-request-failed":
-
-                    text =
-                        "Network connection failed.";
-
-                    break;
-
-
-                case "auth/api-key-not-valid":
-
-                    text =
-                        "Firebase API key is not valid for this project.";
-
-                    break;
-
-
-                default:
-
-                    text =
-                        error.code +
-                        " - " +
-                        error.message;
-
-                    break;
-            }
-
-
-            showMessage(
-                text,
-                "error"
-            );
-
-
-            loginButton.disabled = false;
-
-            loginButton.textContent =
-                "Sign In to LP-Store";
-
-        }
-
-    }
-);
-
-
-/* Messages */
-
-function showMessage(text, type) {
-
-    message.textContent = text;
-
-    message.className =
-        "message " + type;
-}
-
-
-function hideMessage() {
-
-    message.textContent = "";
-
-    message.className =
-        "message";
-}
-
-</script>
 
 </body>
 </html>
