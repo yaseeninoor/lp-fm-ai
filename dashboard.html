@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#071a2f">
+
+<title>LP-Store | Facility Management Dashboard</title>
+
+<style>
+
+*{
+
+    box-sizing:border-box;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+:root{
+
+    --blue:#1677ff;
+
+    --blue2:#075dcc;
+
+    --cyan:#18c8ff;
+
+    --green:#22c55e;
+
+    --orange:#f59e0b;
+
+    --red:#ef4444;
+
+    --dark:#061426;
+
+    --dark2:#0a1d32;
+
+    --dark3:#102b46;
+
+    --white:#fff;
+
+    --muted:#91a8c2;
+
+    --border:rgba(255,255,255,.10);
+
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+
+        -apple-system,
+
+        BlinkMacSystemFont,
+
+        "Segoe UI",
+
+        Roboto,
+
+        Arial,
+
+        sans-serif;
+
+    color:var(--white);
+
+    background:
+
+        radial-gradient(
+
+            circle at 10% 10%,
+
+            rgba(22,119,255,.20),
+
+            transparent 28%
+
+        ),
+
+        radial-gradient(
+
+            circle at 90% 90%,
+
+            rgba(24,200,255,.10),
+
+            transparent 30%
+
+        ),
+
+        linear-gradient(
+
+            135deg,
+
+            #04101f,
+
+            #081d34 50%,
+
+            #041321
+
+        );
+
+}
+
+button{
+
+    font-family:inherit;
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+/* ==============================
+
+   SIDEBAR
+
+============================== */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    bottom:0;
+
+    width:250px;
+
+    background:
+
+        rgba(5,19,35,.97);
+
+    border-right:
+
+        1px solid var(--border);
+
+    z-index:20;
+
+    padding:20px 15px;
+
+    transition:.25s;
+
+}
+
+.sidebar-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    padding:5px 10px 24px;
+
+}
+
+.logo{
+
+    width:43px;
+
+    height:43px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #2188ff,
+
+            #0758c8
+
+        );
+
+    font-size:16px;
+
+    font-weight:900;
+
+}
+
+.brand-title{
+
+    font-weight:800;
+
+    font-size:17px;
+
+}
+
+.brand-sub{
+
+    color:#718ba6;
+
+    font-size:9px;
+
+    margin-top:2px;
+
+}
+
+.menu-title{
+
+    color:#526b84;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    padding:
+
+        15px 12px 8px;
+
+}
+
+.nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+}
+
+.nav button{
+
+    width:100%;
+
+    border:0;
+
+    background:transparent;
+
+    color:#9bb0c5;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    text-align:left;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.nav button:hover,
+
+.nav button.active{
+
+    background:
+
+        rgba(22,119,255,.15);
+
+    color:#fff;
+
+}
+
+.nav-icon{
+
+    display:inline-block;
+
+    width:28px;
+
+    font-size:16px;
+
+}
+
+.sidebar-bottom{
+
+    position:absolute;
+
+    left:15px;
+
+    right:15px;
+
+    bottom:20px;
+
+}
+
+/* ==============================
+
+   MAIN
+
+============================== */
+
+.main{
+
+    margin-left:250px;
+
+    min-height:100vh;
+
+}
+
+/* ==============================
+
+   TOPBAR
+
+============================== */
+
+.topbar{
+
+    height:72px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+
+        0 28px;
+
+    border-bottom:
+
+        1px solid var(--border);
+
+    background:
+
+        rgba(6,20,38,.75);
+
+    backdrop-filter:blur(15px);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:10;
+
+}
+
+.page-title h1{
+
+    font-size:20px;
+
+}
+
+.page-title p{
+
+    color:#6f879f;
+
+    font-size:10px;
+
+    margin-top:3px;
+
+}
+
+.user-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.status{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#8fa7be;
+
+    font-size:10px;
+
+}
+
+.status-dot{
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:
+
+        0 0 10px
+
+        rgba(34,197,94,.7);
+
+}
+
+.user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+
+        7px 10px;
+
+    border:
+
+        1px solid var(--border);
+
+    border-radius:10px;
+
+    background:
+
+        rgba(255,255,255,.035);
+
+}
+
+.avatar{
+
+    width:30px;
+
+    height:30px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #2188ff,
+
+            #0758c8
+
+        );
+
+    font-size:11px;
+
+    font-weight:800;
+
+}
+
+.user-email{
+
+    color:#c4d2e1;
+
+    font-size:10px;
+
+}
+
+/* ==============================
+
+   CONTENT
+
+============================== */
+
+.content{
+
+    padding:25px;
+
+    max-width:1400px;
+
+    margin:auto;
+
+}
+
+.welcome{
+
+    margin-bottom:22px;
+
+}
+
+.welcome h2{
+
+    font-size:26px;
+
+    margin-bottom:6px;
+
+}
+
+.welcome p{
+
+    color:#8097ae;
+
+    font-size:12px;
+
+}
+
+/* ==============================
+
+   STATS
+
+============================== */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(4,1fr);
+
+    gap:14px;
+
+    margin-bottom:25px;
+
+}
+
+.stat{
+
+    padding:18px;
+
+    border:
+
+        1px solid var(--border);
+
+    border-radius:15px;
+
+    background:
+
+        rgba(255,255,255,.035);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.stat:after{
+
+    content:"";
+
+    position:absolute;
+
+    width:80px;
+
+    height:80px;
+
+    right:-30px;
+
+    bottom:-30px;
+
+    border-radius:50%;
+
+    background:
+
+        rgba(22,119,255,.12);
+
+}
+
+.stat-icon{
+
+    font-size:22px;
+
+    margin-bottom:10px;
+
+}
+
+.stat-label{
+
+    color:#7189a2;
+
+    font-size:10px;
+
+    margin-bottom:5px;
+
+}
+
+.stat-value{
+
+    font-size:24px;
+
+    font-weight:800;
+
+}
+
+.stat-note{
+
+    color:#5f7891;
+
+    font-size:9px;
+
+    margin-top:5px;
+
+}
+
+/* ==============================
+
+   SECTION
+
+============================== */
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:13px;
+
+}
+
+.section-title h3{
+
+    font-size:15px;
+
+}
+
+.section-title span{
+
+    color:#64809b;
+
+    font-size:10px;
+
+}
+
+/* ==============================
+
+   MODULES
+
+============================== */
+
+.modules{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(4,1fr);
+
+    gap:12px;
+
+    margin-bottom:28px;
+
+}
+
+.module{
+
+    padding:17px;
+
+    border:
+
+        1px solid var(--border);
+
+    border-radius:14px;
+
+    background:
+
+        linear-gradient(
+
+            145deg,
+
+            rgba(17,43,70,.75),
+
+            rgba(7,22,40,.85)
+
+        );
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.module:hover{
+
+    transform:translateY(-2px);
+
+    border-color:
+
+        rgba(33,136,255,.35);
+
+    background:
+
+        rgba(22,119,255,.09);
+
+}
+
+.module-icon{
+
+    width:39px;
+
+    height:39px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:
+
+        rgba(22,119,255,.12);
+
+    font-size:19px;
+
+    margin-bottom:12px;
+
+}
+
+.module h4{
+
+    font-size:12px;
+
+    margin-bottom:5px;
+
+}
+
+.module p{
+
+    color:#688199;
+
+    font-size:9px;
+
+    line-height:1.5;
+
+}
+
+/* ==============================
+
+   REPORT PANEL
+
+============================== */
+
+.panel{
+
+    padding:20px;
+
+    border:
+
+        1px solid var(--border);
+
+    border-radius:15px;
+
+    background:
+
+        rgba(255,255,255,.035);
+
+    margin-bottom:25px;
+
+}
+
+.report-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.report-row{
+
+    display:grid;
+
+    grid-template-columns:
+
+        40px 1fr 100px 80px;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:13px 4px;
+
+    border-bottom:
+
+        1px solid
+
+        rgba(255,255,255,.06);
+
+}
+
+.report-row:last-child{
+
+    border-bottom:0;
+
+}
+
+.report-icon{
+
+    width:34px;
+
+    height:34px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:8px;
+
+    background:
+
+        rgba(22,119,255,.10);
+
+}
+
+.report-name{
+
+    font-size:11px;
+
+    font-weight:700;
+
+}
+
+.report-date{
+
+    color:#688199;
+
+    font-size:9px;
+
+    margin-top:3px;
+
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:
+
+        5px 8px;
+
+    border-radius:20px;
+
+    font-size:8px;
+
+    font-weight:700;
+
+    text-align:center;
+
+}
+
+.badge-ready{
+
+    color:#8de6a4;
+
+    background:
+
+        rgba(34,197,94,.10);
+
+}
+
+.badge-pending{
+
+    color:#ffd27b;
+
+    background:
+
+        rgba(245,158,11,.10);
+
+}
+
+/* ==============================
+
+   QUICK ACTIONS
+
+============================== */
+
+.actions{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(3,1fr);
+
+    gap:12px;
+
+}
+
+.action{
+
+    border:
+
+        1px dashed
+
+        rgba(255,255,255,.12);
+
+    background:
+
+        rgba(255,255,255,.025);
+
+    border-radius:12px;
+
+    padding:15px;
+
+    cursor:pointer;
+
+    color:#9bb0c5;
+
+    text-align:center;
+
+    font-size:10px;
+
+    transition:.2s;
+
+}
+
+.action:hover{
+
+    border-color:#2188ff;
+
+    color:white;
+
+    background:
+
+        rgba(22,119,255,.07);
+
+}
+
+/* ==============================
+
+   MOBILE MENU
+
+============================== */
+
+.menu-toggle{
+
+    display:none;
+
+    width:38px;
+
+    height:38px;
+
+    border:1px solid var(--border);
+
+    border-radius:9px;
+
+    background:
+
+        rgba(255,255,255,.05);
+
+    color:#fff;
+
+    font-size:18px;
+
+}
+
+/* ==============================
+
+   MOBILE
+
+============================== */
+
+@media(max-width:1050px){
+
+    .stats{
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+    }
+
+    .modules{
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+
+        transform:
+
+            translateX(-100%);
+
+    }
+
+    .sidebar.open{
+
+        transform:
+
+            translateX(0);
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+    .menu-toggle{
+
+        display:block;
+
+    }
+
+    .topbar{
+
+        padding:
+
+            0 15px;
+
+    }
+
+    .page-title{
+
+        margin-left:10px;
+
+    }
+
+    .page-title h1{
+
+        font-size:17px;
+
+    }
+
+    .status{
+
+        display:none;
+
+    }
+
+    .user-email{
+
+        display:none;
+
+    }
+
+    .content{
+
+        padding:18px 14px 30px;
+
+    }
+
+    .welcome h2{
+
+        font-size:23px;
+
+    }
+
+    .stats{
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+        gap:10px;
+
+    }
+
+    .stat{
+
+        padding:14px;
+
+    }
+
+    .stat-value{
+
+        font-size:21px;
+
+    }
+
+    .modules{
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+        gap:9px;
+
+    }
+
+    .module{
+
+        padding:14px;
+
+    }
+
+    .report-row{
+
+        grid-template-columns:
+
+            38px 1fr 70px;
+
+    }
+
+    .report-row > :last-child{
+
+        display:none;
+
+    }
+
+    .actions{
+
+        grid-template-columns:
+
+            1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ============================
+
+     SIDEBAR
+
+============================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="logo">
+
+            LP
+
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+
+                LP-Store
+
+            </div>
+
+            <div class="brand-sub">
+
+                Facility Management
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="menu-title">
+
+        MAIN
+
+    </div>
+
+    <nav class="nav">
+
+        <button class="active">
+
+            <span class="nav-icon">📊</span>
+
+            Dashboard
+
+        </button>
+
+        <button onclick="openModule('stock')">
+
+            <span class="nav-icon">📦</span>
+
+            Current Stock
+
+        </button>
+
+        <button onclick="openModule('reports')">
+
+            <span class="nav-icon">📑</span>
+
+            Reports
+
+        </button>
+
+        <button onclick="openModule('upload')">
+
+            <span class="nav-icon">📤</span>
+
+            Upload Reports
+
+        </button>
+
+    </nav>
+
+    <div class="menu-title">
+
+        PROCUREMENT
+
+    </div>
+
+    <nav class="nav">
+
+        <button onclick="openModule('pr')">
+
+            <span class="nav-icon">📋</span>
+
+            PR Reports
+
+        </button>
+
+        <button onclick="openModule('po')">
+
+            <span class="nav-icon">🧾</span>
+
+            PO Reports
+
+        </button>
+
+        <button onclick="openModule('grn')">
+
+            <span class="nav-icon">📥</span>
+
+            GRN Reports
+
+        </button>
+
+    </nav>
+
+    <div class="menu-title">
+
+        MATERIAL MOVEMENT
+
+    </div>
+
+    <nav class="nav">
+
+        <button onclick="openModule('gate')">
+
+            <span class="nav-icon">🚪</span>
+
+            Gate Entry
+
+        </button>
+
+        <button onclick="openModule('rgp')">
+
+            <span class="nav-icon">🔄</span>
+
+            RGP
+
+        </button>
+
+        <button onclick="openModule('nrgp')">
+
+            <span class="nav-icon">🔁</span>
+
+            NRGP
+
+        </button>
+
+        <button onclick="openModule('reservation')">
+
+            <span class="nav-icon">📌</span>
+
+            Reservation
+
+        </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <nav class="nav">
+
+            <button onclick="openModule('ai')">
+
+                <span class="nav-icon">🤖</span>
+
+                AI Assistant
+
+            </button>
+
+            <button onclick="logout()">
+
+                <span class="nav-icon">🚪</span>
+
+                Sign Out
+
+            </button>
+
+        </nav>
+
+    </div>
+
+</aside>
+
+<!-- ============================
+
+     MAIN
+
+============================= -->
+
+<div class="main">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div style="display:flex;align-items:center;">
+
+            <button
+
+                class="menu-toggle"
+
+                onclick="toggleSidebar()">
+
+                ☰
+
+            </button>
+
+            <div class="page-title">
+
+                <h1>
+
+                    Facility Management Dashboard
+
+                </h1>
+
+                <p>
+
+                    LP-Store • Pharma Material Intelligence
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="user-area">
+
+            <div class="status">
+
+                <span class="status-dot"></span>
+
+                Firebase Secure
+
+            </div>
+
+            <div class="user">
+
+                <div
+
+                    class="avatar"
+
+                    id="avatar">
+
+                    LP
+
+                </div>
+
+                <div
+
+                    class="user-email"
+
+                    id="userEmail">
+
+                    Loading...
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+        <section class="welcome">
+
+            <h2>
+
+                Welcome to LP-Store 👋
+
+            </h2>
+
+            <p>
+
+                Centralized Facility Management,
+
+                Store & Material Intelligence System
+
+            </p>
+
+        </section>
+
+        <!-- STATS -->
+
+        <section class="stats">
+
+            <div class="stat">
+
+                <div class="stat-icon">
+
+                    📦
+
+                </div>
+
+                <div class="stat-label">
+
+                    CURRENT STOCK
+
+                </div>
+
+                <div
+
+                    class="stat-value"
+
+                    id="stockCount">
+
+                    —
+
+                </div>
+
+                <div class="stat-note">
+
+                    Waiting for database connection
+
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-icon">
+
+                    📋
+
+                </div>
+
+                <div class="stat-label">
+
+                    PR REPORTS
+
+                </div>
+
+                <div
+
+                    class="stat-value"
+
+                    id="prCount">
+
+                    —
+
+                </div>
+
+                <div class="stat-note">
+
+                    Procurement requests
+
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-icon">
+
+                    📥
+
+                </div>
+
+                <div class="stat-label">
+
+                    GRN REPORTS
+
+                </div>
+
+                <div
+
+                    class="stat-value"
+
+                    id="grnCount">
+
+                    —
+
+                </div>
+
+                <div class="stat-note">
+
+                    Goods receipt records
+
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-icon">
+
+                    🤖
+
+                </div>
+
+                <div class="stat-label">
+
+                    AI STATUS
+
+                </div>
+
+                <div class="stat-value">
+
+                    READY
+
+                </div>
+
+                <div class="stat-note">
+
+                    AI connection coming next
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- MODULES -->
+
+        <div class="section-title">
+
+            <h3>
+
+                Store & Facility Modules
+
+            </h3>
+
+            <span>
+
+                LP-Store System
+
+            </span>
+
+        </div>
+
+        <section class="modules">
+
+            <div
+
+                class="module"
+
+                onclick="openModule('stock')">
+
+                <div class="module-icon">
+
+                    📦
+
+                </div>
+
+                <h4>
+
+                    Current Stock
+
+                </h4>
+
+                <p>
+
+                    Material quantity,
+
+                    availability and stock status.
+
+                </p>
+
+            </div>
+
+            <div
+
+                class="module"
+
+                onclick="openModule('pr')">
+
+                <div class="module-icon">
+
+                    📋
+
+                </div>
+
+                <h4>
+
+                    PR Reports
+
+                </h4>
+
+                <p>
+
+                    Purchase requisition
+
+                    tracking and history.
+
+                </p>
+
+            </div>
+
+            <div
+
+                class="module"
+
+                onclick="openModule('po')">
+
+                <div class="module-icon">
+
+                    🧾
+
+                </div>
+
+                <h4>
+
+                    PO Reports
+
+                </h4>
+
+                <p>
+
+                    Purchase order
+
+                    monitoring and records.
+
+                </p>
+
+            </div>
+
+            <div
+
+                class="module"
+
+                onclick="openModule('grn')">
+
+                <div class="module-icon">
+
+                    📥
+
+                </div>
+
+                <h4>
+
+                    GRN Reports
+
+                </h4>
+
+                <p>
+
+                    Goods receipt note
+
+                    reports and tracking.
+
+                </p>
+
+            </div>
+
+            <div
+
+                class="module"
+
+                onclick="openModule('gate')">
+
+                <div class="module-icon">
+
+                    🚪
+
+                </div>
+
+                <h4>
+
+                    Gate Entry
+
+                </h4>
+
+                <p>
+
+                    Material gate entry
+
+                    and movement records.
+
+                </p>
+
+            </div>
+
+            <div
+
+                class="module"
+
+                onclick="openModule('reservation')">
+
+                <div class="module-icon">
+
+                    📌
+
+                </div>
+
+                <h4>
+
+                    Reservation
+
+                </h4>
+
+                <p>
+
+                    Material reservation
+
+                    reports and tracking.
+
+                </p>
+
+            </div>
+
+            <div
+
+                class="module"
+
+                onclick="openModule('rgp')">
+
+                <div class="module-icon">
+
+                    🔄
+
+                </div>
+
+                <h4>
+
+                    RGP
+
+                </h4>
+
+                <p>
+
+                    Returnable gate pass
+
+                    monitoring.
+
+                </p>
+
+            </div>
+
+            <div
+
+                class="module"
+
+                onclick="openModule('nrgp')">
+
+                <div class="module-icon">
+
+                    🔁
+
+                </div>
+
+                <h4>
+
+                    NRGP
+
+                </h4>
+
+                <p>
+
+                    Non-returnable gate pass
+
+                    monitoring.
+
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- RECENT REPORTS -->
+
+        <div class="section-title">
+
+            <h3>
+
+                Recent Reports
+
+            </h3>
+
+            <span>
+
+                Database connection pending
+
+            </span>
+
+        </div>
+
+        <section class="panel">
+
+            <div class="report-list">
+
+                <div class="report-row">
+
+                    <div class="report-icon">
+
+                        📦
+
+                    </div>
+
+                    <div>
+
+                        <div class="report-name">
+
+                            Current Stock Report
+
+                        </div>
+
+                        <div class="report-date">
+
+                            Upload report to begin
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <span class="badge badge-pending">
+
+                            PENDING
+
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        —
+
+                    </div>
+
+                </div>
+
+                <div class="report-row">
+
+                    <div class="report-icon">
+
+                        📥
+
+                    </div>
+
+                    <div>
+
+                        <div class="report-name">
+
+                            July GRN Report
+
+                        </div>
+
+                        <div class="report-date">
+
+                            GRN report
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <span class="badge badge-pending">
+
+                            PENDING
+
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        —
+
+                    </div>
+
+                </div>
+
+                <div class="report-row">
+
+                    <div class="report-icon">
+
+                        📋
+
+                    </div>
+
+                    <div>
+
+                        <div class="report-name">
+
+                            PR / PO Reports
+
+                        </div>
+
+                        <div class="report-date">
+
+                            Waiting for upload
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <span class="badge badge-pending">
+
+                            PENDING
+
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        —
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="section-title">
+
+            <h3>
+
+                Quick Actions
+
+            </h3>
+
+        </div>
+
+        <section class="actions">
+
+            <div
+
+                class="action"
+
+                onclick="openModule('upload')">
+
+                📤
+
+                <br><br>
+
+                Upload New Report
+
+            </div>
+
+            <div
+
+                class="action"
+
+                onclick="openModule('reports')">
+
+                📑
+
+                <br><br>
+
+                Browse Reports
+
+            </div>
+
+            <div
+
+                class="action"
+
+                onclick="openModule('ai')">
+
+                🤖
+
+                <br><br>
+
+                Ask AI Assistant
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+<script>
+
+/* ==========================================
+
+   FIREBASE CONFIG
+
+========================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+
+        "AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",
+
+    authDomain:
+
+        "lp-store-23212.firebaseapp.com",
+
+    projectId:
+
+        "lp-store-23212",
+
+    storageBucket:
+
+        "lp-store-23212.firebasestorage.app",
+
+    messagingSenderId:
+
+        "200245726085",
+
+    appId:
+
+        "1:200245726085:web:846b39a873c06a1ebc12ec",
+
+    measurementId:
+
+        "G-51Q3ZZJQJD"
+
+};
+
+/* ==========================================
+
+   INITIALIZE FIREBASE
+
+========================================== */
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+/* ==========================================
+
+   AUTHENTICATION CHECK
+
+========================================== */
+
+auth.onAuthStateChanged(function(user){
+
+    if(!user){
+
+        window.location.href =
+
+            "login.html";
+
+        return;
+
+    }
+
+    /* USER EMAIL */
+
+    const email =
+
+        user.email || "Authorized User";
+
+    document.getElementById(
+
+        "userEmail"
+
+    ).textContent = email;
+
+    /* AVATAR */
+
+    const first =
+
+        email.charAt(0).toUpperCase();
+
+    document.getElementById(
+
+        "avatar"
+
+    ).textContent = first;
+
+});
+
+/* ==========================================
+
+   LOGOUT
+
+========================================== */
+
+async function logout(){
+
+    try{
+
+        await auth.signOut();
+
+        window.location.href =
+
+            "login.html";
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+
+            "Unable to sign out. Please try again."
+
+        );
+
+    }
+
+}
+
+/* ==========================================
+
+   MOBILE SIDEBAR
+
+========================================== */
+
+function toggleSidebar(){
+
+    const sidebar =
+
+        document.getElementById("sidebar");
+
+    sidebar.classList.toggle("open");
+
+}
+
+/* ==========================================
+
+   MODULE HANDLER
+
+========================================== */
+
+function openModule(module){
+
+    const pages = {
+
+        stock:
+
+            "stock.html",
+
+        reports:
+
+            "reports.html",
+
+        upload:
+
+            "upload.html",
+
+        pr:
+
+            "reports.html?type=PR",
+
+        po:
+
+            "reports.html?type=PO",
+
+        grn:
+
+            "reports.html?type=GRN",
+
+        gate:
+
+            "reports.html?type=GateEntry",
+
+        rgp:
+
+            "reports.html?type=RGP",
+
+        nrgp:
+
+            "reports.html?type=NRGP",
+
+        reservation:
+
+            "reports.html?type=Reservation",
+
+        ai:
+
+            "ai.html"
+
+    };
+
+    if(pages[module]){
+
+        window.location.href =
+
+            pages[module];
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
