@@ -1,349 +1,863 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Upload Reports | LP FM AI</title>
+<meta charset="UTF-8">
 
-    <meta name="description"
-          content="Upload Facility Management reports to LP FM AI">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta name="theme-color"
+      content="#071426">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                         Roboto, Arial, sans-serif;
-            background: #f1f5f9;
-            color: #0f172a;
-        }
+<title>LP-Store | Upload Reports</title>
 
-        header {
-            background: #0f172a;
-            color: white;
-            padding: 18px 22px;
-        }
+<style>
 
-        .header-inner {
-            max-width: 1100px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+:root{
 
-        .logo {
-            width: 44px;
-            height: 44px;
-            background: #2563eb;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-        }
+    --blue:#1677ff;
+    --blue2:#075dcc;
+    --cyan:#18c8ff;
 
-        .brand h1 {
-            font-size: 19px;
-        }
+    --dark:#061426;
+    --dark2:#0a1d32;
+    --dark3:#102b46;
 
-        .brand p {
-            color: #cbd5e1;
-            font-size: 12px;
-            margin-top: 3px;
-        }
+    --white:#ffffff;
+    --muted:#8ea5bd;
 
-        .back {
-            color: white;
-            text-decoration: none;
-            background: #1e293b;
-            padding: 9px 14px;
-            border-radius: 9px;
-            font-size: 13px;
-        }
+    --border:
+        rgba(255,255,255,.10);
 
-        main {
-            max-width: 900px;
-            margin: auto;
-            padding: 30px 18px 50px;
-        }
+    --green:#22c55e;
+    --red:#ef4444;
+    --orange:#f59e0b;
+}
 
-        .title {
-            margin-bottom: 22px;
-        }
+body{
 
-        .title h2 {
-            font-size: 27px;
-            margin-bottom: 6px;
-        }
+    min-height:100vh;
 
-        .title p {
-            color: #64748b;
-            font-size: 14px;
-        }
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
 
-        .upload-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 20px;
-            padding: 28px;
-            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.05);
-        }
+    color:white;
 
-        .form-group {
-            margin-bottom: 22px;
-        }
+    background:
 
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(22,119,255,.22),
+            transparent 30%
+        ),
 
-        select {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            background: white;
-            font-size: 14px;
-            outline: none;
-        }
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(24,200,255,.10),
+            transparent 30%
+        ),
 
-        select:focus {
-            border-color: #2563eb;
-        }
+        linear-gradient(
+            135deg,
+            #04101f,
+            #081d34 50%,
+            #041321
+        );
+}
 
-        .drop-zone {
-            border: 2px dashed #94a3b8;
-            border-radius: 16px;
-            padding: 45px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-            background: #f8fafc;
-        }
+button,
+input,
+select{
 
-        .drop-zone:hover {
-            border-color: #2563eb;
-            background: #eff6ff;
-        }
+    font-family:inherit;
+}
 
-        .upload-icon {
-            font-size: 42px;
-            margin-bottom: 12px;
-        }
 
-        .drop-zone h3 {
-            font-size: 17px;
-            margin-bottom: 7px;
-        }
+/* =========================
+   TOPBAR
+========================= */
 
-        .drop-zone p {
-            color: #64748b;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
+.topbar{
 
-        .browse {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            padding: 11px 18px;
-            border-radius: 9px;
-            font-size: 13px;
-            font-weight: 700;
-        }
+    height:70px;
 
-        input[type="file"] {
-            display: none;
-        }
+    padding:
+        0 25px;
 
-        .file-info {
-            display: none;
-            margin-top: 15px;
-            padding: 13px;
-            border-radius: 10px;
-            background: #f1f5f9;
-            font-size: 13px;
-        }
+    display:flex;
 
-        .submit-btn {
-            width: 100%;
-            border: 0;
-            background: #0f172a;
-            color: white;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+    align-items:center;
 
-        .submit-btn:hover {
-            background: #1e293b;
-        }
+    justify-content:space-between;
 
-        .notice {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            color: #92400e;
-            font-size: 12px;
-            line-height: 1.6;
-        }
+    border-bottom:
+        1px solid var(--border);
 
-        .formats {
-            margin-top: 20px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+    background:
+        rgba(5,19,35,.90);
 
-        .format {
-            padding: 6px 10px;
-            background: #f1f5f9;
-            border-radius: 7px;
-            font-size: 11px;
-            color: #475569;
-        }
+    backdrop-filter:
+        blur(15px);
 
-        footer {
-            text-align: center;
-            color: #94a3b8;
-            font-size: 12px;
-            padding: 25px;
-        }
+    position:sticky;
 
-        @media (max-width: 600px) {
+    top:0;
 
-            .header-inner {
-                align-items: flex-start;
-            }
+    z-index:10;
+}
 
-            .brand h1 {
-                font-size: 17px;
-            }
+.brand{
 
-            .upload-card {
-                padding: 20px;
-            }
+    display:flex;
 
-            .drop-zone {
-                padding: 35px 15px;
-            }
+    align-items:center;
 
-            .title h2 {
-                font-size: 23px;
-            }
-        }
-    </style>
+    gap:11px;
+}
+
+.logo{
+
+    width:43px;
+    height:43px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2188ff,
+            #0758c8
+        );
+
+    font-weight:900;
+}
+
+.brand-name{
+
+    font-size:17px;
+    font-weight:800;
+}
+
+.brand-sub{
+
+    color:#718ba6;
+
+    font-size:9px;
+
+    margin-top:2px;
+}
+
+.user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    color:#9eb2c7;
+
+    font-size:10px;
+}
+
+.avatar{
+
+    width:31px;
+    height:31px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2188ff,
+            #0758c8
+        );
+
+    font-weight:800;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:
+        35px 18px 60px;
+}
+
+.back{
+
+    display:inline-block;
+
+    color:#7fa0bf;
+
+    font-size:11px;
+
+    margin-bottom:20px;
+
+    cursor:pointer;
+}
+
+.back:hover{
+
+    color:#55a9ff;
+}
+
+.title{
+
+    margin-bottom:25px;
+}
+
+.title h1{
+
+    font-size:
+        clamp(25px,5vw,34px);
+
+    margin-bottom:7px;
+}
+
+.title p{
+
+    color:#7e96ae;
+
+    font-size:12px;
+
+    line-height:1.6;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+
+    padding:25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,43,70,.85),
+            rgba(7,22,40,.95)
+        );
+
+    box-shadow:
+        0 25px 60px
+        rgba(0,0,0,.30);
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+
+    margin-bottom:20px;
+}
+
+label{
+
+    display:block;
+
+    color:#c4d3e2;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+}
+
+select{
+
+    width:100%;
+
+    height:48px;
+
+    padding:
+        0 13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    color:white;
+
+    outline:none;
+}
+
+select option{
+
+    background:#0b1d33;
+
+    color:white;
+}
+
+
+/* =========================
+   DROP AREA
+========================= */
+
+.drop-area{
+
+    border:
+        1.5px dashed
+        rgba(74,157,255,.40);
+
+    border-radius:16px;
+
+    padding:35px 20px;
+
+    text-align:center;
+
+    background:
+        rgba(22,119,255,.045);
+
+    transition:.2s;
+
+    cursor:pointer;
+}
+
+.drop-area:hover,
+.drop-area.dragover{
+
+    border-color:
+        #2188ff;
+
+    background:
+        rgba(22,119,255,.09);
+}
+
+.upload-icon{
+
+    width:58px;
+    height:58px;
+
+    margin:
+        0 auto 14px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:
+        rgba(22,119,255,.13);
+
+    font-size:26px;
+}
+
+.drop-area h3{
+
+    font-size:15px;
+
+    margin-bottom:6px;
+}
+
+.drop-area p{
+
+    color:#7189a1;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+.browse{
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    padding:
+        9px 16px;
+
+    border-radius:8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2188ff,
+            #075dcc
+        );
+
+    font-size:10px;
+
+    font-weight:700;
+}
+
+
+/* =========================
+   FILE INFO
+========================= */
+
+.file-info{
+
+    display:none;
+
+    margin-top:15px;
+
+    padding:13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.file-info.show{
+
+    display:flex;
+}
+
+.file-name{
+
+    font-size:11px;
+
+    font-weight:700;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+}
+
+.file-size{
+
+    color:#6e879f;
+
+    font-size:9px;
+
+    margin-top:3px;
+}
+
+.remove{
+
+    border:0;
+
+    background:
+        rgba(239,68,68,.10);
+
+    color:#ff8c8c;
+
+    border-radius:7px;
+
+    padding:7px 10px;
+
+    cursor:pointer;
+
+    font-size:10px;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-box{
+
+    display:none;
+
+    margin-top:18px;
+}
+
+.progress-box.show{
+
+    display:block;
+}
+
+.progress-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#8fa7bd;
+
+    font-size:10px;
+
+    margin-bottom:7px;
+}
+
+.progress{
+
+    width:100%;
+
+    height:7px;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    overflow:hidden;
+}
+
+.progress-bar{
+
+    width:0%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2188ff,
+            #18c8ff
+        );
+
+    transition:.2s;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.upload-button{
+
+    width:100%;
+
+    height:50px;
+
+    margin-top:20px;
+
+    border:0;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2188ff,
+            #075dcc
+        );
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 10px 25px
+        rgba(22,119,255,.20);
+
+    transition:.2s;
+}
+
+.upload-button:hover{
+
+    transform:
+        translateY(-1px);
+}
+
+.upload-button:disabled{
+
+    opacity:.55;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+
+    display:none;
+
+    margin-top:15px;
+
+    padding:12px 14px;
+
+    border-radius:9px;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+.message.show{
+
+    display:block;
+}
+
+.message.success{
+
+    color:#8ee6a9;
+
+    background:
+        rgba(34,197,94,.09);
+
+    border:
+        1px solid
+        rgba(34,197,94,.20);
+}
+
+.message.error{
+
+    color:#ff9999;
+
+    background:
+        rgba(239,68,68,.09);
+
+    border:
+        1px solid
+        rgba(239,68,68,.20);
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+.security{
+
+    margin-top:20px;
+
+    padding-top:17px;
+
+    border-top:
+        1px solid var(--border);
+
+    color:#607990;
+
+    font-size:9px;
+
+    text-align:center;
+
+    line-height:1.7;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .topbar{
+
+        padding:
+            0 14px;
+    }
+
+    .user-email{
+
+        display:none;
+    }
+
+    .page{
+
+        padding:
+            25px 13px 45px;
+    }
+
+    .card{
+
+        padding:19px;
+
+        border-radius:17px;
+    }
+
+    .drop-area{
+
+        padding:
+            30px 14px;
+    }
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<header>
 
-    <div class="header-inner">
+<header class="topbar">
 
-        <div class="brand">
+    <div class="brand">
 
-            <div class="logo">
-                LP
+        <div class="logo">
+            LP
+        </div>
+
+        <div>
+
+            <div class="brand-name">
+                LP-Store
             </div>
 
-            <div>
-                <h1>LP FM AI</h1>
-                <p>Facility Management Reports</p>
+            <div class="brand-sub">
+                Pharma Material Intelligence
             </div>
 
         </div>
 
-        <a href="index.html" class="back">
-            ← Dashboard
-        </a>
+    </div>
+
+
+    <div class="user">
+
+        <div
+            class="avatar"
+            id="avatar">
+
+            LP
+
+        </div>
+
+        <span
+            id="userEmail">
+
+            Loading...
+
+        </span>
 
     </div>
 
 </header>
 
 
-<main>
 
-    <section class="title">
+<main class="page">
 
-        <h2>Upload Report</h2>
+
+    <div
+        class="back"
+        onclick="goDashboard()">
+
+        ← Back to Dashboard
+
+    </div>
+
+
+    <div class="title">
+
+        <h1>
+            Upload Material Report
+        </h1>
 
         <p>
-            Upload your Facility Management and Store reports.
+            Upload your pharmaceutical material
+            inventory and Facility Management reports
+            securely to LP-Store.
         </p>
 
-    </section>
+    </div>
 
 
-    <section class="upload-card">
+
+    <section class="card">
+
+
+        <!-- REPORT TYPE -->
 
         <div class="form-group">
 
-            <label for="reportType">
+            <label>
                 Report Type
             </label>
 
             <select id="reportType">
 
                 <option value="">
-                    Select Report Type
+                    Select report type
                 </option>
 
-                <option value="stock">
-                    Current Stock Report
+                <option value="Current Stock">
+                    📦 Current Stock
                 </option>
 
-                <option value="pr">
-                    PR Report
+                <option value="PR">
+                    📋 Purchase Requisition (PR)
                 </option>
 
-                <option value="po">
-                    PO Report
+                <option value="PO">
+                    🧾 Purchase Order (PO)
                 </option>
 
-                <option value="grn">
-                    GRN Report
+                <option value="GRN">
+                    📥 Goods Receipt Note (GRN)
                 </option>
 
-                <option value="gate">
-                    Material Gate Entry Report
+                <option value="Gate Entry">
+                    🚪 Gate Entry
                 </option>
 
-                <option value="reservation">
-                    Reservation Report
+                <option value="RGP">
+                    🔄 RGP
                 </option>
 
-                <option value="rgp">
-                    RGP Report
+                <option value="NRGP">
+                    🔁 NRGP
                 </option>
 
-                <option value="nrgp">
-                    NRGP Report
-                </option>
-
-                <option value="other">
-                    Other Report
+                <option value="Reservation">
+                    📌 Reservation
                 </option>
 
             </select>
@@ -351,156 +865,881 @@
         </div>
 
 
-        <div class="form-group">
 
-            <label>
-                Select File
-            </label>
+        <!-- DROP AREA -->
 
-            <label class="drop-zone" for="reportFile">
+        <div
+            class="drop-area"
+            id="dropArea">
 
-                <div class="upload-icon">
-                    📄
-                </div>
+            <div class="upload-icon">
+                📤
+            </div>
 
-                <h3>
-                    Choose your report
-                </h3>
+            <h3>
+                Upload your report
+            </h3>
 
-                <p>
-                    PDF, Excel or CSV files
-                </p>
+            <p>
+                Drag & drop your file here
+                <br>
+                or select a file from your device
+            </p>
 
-                <span class="browse">
-                    Browse File
-                </span>
-
-            </label>
+            <div class="browse">
+                Choose File
+            </div>
 
             <input
                 type="file"
-                id="reportFile"
-                accept=".pdf,.xlsx,.xls,.csv"
-            >
-
-            <div class="file-info" id="fileInfo"></div>
+                id="fileInput"
+                hidden
+                accept=".pdf,.xlsx,.xls,.csv">
 
         </div>
 
 
-        <button
-            class="submit-btn"
-            onclick="prepareUpload()">
 
-            ⬆️ Upload Report
+        <!-- FILE INFO -->
+
+        <div
+            class="file-info"
+            id="fileInfo">
+
+            <div>
+
+                <div
+                    class="file-name"
+                    id="fileName">
+                </div>
+
+                <div
+                    class="file-size"
+                    id="fileSize">
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="remove"
+                onclick="removeFile()">
+
+                Remove
+
+            </button>
+
+        </div>
+
+
+
+        <!-- PROGRESS -->
+
+        <div
+            class="progress-box"
+            id="progressBox">
+
+            <div class="progress-top">
+
+                <span>
+                    Uploading...
+                </span>
+
+                <span
+                    id="progressText">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    id="progressBar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BUTTON -->
+
+        <button
+            type="button"
+            class="upload-button"
+            id="uploadButton"
+            disabled
+            onclick="uploadFile()">
+
+            📤 Upload Report
 
         </button>
 
 
-        <div class="notice">
 
-            <strong>Important:</strong><br>
+        <!-- MESSAGE -->
 
-            Your report will be stored securely after the
-            database and private storage system are connected.
-
-            At this stage, this page is only the upload interface.
-
+        <div
+            id="message"
+            class="message">
         </div>
 
 
-        <div class="formats">
 
-            <span class="format">PDF</span>
-            <span class="format">XLSX</span>
-            <span class="format">XLS</span>
-            <span class="format">CSV</span>
+        <div class="security">
+
+            🔒 Firebase Secure Storage
+
+            <br>
+
+            Authorized Facility Management users only
+
+            <br>
+
+            Supported files:
+            PDF • Excel • CSV
 
         </div>
+
 
     </section>
 
 </main>
 
 
-<footer>
 
-    LP FM AI — Facility Management & Store Intelligence
+<!-- FIREBASE -->
 
-</footer>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
 
 
 <script>
 
-const fileInput = document.getElementById("reportFile");
-const fileInfo = document.getElementById("fileInfo");
 
-fileInput.addEventListener("change", function () {
+/* ==========================================
+   FIREBASE CONFIGURATION
+========================================== */
 
-    if (this.files.length === 0) {
-        fileInfo.style.display = "none";
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",
+
+    authDomain:
+        "lp-store-23212.firebaseapp.com",
+
+    projectId:
+        "lp-store-23212",
+
+    storageBucket:
+        "lp-store-23212.firebasestorage.app",
+
+    messagingSenderId:
+        "200245726085",
+
+    appId:
+        "1:200245726085:web:846b39a873c06a1ebc12ec",
+
+    measurementId:
+        "G-51Q3ZZJQJD"
+};
+
+
+/* ==========================================
+   INITIALIZE FIREBASE
+========================================== */
+
+firebase.initializeApp(firebaseConfig);
+
+const auth =
+    firebase.auth();
+
+const storage =
+    firebase.storage();
+
+const db =
+    firebase.firestore();
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let currentUser = null;
+
+let selectedFile = null;
+
+
+/* ==========================================
+   AUTH CHECK
+========================================== */
+
+auth.onAuthStateChanged(function(user){
+
+    if(!user){
+
+        window.location.href =
+            "login.html";
+
         return;
     }
 
-    const file = this.files[0];
 
-    fileInfo.style.display = "block";
+    currentUser = user;
 
-    fileInfo.innerHTML =
-        "📄 <strong>" +
-        file.name +
-        "</strong><br>" +
-        "Size: " +
-        formatFileSize(file.size);
+
+    const email =
+        user.email || "Authorized User";
+
+
+    document.getElementById(
+        "userEmail"
+    ).textContent = email;
+
+
+    document.getElementById(
+        "avatar"
+    ).textContent =
+        email.charAt(0).toUpperCase();
 
 });
 
 
-function formatFileSize(bytes) {
+/* ==========================================
+   ELEMENTS
+========================================== */
 
-    if (bytes < 1024) {
-        return bytes + " B";
+const dropArea =
+    document.getElementById(
+        "dropArea"
+    );
+
+const fileInput =
+    document.getElementById(
+        "fileInput"
+    );
+
+const fileInfo =
+    document.getElementById(
+        "fileInfo"
+    );
+
+const fileName =
+    document.getElementById(
+        "fileName"
+    );
+
+const fileSize =
+    document.getElementById(
+        "fileSize"
+    );
+
+const uploadButton =
+    document.getElementById(
+        "uploadButton"
+    );
+
+const reportType =
+    document.getElementById(
+        "reportType"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+/* ==========================================
+   CHOOSE FILE
+========================================== */
+
+dropArea.addEventListener(
+    "click",
+    function(){
+
+        fileInput.click();
+
+    }
+);
+
+
+/* ==========================================
+   FILE SELECTED
+========================================== */
+
+fileInput.addEventListener(
+    "change",
+    function(){
+
+        if(this.files.length){
+
+            selectFile(
+                this.files[0]
+            );
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   DRAG & DROP
+========================================== */
+
+dropArea.addEventListener(
+    "dragover",
+    function(event){
+
+        event.preventDefault();
+
+        dropArea.classList.add(
+            "dragover"
+        );
+
+    }
+);
+
+
+dropArea.addEventListener(
+    "dragleave",
+    function(){
+
+        dropArea.classList.remove(
+            "dragover"
+        );
+
+    }
+);
+
+
+dropArea.addEventListener(
+    "drop",
+    function(event){
+
+        event.preventDefault();
+
+        dropArea.classList.remove(
+            "dragover"
+        );
+
+
+        if(
+            event.dataTransfer.files.length
+        ){
+
+            selectFile(
+                event.dataTransfer.files[0]
+            );
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   SELECT FILE
+========================================== */
+
+function selectFile(file){
+
+    const allowedTypes = [
+
+        "application/pdf",
+
+        "application/vnd.ms-excel",
+
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+
+        "text/csv"
+
+    ];
+
+
+    const extension =
+        file.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+
+    const allowedExtensions = [
+        "pdf",
+        "xlsx",
+        "xls",
+        "csv"
+    ];
+
+
+    if(
+        !allowedExtensions.includes(
+            extension
+        )
+    ){
+
+        showMessage(
+            "Please select a PDF, Excel or CSV file.",
+            "error"
+        );
+
+        return;
+
     }
 
-    if (bytes < 1024 * 1024) {
-        return (bytes / 1024).toFixed(1) + " KB";
+
+    const maxSize =
+        25 * 1024 * 1024;
+
+
+    if(file.size > maxSize){
+
+        showMessage(
+            "File size must be 25 MB or less.",
+            "error"
+        );
+
+        return;
+
     }
 
-    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+
+    selectedFile = file;
+
+
+    fileName.textContent =
+        file.name;
+
+
+    fileSize.textContent =
+        formatFileSize(
+            file.size
+        );
+
+
+    fileInfo.classList.add(
+        "show"
+    );
+
+
+    uploadButton.disabled =
+        false;
+
+
+    hideMessage();
 
 }
 
 
-function prepareUpload() {
+/* ==========================================
+   REMOVE FILE
+========================================== */
 
-    const reportType =
-        document.getElementById("reportType").value;
+function removeFile(){
 
-    const file =
-        document.getElementById("reportFile").files[0];
+    selectedFile = null;
 
-    if (!reportType) {
+    fileInput.value = "";
 
-        alert("Please select the report type.");
-
-        return;
-
-    }
-
-    if (!file) {
-
-        alert("Please select a report file.");
-
-        return;
-
-    }
-
-    alert(
-        "File selected successfully.\n\n" +
-        "Report: " + reportType + "\n" +
-        "File: " + file.name +
-        "\n\nDatabase upload will be connected in the next stage."
+    fileInfo.classList.remove(
+        "show"
     );
+
+    uploadButton.disabled =
+        true;
+
+}
+
+
+/* ==========================================
+   UPLOAD
+========================================== */
+
+function uploadFile(){
+
+    if(!currentUser){
+
+        showMessage(
+            "Authentication session not ready.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!selectedFile){
+
+        showMessage(
+            "Please select a file.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!reportType.value){
+
+        showMessage(
+            "Please select the report type.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    uploadButton.disabled =
+        true;
+
+
+    hideMessage();
+
+
+    const type =
+        reportType.value;
+
+
+    const timestamp =
+        Date.now();
+
+
+    const safeName =
+        selectedFile.name
+        .replace(
+            /[^a-zA-Z0-9._-]/g,
+            "_"
+        );
+
+
+    /*
+       Firebase Storage path
+    */
+
+    const path =
+        "reports/" +
+        type.replace(
+            /[^a-zA-Z0-9]/g,
+            "_"
+        ) +
+        "/" +
+        timestamp +
+        "_" +
+        safeName;
+
+
+    const storageRef =
+        storage.ref(path);
+
+
+    const uploadTask =
+        storageRef.put(
+            selectedFile
+        );
+
+
+    uploadTask.on(
+
+        "state_changed",
+
+        function(snapshot){
+
+            const progress =
+                Math.round(
+                    (
+                        snapshot.bytesTransferred /
+                        snapshot.totalBytes
+                    ) * 100
+                );
+
+
+            document
+                .getElementById(
+                    "progressBox"
+                )
+                .classList.add(
+                    "show"
+                );
+
+
+            document
+                .getElementById(
+                    "progressBar"
+                )
+                .style.width =
+                    progress + "%";
+
+
+            document
+                .getElementById(
+                    "progressText"
+                )
+                .textContent =
+                    progress + "%";
+
+        },
+
+
+        function(error){
+
+            console.error(
+                "Upload error:",
+                error
+            );
+
+
+            uploadButton.disabled =
+                false;
+
+
+            showMessage(
+                getUploadError(error),
+                "error"
+            );
+
+        },
+
+
+        async function(){
+
+            try{
+
+                const downloadURL =
+                    await uploadTask
+                    .snapshot
+                    .ref
+                    .getDownloadURL();
+
+
+                /*
+                   Save report information
+                   into Firestore
+                */
+
+                await db
+                    .collection("reports")
+                    .add({
+
+                        reportType:
+                            type,
+
+                        fileName:
+                            selectedFile.name,
+
+                        fileSize:
+                            selectedFile.size,
+
+                        fileURL:
+                            downloadURL,
+
+                        storagePath:
+                            path,
+
+                        uploadedBy:
+                            currentUser.email,
+
+                        uploadedByUID:
+                            currentUser.uid,
+
+                        uploadedAt:
+                            firebase.firestore
+                            .FieldValue
+                            .serverTimestamp(),
+
+                        status:
+                            "uploaded"
+
+                    });
+
+
+                showMessage(
+                    "Report uploaded successfully and saved to LP-Store.",
+                    "success"
+                );
+
+
+                removeFile();
+
+
+                document
+                    .getElementById(
+                        "progressBar"
+                    )
+                    .style.width =
+                        "100%";
+
+
+                document
+                    .getElementById(
+                        "progressText"
+                    )
+                    .textContent =
+                        "100%";
+
+
+            }catch(error){
+
+                console.error(
+                    error
+                );
+
+
+                showMessage(
+                    "File uploaded, but report information could not be saved. Please check Firestore.",
+                    "error"
+                );
+
+                uploadButton.disabled =
+                    false;
+
+            }
+
+        }
+
+    );
+
+}
+
+
+/* ==========================================
+   ERROR HANDLER
+========================================== */
+
+function getUploadError(error){
+
+    switch(error.code){
+
+        case
+        "storage/unauthorized":
+
+            return "Upload permission denied. Please check Firebase Storage Rules.";
+
+        case
+        "storage/canceled":
+
+            return "Upload cancelled.";
+
+        case
+        "storage/quota-exceeded":
+
+            return "Firebase Storage quota exceeded.";
+
+        case
+        "storage/unauthenticated":
+
+            return "Please login again.";
+
+        default:
+
+            return (
+                "Upload failed: " +
+                error.message
+            );
+
+    }
+
+}
+
+
+/* ==========================================
+   FILE SIZE
+========================================== */
+
+function formatFileSize(bytes){
+
+    if(bytes === 0){
+
+        return "0 Bytes";
+
+    }
+
+
+    const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        parseFloat(
+            (
+                bytes /
+                Math.pow(
+                    1024,
+                    i
+                )
+            ).toFixed(2)
+        )
+        +
+        " " +
+        units[i]
+    );
+
+}
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message show " +
+        type;
+
+}
+
+
+function hideMessage(){
+
+    message.textContent =
+        "";
+
+    message.className =
+        "message";
+
+}
+
+
+/* ==========================================
+   DASHBOARD
+========================================== */
+
+function goDashboard(){
+
+    window.location.href =
+        "dashboard.html";
 
 }
 
