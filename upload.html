@@ -2,277 +2,269 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0,user-scalable=no">
 
-<title>Upload Report - LP-Store</title>
+<title>Upload Report • LP-Store</title>
 
 <style>
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(circle at top right, #123b68 0%, transparent 35%),
-        linear-gradient(135deg, #061a30, #031322);
-    color: #ffffff;
-    min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(circle at top right, #123d70 0, transparent 35%),
+    linear-gradient(135deg, #06182d, #03101f);
+  color: #fff;
+  min-height: 100vh;
 }
 
 .header {
-    padding: 18px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(3, 18, 34, 0.95);
-    border-bottom: 1px solid rgba(100,160,220,.25);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  background: rgba(3,15,30,.9);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .logo {
-    width: 64px;
-    height: 64px;
-    border-radius: 18px;
-    background: linear-gradient(135deg,#1787ff,#0861d8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    font-weight: 800;
-    box-shadow: 0 8px 25px rgba(0,120,255,.25);
+  width: 62px;
+  height: 62px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,#1685ff,#0754d8);
+  font-size: 25px;
+  font-weight: 900;
+  box-shadow: 0 8px 25px rgba(0,100,255,.3);
 }
 
-.brand h2 {
-    margin: 0;
-    font-size: 25px;
+.header h1 {
+  font-size: 25px;
 }
 
-.brand p {
-    margin: 5px 0 0;
-    color: #7894b2;
-    font-size: 15px;
-}
-
-.user {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #087bf5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 20px;
+.header p {
+  color: #8ea7c5;
+  margin-top: 4px;
 }
 
 .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 35px 20px 60px;
+  max-width: 760px;
+  margin: auto;
+  padding: 28px 18px 60px;
 }
 
 .back {
-    color: #80baff;
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 25px;
-    font-size: 16px;
+  display: inline-block;
+  color: #70b5ff;
+  text-decoration: none;
+  margin-bottom: 24px;
+  font-size: 16px;
 }
 
-h1 {
-    font-size: 38px;
-    margin: 10px 0;
+h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
 }
 
 .subtitle {
-    color: #8fa9c5;
-    font-size: 18px;
-    line-height: 1.7;
-    margin-bottom: 30px;
+  color: #9db2ca;
+  line-height: 1.7;
+  margin-bottom: 28px;
 }
 
 .card {
-    background: rgba(14, 42, 70, .75);
-    border: 1px solid rgba(100,160,220,.25);
-    border-radius: 25px;
-    padding: 28px;
-    box-shadow: 0 20px 50px rgba(0,0,0,.2);
+  background: rgba(16,48,82,.72);
+  border: 1px solid rgba(120,180,255,.2);
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
 }
 
 label {
-    display: block;
-    font-weight: bold;
-    color: #c6d6e8;
-    margin-bottom: 10px;
-    font-size: 17px;
+  display: block;
+  font-weight: 700;
+  color: #c8d8ea;
+  margin-bottom: 9px;
+  margin-top: 18px;
 }
 
 select,
-input[type="text"] {
-    width: 100%;
-    padding: 17px;
-    border-radius: 15px;
-    border: 1px solid #315273;
-    background: #172f49;
-    color: white;
-    font-size: 16px;
-    outline: none;
-    margin-bottom: 25px;
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 17px;
+  border-radius: 15px;
+  border: 1px solid rgba(150,200,255,.2);
+  background: #102b48;
+  color: white;
+  font-size: 16px;
+  outline: none;
 }
 
-.upload-box {
-    border: 2px dashed #1685ff;
-    border-radius: 24px;
-    padding: 45px 20px;
-    text-align: center;
-    background: rgba(10, 55, 100, .35);
-    transition: .2s;
+input:focus,
+select:focus {
+  border-color: #258cff;
+  box-shadow: 0 0 0 3px rgba(37,140,255,.12);
 }
 
-.upload-box.active {
-    background: rgba(20,110,210,.25);
-    border-color: #55adff;
+.dropzone {
+  margin-top: 12px;
+  border: 2px dashed #258cff;
+  border-radius: 22px;
+  padding: 32px 20px;
+  text-align: center;
+  background: rgba(15,62,110,.45);
 }
 
 .upload-icon {
-    font-size: 55px;
-    margin-bottom: 15px;
+  font-size: 48px;
+  margin-bottom: 12px;
 }
 
-.upload-box h2 {
-    margin: 10px 0;
+.dropzone h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
 }
 
-.upload-box p {
-    color: #8ca6c0;
-    margin: 8px 0 22px;
+.dropzone p {
+  color: #8fa8c3;
+  margin-bottom: 20px;
 }
 
 .file-button {
-    display: inline-block;
-    background: linear-gradient(135deg,#1689ff,#0964d8);
-    padding: 15px 28px;
-    border-radius: 14px;
-    font-weight: bold;
-    cursor: pointer;
+  display: inline-block;
+  background: #1685ff;
+  padding: 14px 25px;
+  border-radius: 13px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 #fileInput {
-    display: none;
-}
-
-.file-info {
-    margin-top: 20px;
-    display: none;
-    background: rgba(4,20,35,.65);
-    border: 1px solid #315273;
-    border-radius: 15px;
-    padding: 17px;
+  display: none;
 }
 
 .file-name {
-    font-weight: bold;
-    word-break: break-word;
+  margin-top: 15px;
+  color: #72c0ff;
+  word-break: break-word;
 }
 
-.file-size {
-    color: #8fa9c5;
-    margin-top: 5px;
+.token-box {
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.2);
+  border: 1px solid rgba(255,255,255,.08);
 }
 
-.button {
-    width: 100%;
-    border: 0;
-    margin-top: 25px;
-    padding: 18px;
-    border-radius: 15px;
-    background: linear-gradient(135deg,#1689ff,#0865d7);
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
+.token-box small {
+  display: block;
+  color: #91a7bf;
+  line-height: 1.6;
+  margin-top: 8px;
 }
 
-.button:disabled {
-    opacity: .45;
-    cursor: not-allowed;
+.upload-btn {
+  width: 100%;
+  border: 0;
+  margin-top: 24px;
+  padding: 18px;
+  border-radius: 17px;
+  background: linear-gradient(135deg,#1685ff,#0861db);
+  color: white;
+  font-size: 19px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.message {
-    display: none;
-    margin-top: 20px;
-    padding: 17px;
-    border-radius: 14px;
-    line-height: 1.5;
+.upload-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.progress {
+  height: 9px;
+  background: rgba(255,255,255,.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 18px;
+  display: none;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #27a5ff;
+  transition: width .3s;
+}
+
+.status {
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 14px;
+  display: none;
+  line-height: 1.6;
 }
 
 .success {
-    display: block;
-    background: rgba(20,130,70,.2);
-    border: 1px solid #2eb872;
-    color: #8ff0b7;
+  display: block;
+  background: rgba(25,160,90,.18);
+  border: 1px solid rgba(25,200,110,.4);
+  color: #8ff0bb;
 }
 
 .error {
-    display: block;
-    background: rgba(160,30,50,.2);
-    border: 1px solid #e45b70;
-    color: #ff9cac;
+  display: block;
+  background: rgba(220,50,70,.15);
+  border: 1px solid rgba(255,80,100,.4);
+  color: #ff9da9;
+}
+
+.info {
+  display: block;
+  background: rgba(30,130,230,.15);
+  border: 1px solid rgba(60,150,255,.3);
+  color: #9ed0ff;
+}
+
+.note {
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255,180,30,.08);
+  border: 1px solid rgba(255,180,30,.2);
+  color: #e9c878;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .footer {
-    text-align: center;
-    color: #68829d;
-    margin-top: 35px;
-    padding-top: 25px;
-    border-top: 1px solid rgba(100,160,220,.15);
+  text-align: center;
+  color: #657d98;
+  margin-top: 30px;
+  font-size: 14px;
 }
 
-@media(max-width:600px) {
+@media(max-width:500px) {
+  h2 {
+    font-size: 30px;
+  }
 
-    .header {
-        padding: 15px;
-    }
-
-    .logo {
-        width: 58px;
-        height: 58px;
-    }
-
-    .brand h2 {
-        font-size: 21px;
-    }
-
-    .brand p {
-        font-size: 13px;
-    }
-
-    .container {
-        padding: 25px 15px 45px;
-    }
-
-    h1 {
-        font-size: 32px;
-    }
-
-    .card {
-        padding: 20px;
-        border-radius: 20px;
-    }
-
-    .upload-box {
-        padding: 35px 15px;
-    }
+  .card {
+    padding: 17px;
+  }
 }
 </style>
 </head>
@@ -280,475 +272,570 @@ input[type="text"] {
 <body>
 
 <header class="header">
-
-    <div class="brand">
-        <div class="logo">LP</div>
-
-        <div>
-            <h2>LP-Store</h2>
-            <p>Pharma Material Intelligence</p>
-        </div>
-    </div>
-
-    <div class="user">Y</div>
-
+  <div class="logo">LP</div>
+  <div>
+    <h1>LP-Store</h1>
+    <p>Pharma Material Intelligence</p>
+  </div>
 </header>
-
 
 <main class="container">
 
-    <a href="dashboard.html" class="back">
-        ← Back to Dashboard
-    </a>
+<a href="dashboard.html" class="back">
+  ← Back to Dashboard
+</a>
 
-    <h1>Upload Material Report</h1>
+<h2>Upload <span style="color:#49a8ff;">Material Report</span></h2>
 
-    <div class="subtitle">
-        Upload your pharmaceutical material inventory and
-        Facility Management reports securely to LP-Store.
-    </div>
+<p class="subtitle">
+  Upload your pharmaceutical material inventory and
+  Facility Management reports securely to LP-Store.
+</p>
 
+<div class="card">
 
-    <div class="card">
+<label>Report Type</label>
 
-        <label for="reportType">
-            Report Type
-        </label>
-
-        <select id="reportType">
-
-            <option value="Gate Entry">
-                📋 Gate Entry
-            </option>
-
-            <option value="Material Stock">
-                📦 Material Stock
-            </option>
-
-            <option value="Purchase Order">
-                🧾 Purchase Order
-            </option>
-
-            <option value="Warehouse">
-                🏭 Warehouse Report
-            </option>
-
-            <option value="Facility Management">
-                🛠️ Facility Management
-            </option>
-
-            <option value="Other">
-                📄 Other Report
-            </option>
-
-        </select>
+<select id="reportType">
+  <option value="gate-entry">📋 Gate Entry</option>
+  <option value="pr-po">📑 PR / PO</option>
+  <option value="material-stock">📦 Material Stock</option>
+  <option value="warehouse">🏭 Warehouse</option>
+  <option value="facility-management">🛠️ Facility Management</option>
+</select>
 
 
-        <label for="reportTitle">
-            Report Name
-        </label>
+<label>Report Name</label>
 
-        <input
-            type="text"
-            id="reportTitle"
-            placeholder="Example: Gate Entry July 2026"
-        >
+<input
+  type="text"
+  id="reportName"
+  placeholder="Example: July Month Gate Entry"
+>
 
 
-        <div
-            class="upload-box"
-            id="uploadBox"
-        >
+<div class="dropzone">
 
-            <div class="upload-icon">
-                📤
-            </div>
+<div class="upload-icon">📤</div>
 
-            <h2>
-                Upload your report
-            </h2>
+<h3>Upload your report</h3>
 
-            <p>
-                Select PDF, Excel, Word or image file
-            </p>
+<p>
+Drag & drop your PDF here<br>
+or select a file from your device
+</p>
 
-            <label
-                for="fileInput"
-                class="file-button"
-            >
-                Choose File
-            </label>
+<label class="file-button" for="fileInput">
+  Choose File
+</label>
 
-            <input
-                type="file"
-                id="fileInput"
-                accept=".pdf,.xlsx,.xls,.csv,.doc,.docx,.jpg,.jpeg,.png"
-            >
+<input
+  type="file"
+  id="fileInput"
+  accept=".pdf,application/pdf"
+>
 
-        </div>
+<div class="file-name" id="fileName">
+  No file selected
+</div>
+
+</div>
 
 
-        <div
-            class="file-info"
-            id="fileInfo"
-        >
+<div class="token-box">
 
-            <div class="file-name" id="fileName"></div>
+<label style="margin-top:0;">
+  GitHub Access Token
+</label>
 
-            <div class="file-size" id="fileSize"></div>
+<input
+  type="password"
+  id="githubToken"
+  placeholder="Paste your GitHub token here"
+  autocomplete="off"
+>
 
-        </div>
+<small>
+  🔐 Your token is not saved in this page.
+  Never put your token inside the HTML code or GitHub repository.
+</small>
 
-
-        <button
-            class="button"
-            id="uploadButton"
-            disabled
-        >
-            📤 Save Report
-        </button>
-
-
-        <div
-            class="message"
-            id="message"
-        ></div>
-
-    </div>
+</div>
 
 
-    <div class="footer">
+<button
+  class="upload-btn"
+  id="uploadBtn"
+  onclick="uploadReport()"
+>
+  📤 Upload Report
+</button>
 
-        🔒 Secure LP-Store Facility Management Portal
-        <br><br>
+<div class="progress" id="progress">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
 
-        Authorized Facility Management users only
+<div id="status" class="status"></div>
 
-    </div>
+
+<div class="note">
+
+⚠️ <b>Important:</b><br>
+Use a GitHub Fine-grained Personal Access Token
+with access only to this repository and
+<b>Contents → Read and write</b> permission.
+
+</div>
+
+</div>
+
+<div class="footer">
+  🔒 LP-Store • Facility Management Secure Portal
+</div>
 
 </main>
 
 
 <script>
 
+const OWNER = "yaseeninoor";
+const REPO = "lp-fm-ai";
+const BRANCH = "main";
+
+const API =
+  "https://api.github.com/repos/" +
+  OWNER + "/" + REPO + "/contents/";
+
+
 const fileInput =
-    document.getElementById("fileInput");
-
-const uploadBox =
-    document.getElementById("uploadBox");
-
-const fileInfo =
-    document.getElementById("fileInfo");
+  document.getElementById("fileInput");
 
 const fileName =
-    document.getElementById("fileName");
+  document.getElementById("fileName");
 
-const fileSize =
-    document.getElementById("fileSize");
-
-const uploadButton =
-    document.getElementById("uploadButton");
-
-const message =
-    document.getElementById("message");
+const reportName =
+  document.getElementById("reportName");
 
 const reportType =
-    document.getElementById("reportType");
+  document.getElementById("reportType");
 
-const reportTitle =
-    document.getElementById("reportTitle");
+const tokenInput =
+  document.getElementById("githubToken");
 
-let selectedFile = null;
+const uploadBtn =
+  document.getElementById("uploadBtn");
+
+const statusBox =
+  document.getElementById("status");
+
+const progress =
+  document.getElementById("progress");
+
+const progressBar =
+  document.getElementById("progressBar");
 
 
-/* -----------------------------
-   OPEN DATABASE
------------------------------- */
+fileInput.addEventListener("change", function() {
 
-let db;
+  if (!this.files.length) {
+    fileName.textContent = "No file selected";
+    return;
+  }
 
-const request =
-    indexedDB.open("LPStoreDB", 1);
+  const file = this.files[0];
 
-request.onupgradeneeded = function(event) {
+  fileName.textContent =
+    "📄 " + file.name +
+    " • " + formatSize(file.size);
 
-    db = event.target.result;
+});
 
-    if (!db.objectStoreNames.contains("reports")) {
 
-        db.createObjectStore(
-            "reports",
-            {
-                keyPath: "id",
-                autoIncrement: true
-            }
-        );
+function formatSize(bytes) {
 
-    }
+  if (bytes < 1024)
+    return bytes + " B";
 
-};
+  if (bytes < 1024 * 1024)
+    return (bytes / 1024).toFixed(1) + " KB";
 
-request.onsuccess = function(event) {
+  return (bytes / 1024 / 1024).toFixed(1) + " MB";
+}
 
-    db = event.target.result;
 
-};
+function showStatus(message, type) {
 
-request.onerror = function() {
+  statusBox.className =
+    "status " + type;
 
-    showMessage(
-        "Unable to open local storage.",
-        "error"
+  statusBox.innerHTML = message;
+}
+
+
+function cleanFileName(name) {
+
+  return name
+    .trim()
+    .replace(/[\/\\:*?"<>|#%{}[\]]/g, "-")
+    .replace(/\s+/g, "-");
+}
+
+
+function arrayBufferToBase64(buffer) {
+
+  let binary = "";
+
+  const bytes = new Uint8Array(buffer);
+
+  const chunkSize = 0x8000;
+
+  for (
+    let i = 0;
+    i < bytes.length;
+    i += chunkSize
+  ) {
+
+    binary += String.fromCharCode.apply(
+      null,
+      bytes.subarray(
+        i,
+        Math.min(i + chunkSize, bytes.length)
+      )
     );
 
-};
+  }
+
+  return btoa(binary);
+}
 
 
-/* -----------------------------
-   SELECT FILE
------------------------------- */
+async function uploadReport() {
 
-fileInput.addEventListener(
-    "change",
-    function() {
+  const file =
+    fileInput.files[0];
 
-        if (!this.files.length) {
+  const token =
+    tokenInput.value.trim();
 
-            selectedFile = null;
-            uploadButton.disabled = true;
+  const name =
+    reportName.value.trim();
 
-            return;
+  if (!file) {
+
+    showStatus(
+      "⚠️ Please select a PDF file.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (
+    file.type !== "application/pdf" &&
+    !file.name.toLowerCase().endsWith(".pdf")
+  ) {
+
+    showStatus(
+      "⚠️ Please select a PDF file only.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  if (!name) {
+
+    showStatus(
+      "⚠️ Please enter a report name.",
+      "error"
+    );
+
+    reportName.focus();
+    return;
+  }
+
+
+  if (!token) {
+
+    showStatus(
+      "⚠️ Please enter your GitHub Access Token.",
+      "error"
+    );
+
+    tokenInput.focus();
+    return;
+  }
+
+
+  if (file.size > 100 * 1024 * 1024) {
+
+    showStatus(
+      "⚠️ File is too large. Please use a file below 100 MB.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  uploadBtn.disabled = true;
+
+  progress.style.display = "block";
+
+  progressBar.style.width = "10%";
+
+
+  showStatus(
+    "⏳ Reading your PDF...",
+    "info"
+  );
+
+
+  try {
+
+    const buffer =
+      await file.arrayBuffer();
+
+    progressBar.style.width = "35%";
+
+
+    const base64 =
+      arrayBufferToBase64(buffer);
+
+    progressBar.style.width = "55%";
+
+
+    const folder =
+      reportType.value;
+
+    const safeName =
+      cleanFileName(name);
+
+    let finalName =
+      safeName;
+
+    if (
+      !finalName
+        .toLowerCase()
+        .endsWith(".pdf")
+    ) {
+
+      finalName += ".pdf";
+
+    }
+
+
+    const path =
+      "reports/" +
+      folder +
+      "/" +
+      finalName;
+
+
+    showStatus(
+      "⏳ Uploading to GitHub...",
+      "info"
+    );
+
+
+    /*
+      First check whether the file already exists.
+      This prevents accidental overwrite errors.
+    */
+
+    let existingSha = null;
+
+
+    const checkResponse =
+      await fetch(
+        API +
+        encodePath(path) +
+        "?ref=" +
+        encodeURIComponent(BRANCH),
+        {
+          method: "GET",
+          headers: {
+            "Accept":
+              "application/vnd.github+json",
+            "Authorization":
+              "Bearer " + token
+          }
         }
+      );
 
-        selectedFile = this.files[0];
 
-        fileName.textContent =
-            "📄 " + selectedFile.name;
+    if (checkResponse.ok) {
 
-        fileSize.textContent =
-            formatSize(selectedFile.size);
+      const existing =
+        await checkResponse.json();
 
-        fileInfo.style.display = "block";
-
-        uploadButton.disabled = false;
-
-        uploadBox.classList.add("active");
+      existingSha =
+        existing.sha;
 
     }
-);
 
 
-/* -----------------------------
-   DRAG & DROP
------------------------------- */
+    progressBar.style.width = "70%";
 
-uploadBox.addEventListener(
-    "dragover",
-    function(event) {
 
-        event.preventDefault();
+    const body = {
 
-        uploadBox.classList.add("active");
+      message:
+        "Upload report: " + finalName,
 
-    }
-);
+      content:
+        base64,
 
-uploadBox.addEventListener(
-    "dragleave",
-    function() {
+      branch:
+        BRANCH
 
-        uploadBox.classList.remove("active");
+    };
 
-    }
-);
 
-uploadBox.addEventListener(
-    "drop",
-    function(event) {
+    if (existingSha) {
 
-        event.preventDefault();
-
-        uploadBox.classList.remove("active");
-
-        const files =
-            event.dataTransfer.files;
-
-        if (!files.length) return;
-
-        selectedFile = files[0];
-
-        fileName.textContent =
-            "📄 " + selectedFile.name;
-
-        fileSize.textContent =
-            formatSize(selectedFile.size);
-
-        fileInfo.style.display = "block";
-
-        uploadButton.disabled = false;
+      body.sha = existingSha;
 
     }
-);
 
 
-/* -----------------------------
-   SAVE REPORT
------------------------------- */
+    const response =
+      await fetch(
+        API + encodePath(path),
+        {
+          method: "PUT",
 
-uploadButton.addEventListener(
-    "click",
-    function() {
+          headers: {
+            "Accept":
+              "application/vnd.github+json",
 
-        if (!selectedFile) {
+            "Authorization":
+              "Bearer " + token,
 
-            showMessage(
-                "Please choose a file first.",
-                "error"
-            );
+            "X-GitHub-Api-Version":
+              "2026-03-10",
 
-            return;
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify(body)
         }
+      );
 
 
-        if (!db) {
-
-            showMessage(
-                "Database is still loading. Please try again.",
-                "error"
-            );
-
-            return;
-        }
+    const result =
+      await response.json();
 
 
-        uploadButton.disabled = true;
+    if (!response.ok) {
 
-        uploadButton.textContent =
-            "Saving...";
+      let message =
+        result.message ||
+        "GitHub upload failed.";
 
+      if (response.status === 401) {
 
-        const report = {
+        message =
+          "❌ Invalid GitHub token.";
 
-            type: reportType.value,
+      }
 
-            title:
-                reportTitle.value.trim()
-                || selectedFile.name,
+      else if (response.status === 403) {
 
-            fileName:
-                selectedFile.name,
+        message =
+          "❌ Permission denied. Check that your token has Contents → Read and write permission.";
 
-            fileSize:
-                selectedFile.size,
+      }
 
-            fileType:
-                selectedFile.type,
+      else if (response.status === 404) {
 
-            file:
-                selectedFile,
+        message =
+          "❌ Repository not found. Check repository name and token access.";
 
-            createdAt:
-                new Date().toISOString()
+      }
 
-        };
-
-
-        const transaction =
-            db.transaction(
-                ["reports"],
-                "readwrite"
-            );
-
-        const store =
-            transaction.objectStore("reports");
-
-        const addRequest =
-            store.add(report);
-
-
-        addRequest.onsuccess =
-            function() {
-
-                showMessage(
-                    "✅ Report saved successfully!",
-                    "success"
-                );
-
-                uploadButton.textContent =
-                    "✅ Report Saved";
-
-
-                setTimeout(function() {
-
-                    window.location.href =
-                        "reports.html";
-
-                }, 1200);
-
-            };
-
-
-        addRequest.onerror =
-            function() {
-
-                showMessage(
-                    "❌ Unable to save the report.",
-                    "error"
-                );
-
-                uploadButton.disabled = false;
-
-                uploadButton.textContent =
-                    "📤 Save Report";
-
-            };
+      throw new Error(message);
 
     }
-);
 
 
-/* -----------------------------
-   MESSAGE
------------------------------- */
+    progressBar.style.width = "100%";
 
-function showMessage(
-    text,
-    type
-) {
 
-    message.textContent = text;
+    showStatus(
+      "✅ <b>Upload successful!</b><br><br>" +
+      "📄 " + finalName +
+      "<br>📁 reports/" + folder +
+      "<br><br>" +
+      "The report is now available in LP-Store.",
+      "success"
+    );
 
-    message.className =
-        "message " + type;
+
+    /*
+      Clear token from the page after successful upload.
+    */
+
+    tokenInput.value = "";
+
+
+    setTimeout(function() {
+
+      window.location.href =
+        "reports.html";
+
+    }, 2500);
+
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    progressBar.style.width = "0%";
+
+    showStatus(
+      "❌ <b>Upload failed</b><br><br>" +
+      escapeHtml(error.message),
+      "error"
+    );
+
+  }
+
+  finally {
+
+    uploadBtn.disabled = false;
+
+  }
 
 }
 
 
-/* -----------------------------
-   FILE SIZE
------------------------------- */
+function encodePath(path) {
 
-function formatSize(bytes) {
+  return path
+    .split("/")
+    .map(
+      part => encodeURIComponent(part)
+    )
+    .join("/");
 
-    if (bytes < 1024) {
+}
 
-        return bytes + " Bytes";
 
-    }
+function escapeHtml(text) {
 
-    if (bytes < 1024 * 1024) {
+  const div =
+    document.createElement("div");
 
-        return (
-            (bytes / 1024).toFixed(1)
-            + " KB"
-        );
+  div.textContent = text;
 
-    }
-
-    return (
-        (bytes / (1024 * 1024)).toFixed(2)
-        + " MB"
-    );
+  return div.innerHTML;
 
 }
 
