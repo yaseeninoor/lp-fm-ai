@@ -1,288 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Material Reports - LP-Store</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
+
     background:
-        radial-gradient(circle at top right, #123b68 0%, transparent 35%),
-        linear-gradient(135deg, #061a30, #031322);
+        radial-gradient(
+            circle at top right,
+            #123b68 0%,
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #061a30,
+            #031322
+        );
+
     color: white;
     min-height: 100vh;
 }
 
 .header {
+
     padding: 18px 24px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     background: rgba(3,18,34,.96);
-    border-bottom: 1px solid rgba(100,160,220,.25);
+
+    border-bottom:
+        1px solid rgba(100,160,220,.25);
 }
 
 .brand {
+
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
 .logo {
+
     width: 62px;
     height: 62px;
+
     border-radius: 18px;
-    background: linear-gradient(135deg,#1688ff,#075fd1);
+
+    background:
+        linear-gradient(
+            135deg,
+            #1688ff,
+            #075fd1
+        );
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-size: 25px;
     font-weight: 800;
 }
 
 .brand h2 {
+
     margin: 0;
     font-size: 25px;
 }
 
 .brand p {
+
     margin: 5px 0 0;
     color: #7894b2;
 }
 
 .user {
+
     width: 48px;
     height: 48px;
+
     border-radius: 50%;
+
     background: #087bf5;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-weight: bold;
     font-size: 20px;
 }
 
 .container {
+
     max-width: 1000px;
+
     margin: auto;
-    padding: 30px 20px 60px;
+
+    padding:
+        30px 20px 60px;
 }
 
 .back {
+
     color: #82bdff;
+
     text-decoration: none;
+
     font-size: 16px;
 }
 
 h1 {
+
     font-size: 40px;
-    margin: 25px 0 10px;
+
+    margin:
+        25px 0 10px;
 }
 
 h1 span {
+
     color: #42a5ff;
 }
 
 .subtitle {
+
     color: #91aac3;
+
     font-size: 18px;
+
     line-height: 1.7;
+
     margin-bottom: 30px;
 }
 
 .search {
+
     width: 100%;
+
     padding: 18px 20px;
+
     border-radius: 18px;
-    border: 1px solid #315273;
-    background: rgba(23,47,73,.8);
+
+    border:
+        1px solid #315273;
+
+    background:
+        rgba(23,47,73,.8);
+
     color: white;
+
     font-size: 17px;
+
     outline: none;
+
     margin-bottom: 35px;
 }
 
 .search::placeholder {
+
     color: #7c94ac;
 }
 
 .section {
-    margin-bottom: 35px;
+
+    margin-bottom: 40px;
 }
 
 .section-title {
+
     display: flex;
+
     align-items: center;
+
     gap: 14px;
+
     font-size: 25px;
+
     font-weight: bold;
+
     margin-bottom: 18px;
 }
 
 .section-icon {
+
     width: 54px;
     height: 54px;
+
     border-radius: 15px;
-    background: rgba(10,100,210,.25);
+
+    background:
+        rgba(10,100,210,.25);
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     font-size: 27px;
 }
 
 .report-list {
+
     display: grid;
+
     gap: 15px;
 }
 
 .report {
-    background: rgba(14,42,70,.75);
-    border: 1px solid rgba(100,160,220,.25);
+
+    background:
+        rgba(14,42,70,.75);
+
+    border:
+        1px solid rgba(100,160,220,.25);
+
     border-radius: 18px;
+
     padding: 20px;
 }
 
-.report-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-}
-
 .report-name {
+
     font-size: 18px;
+
     font-weight: bold;
+
     word-break: break-word;
 }
 
-.report-date {
-    color: #7894b2;
-    font-size: 13px;
-    margin-top: 7px;
-}
+.report-info {
 
-.report-size {
     color: #8fa9c5;
+
     font-size: 14px;
-    margin-top: 5px;
+
+    margin-top: 8px;
 }
 
 .buttons {
+
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 10px;
+
     margin-top: 18px;
 }
 
 .btn {
+
     border: 0;
-    padding: 11px 17px;
+
+    padding:
+        11px 17px;
+
     border-radius: 11px;
+
     cursor: pointer;
+
     color: white;
+
     font-weight: bold;
+
     font-size: 14px;
+
+    text-decoration: none;
+
+    display: inline-block;
 }
 
 .view {
+
     background: #167ff0;
 }
 
 .download {
+
     background: #1d9b62;
 }
 
-.delete {
-    background: #a93b4c;
-}
-
 .empty {
-    border: 1px dashed #294766;
-    border-radius: 20px;
-    padding: 45px 20px;
-    text-align: center;
-    color: #7e97b0;
-    background: rgba(10,35,58,.35);
-}
 
-.empty-icon {
-    font-size: 42px;
-    margin-bottom: 12px;
+    border:
+        1px dashed #294766;
+
+    border-radius: 20px;
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #7e97b0;
 }
 
 .loading {
+
     text-align: center;
+
     padding: 40px;
+
     color: #8fa9c5;
 }
 
-.message {
-    display: none;
-    padding: 16px;
-    margin-bottom: 20px;
-    border-radius: 14px;
-}
-
 .error {
-    display: block;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
     color: #ff9baa;
-    border: 1px solid #a83e50;
-    background: rgba(150,30,50,.2);
+
+    background:
+        rgba(150,30,50,.2);
+
+    border:
+        1px solid #a83e50;
 }
 
 .footer {
+
     text-align: center;
+
     color: #68829d;
+
     margin-top: 45px;
+
     padding-top: 25px;
-    border-top: 1px solid rgba(100,160,220,.15);
+
+    border-top:
+        1px solid rgba(100,160,220,.15);
 }
 
 @media(max-width:600px) {
 
     .header {
+
         padding: 15px;
     }
 
     .brand h2 {
+
         font-size: 21px;
     }
 
     .brand p {
+
         font-size: 13px;
     }
 
     .container {
-        padding: 25px 15px 50px;
+
+        padding:
+            25px 15px 50px;
     }
 
     h1 {
+
         font-size: 34px;
     }
 
-    .report-top {
-        display: block;
-    }
-
     .buttons {
+
         flex-direction: column;
     }
 
     .btn {
+
         width: 100%;
+
+        text-align: center;
     }
 }
+
 </style>
+
 </head>
 
 <body>
+
 
 <header class="header">
 
@@ -293,8 +406,13 @@ h1 span {
         </div>
 
         <div>
+
             <h2>LP-Store</h2>
-            <p>Pharma Material Intelligence</p>
+
+            <p>
+                Pharma Material Intelligence
+            </p>
+
         </div>
 
     </div>
@@ -308,351 +426,444 @@ h1 span {
 
 <main class="container">
 
-    <a href="dashboard.html" class="back">
-        ← Back to Dashboard
-    </a>
 
-    <h1>
-        Material <span>Reports</span>
-    </h1>
+<a href="dashboard.html"
+   class="back">
 
-    <div class="subtitle">
-        Pharmaceutical material inventory, Facility Management
-        and store reports uploaded to LP-Store.
+    ← Back to Dashboard
+
+</a>
+
+
+<h1>
+    Material <span>Reports</span>
+</h1>
+
+
+<div class="subtitle">
+
+    Pharmaceutical material inventory,
+    Facility Management and store reports
+    uploaded to LP-Store.
+
+</div>
+
+
+<input
+    type="search"
+    id="search"
+    class="search"
+    placeholder="🔎 Search reports..."
+>
+
+
+<div
+    id="loading"
+    class="loading">
+
+    Loading reports from GitHub...
+
+</div>
+
+
+<div
+    id="error"
+    style="display:none;"
+    class="error">
+</div>
+
+
+<div
+    id="content"
+    style="display:none;"
+>
+
+
+<!-- GATE ENTRY -->
+
+<section class="section">
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📋
     </div>
 
+    Gate Entry Reports
 
-    <input
-        type="search"
-        id="search"
-        class="search"
-        placeholder="🔎  Search reports..."
-    >
+</div>
 
+<div
+    id="gate-entry"
+    class="report-list">
+</div>
 
-    <div
-        id="message"
-        class="message"
-    ></div>
+</section>
 
 
-    <div id="loading" class="loading">
-        Loading reports...
+<!-- MATERIAL STOCK -->
+
+<section class="section">
+
+<div class="section-title">
+
+    <div class="section-icon">
+        📦
     </div>
 
+    Material Stock Reports
 
-    <div id="content" style="display:none;">
+</div>
 
-        <section class="section">
+<div
+    id="material-stock"
+    class="report-list">
+</div>
 
-            <div class="section-title">
-
-                <div class="section-icon">
-                    📋
-                </div>
-
-                Gate Entry Reports
-
-            </div>
-
-            <div
-                id="gateEntry"
-                class="report-list"
-            ></div>
-
-        </section>
+</section>
 
 
-        <section class="section">
+<!-- PR PO -->
 
-            <div class="section-title">
+<section class="section">
 
-                <div class="section-icon">
-                    📦
-                </div>
+<div class="section-title">
 
-                Material Stock Reports
-
-            </div>
-
-            <div
-                id="materialStock"
-                class="report-list"
-            ></div>
-
-        </section>
-
-
-        <section class="section">
-
-            <div class="section-title">
-
-                <div class="section-icon">
-                    🧾
-                </div>
-
-                PR / PO Reports
-
-            </div>
-
-            <div
-                id="purchaseOrder"
-                class="report-list"
-            ></div>
-
-        </section>
-
-
-        <section class="section">
-
-            <div class="section-title">
-
-                <div class="section-icon">
-                    🏭
-                </div>
-
-                Warehouse Reports
-
-            </div>
-
-            <div
-                id="warehouse"
-                class="report-list"
-            ></div>
-
-        </section>
-
-
-        <section class="section">
-
-            <div class="section-title">
-
-                <div class="section-icon">
-                    🛠️
-                </div>
-
-                Facility Management Reports
-
-            </div>
-
-            <div
-                id="facilityManagement"
-                class="report-list"
-            ></div>
-
-        </section>
-
-
-        <section class="section">
-
-            <div class="section-title">
-
-                <div class="section-icon">
-                    📄
-                </div>
-
-                Other Reports
-
-            </div>
-
-            <div
-                id="other"
-                class="report-list"
-            ></div>
-
-        </section>
-
+    <div class="section-icon">
+        🧾
     </div>
 
+    PR / PO Reports
 
-    <div class="footer">
+</div>
 
-        🔒 Secure LP-Store Facility Management Portal
-        <br><br>
+<div
+    id="pr-po"
+    class="report-list">
+</div>
 
-        Authorized Facility Management users only
+</section>
 
+
+<!-- WAREHOUSE -->
+
+<section class="section">
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🏭
     </div>
+
+    Warehouse Reports
+
+</div>
+
+<div
+    id="warehouse"
+    class="report-list">
+</div>
+
+</section>
+
+
+<!-- FM -->
+
+<section class="section">
+
+<div class="section-title">
+
+    <div class="section-icon">
+        🛠️
+    </div>
+
+    Facility Management Reports
+
+</div>
+
+<div
+    id="facility-management"
+    class="report-list">
+</div>
+
+</section>
+
+
+</div>
+
+
+<div class="footer">
+
+🔒 Secure LP-Store Facility Management Portal
+
+<br><br>
+
+Authorized Facility Management users only
+
+</div>
+
 
 </main>
 
 
 <script>
 
-let db = null;
-let allReports = [];
-let currentObjectURLs = [];
+
+const GITHUB_USER =
+    "yaseeninoor";
+
+const GITHUB_REPO =
+    "lp-fm-ai";
+
+const GITHUB_BRANCH =
+    "main";
+
+
+const folders = {
+
+    "gate-entry":
+        "reports/gate-entry",
+
+    "material-stock":
+        "reports/material-stock",
+
+    "pr-po":
+        "reports/pr-po",
+
+    "warehouse":
+        "reports/warehouse",
+
+    "facility-management":
+        "reports/facility-management"
+
+};
+
+
+let allFiles = [];
 
 
 /* =========================
-   OPEN DATABASE
+   LOAD GITHUB FILES
 ========================= */
 
-const request =
-    indexedDB.open("LPStoreDB", 1);
+async function loadReports() {
+
+    try {
+
+        for (
+            const category in folders
+        ) {
+
+            const url =
+                "https://api.github.com/repos/"
+                + GITHUB_USER
+                + "/"
+                + GITHUB_REPO
+                + "/contents/"
+                + folders[category]
+                + "?ref="
+                + GITHUB_BRANCH;
 
 
-request.onupgradeneeded = function(event) {
+            const response =
+                await fetch(url);
 
-    db = event.target.result;
 
-    if (!db.objectStoreNames.contains("reports")) {
+            if (!response.ok) {
 
-        db.createObjectStore(
-            "reports",
-            {
-                keyPath: "id",
-                autoIncrement: true
+                continue;
+
             }
-        );
-
-    }
-
-};
 
 
-request.onsuccess = function(event) {
-
-    db = event.target.result;
-
-    loadReports();
-
-};
+            const files =
+                await response.json();
 
 
-request.onerror = function() {
+            if (!Array.isArray(files)) {
 
-    showError(
-        "Unable to open local report database."
-    );
+                continue;
 
-};
+            }
 
 
-/* =========================
-   LOAD REPORTS
-========================= */
+            files.forEach(
+                function(file) {
 
-function loadReports() {
+                    if (
+                        file.type === "file"
+                        &&
+                        isSupportedFile(file.name)
+                    ) {
 
-    const transaction =
-        db.transaction(
-            ["reports"],
-            "readonly"
-        );
+                        allFiles.push({
 
-    const store =
-        transaction.objectStore("reports");
+                            name:
+                                file.name,
 
-    const getRequest =
-        store.getAll();
+                            url:
+                                file.download_url,
 
+                            html_url:
+                                file.html_url,
 
-    getRequest.onsuccess =
-        function(event) {
+                            category:
+                                category,
 
-            allReports =
-                event.target.result || [];
+                            size:
+                                file.size
 
-            allReports.sort(
-                function(a,b) {
+                        });
 
-                    return new Date(b.createdAt)
-                         - new Date(a.createdAt);
+                    }
 
                 }
             );
 
+        }
+
+
+        document.getElementById(
+            "loading"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "content"
+        ).style.display = "block";
+
+
+        renderReports(allFiles);
+
+    }
+
+    catch(error) {
+
+        document.getElementById(
+            "loading"
+        ).style.display = "none";
+
+
+        const errorBox =
             document.getElementById(
-                "loading"
-            ).style.display = "none";
-
-            document.getElementById(
-                "content"
-            ).style.display = "block";
-
-            renderReports(allReports);
-
-        };
-
-
-    getRequest.onerror =
-        function() {
-
-            showError(
-                "Unable to load reports."
+                "error"
             );
 
-        };
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.innerHTML =
+            "⚠️ Unable to load GitHub reports.<br><br>"
+            +
+            "Please check your GitHub repository and folders.";
+
+    }
 
 }
 
 
 /* =========================
-   RENDER REPORTS
+   SUPPORTED FILES
 ========================= */
 
-function renderReports(reports) {
+function isSupportedFile(name) {
 
-    clearObjectURLs();
+    const extensions = [
 
-    const containers = {
+        ".pdf",
+        ".xlsx",
+        ".xls",
+        ".csv",
+        ".doc",
+        ".docx",
+        ".jpg",
+        ".jpeg",
+        ".png"
 
-        "Gate Entry":
-            document.getElementById("gateEntry"),
-
-        "Material Stock":
-            document.getElementById("materialStock"),
-
-        "Purchase Order":
-            document.getElementById("purchaseOrder"),
-
-        "Warehouse":
-            document.getElementById("warehouse"),
-
-        "Facility Management":
-            document.getElementById("facilityManagement"),
-
-        "Other":
-            document.getElementById("other")
-
-    };
+    ];
 
 
-    Object.values(containers).forEach(
-        function(container) {
+    const lower =
+        name.toLowerCase();
 
-            container.innerHTML = "";
+
+    return extensions.some(
+        function(extension) {
+
+            return lower.endsWith(
+                extension
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderReports(files) {
+
+
+    Object.keys(folders).forEach(
+        function(category) {
+
+            document.getElementById(
+                category
+            ).innerHTML = "";
 
         }
     );
 
 
-    reports.forEach(
-        function(report) {
+    files.forEach(
+        function(file) {
 
             const container =
-                containers[report.type]
-                || containers["Other"];
+                document.getElementById(
+                    file.category
+                );
+
+
+            if (!container) {
+
+                return;
+
+            }
+
 
             container.appendChild(
-                createReportCard(report)
+                createCard(file)
             );
 
         }
     );
 
 
-    Object.keys(containers).forEach(
-        function(type) {
+    Object.keys(folders).forEach(
+        function(category) {
 
             const container =
-                containers[type];
+                document.getElementById(
+                    category
+                );
 
-            if (!container.children.length) {
+
+            if (
+                container.children.length === 0
+            ) {
 
                 container.innerHTML =
-                    emptyHTML();
+
+                    '<div class="empty">'
+                    +
+                    '📂 No reports uploaded yet.'
+                    +
+                    '</div>';
 
             }
 
@@ -663,97 +874,67 @@ function renderReports(reports) {
 
 
 /* =========================
-   REPORT CARD
+   CARD
 ========================= */
 
-function createReportCard(report) {
+function createCard(file) {
+
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    div.className = "report";
 
-    const date =
-        new Date(report.createdAt);
+    div.className =
+        "report";
+
 
     div.innerHTML = `
 
-        <div class="report-top">
+        <div class="report-name">
 
-            <div>
-
-                <div class="report-name">
-                    📄 ${escapeHTML(
-                        report.title || report.fileName
-                    )}
-                </div>
-
-                <div class="report-date">
-                    Uploaded:
-                    ${date.toLocaleString()}
-                </div>
-
-                <div class="report-size">
-                    ${formatSize(report.fileSize)}
-                </div>
-
-            </div>
+            📄 ${escapeHTML(file.name)}
 
         </div>
 
+
+        <div class="report-info">
+
+            GitHub •
+            ${formatSize(file.size)}
+
+        </div>
+
+
         <div class="buttons">
 
-            <button
+
+            <a
+                href="${file.html_url}"
+                target="_blank"
                 class="btn view"
-                data-action="view"
             >
+
                 👁 View
-            </button>
 
-            <button
+            </a>
+
+
+            <a
+                href="${file.url}"
+                download
                 class="btn download"
-                data-action="download"
             >
-                ⬇ Download
-            </button>
 
-            <button
-                class="btn delete"
-                data-action="delete"
-            >
-                🗑 Delete
-            </button>
+                ⬇ Download
+
+            </a>
+
 
         </div>
 
     `;
-
-
-    div.querySelector(
-        '[data-action="view"]'
-    ).onclick = function() {
-
-        viewReport(report);
-
-    };
-
-
-    div.querySelector(
-        '[data-action="download"]'
-    ).onclick = function() {
-
-        downloadReport(report);
-
-    };
-
-
-    div.querySelector(
-        '[data-action="delete"]'
-    ).onclick = function() {
-
-        deleteReport(report.id);
-
-    };
 
 
     return div;
@@ -762,141 +943,27 @@ function createReportCard(report) {
 
 
 /* =========================
-   VIEW
-========================= */
-
-function viewReport(report) {
-
-    if (!report.file) {
-
-        alert(
-            "This report does not contain a browser-stored file."
-        );
-
-        return;
-
-    }
-
-
-    const url =
-        URL.createObjectURL(report.file);
-
-    currentObjectURLs.push(url);
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
-/* =========================
-   DOWNLOAD
-========================= */
-
-function downloadReport(report) {
-
-    if (!report.file) {
-
-        alert(
-            "File is not available."
-        );
-
-        return;
-
-    }
-
-
-    const url =
-        URL.createObjectURL(report.file);
-
-    currentObjectURLs.push(url);
-
-
-    const a =
-        document.createElement("a");
-
-    a.href = url;
-
-    a.download =
-        report.fileName || "report";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-}
-
-
-/* =========================
-   DELETE
-========================= */
-
-function deleteReport(id) {
-
-    const confirmDelete =
-        confirm(
-            "Are you sure you want to delete this report?"
-        );
-
-    if (!confirmDelete) return;
-
-
-    const transaction =
-        db.transaction(
-            ["reports"],
-            "readwrite"
-        );
-
-    const store =
-        transaction.objectStore("reports");
-
-    const request =
-        store.delete(id);
-
-
-    request.onsuccess =
-        function() {
-
-            loadReports();
-
-        };
-
-
-    request.onerror =
-        function() {
-
-            alert(
-                "Unable to delete report."
-            );
-
-        };
-
-}
-
-
-/* =========================
    SEARCH
 ========================= */
 
-document.getElementById(
-    "search"
-).addEventListener(
+document
+.getElementById("search")
+.addEventListener(
     "input",
     function() {
 
-        const term =
+
+        const text =
             this.value
-                .trim()
-                .toLowerCase();
+                .toLowerCase()
+                .trim();
 
 
-        if (!term) {
+        if (!text) {
 
-            renderReports(allReports);
+            renderReports(
+                allFiles
+            );
 
             return;
 
@@ -904,91 +971,73 @@ document.getElementById(
 
 
         const filtered =
-            allReports.filter(
-                function(report) {
+            allFiles.filter(
+                function(file) {
 
-                    return (
-
-                        (report.title || "")
-                            .toLowerCase()
-                            .includes(term)
-
-                        ||
-
-                        (report.fileName || "")
-                            .toLowerCase()
-                            .includes(term)
-
-                        ||
-
-                        (report.type || "")
-                            .toLowerCase()
-                            .includes(term)
-
-                    );
+                    return file.name
+                        .toLowerCase()
+                        .includes(text);
 
                 }
             );
 
 
-        renderReports(filtered);
+        renderReports(
+            filtered
+        );
 
     }
 );
 
 
 /* =========================
-   EMPTY
+   ESCAPE
 ========================= */
 
-function emptyHTML() {
+function escapeHTML(text) {
 
-    return `
+    return String(text)
 
-        <div class="empty">
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-            <div class="empty-icon">
-                📂
-            </div>
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-            No reports uploaded yet.
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-        </div>
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-    `;
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
 /* =========================
-   ERROR
-========================= */
-
-function showError(text) {
-
-    document.getElementById(
-        "loading"
-    ).style.display = "none";
-
-    const message =
-        document.getElementById("message");
-
-    message.textContent =
-        "⚠️ " + text;
-
-    message.className =
-        "message error";
-
-}
-
-
-/* =========================
-   FILE SIZE
+   SIZE
 ========================= */
 
 function formatSize(bytes) {
 
-    if (!bytes) return "Unknown size";
+    if (!bytes) {
+
+        return "Unknown size";
+
+    }
+
 
     if (bytes < 1024) {
 
@@ -996,17 +1045,25 @@ function formatSize(bytes) {
 
     }
 
-    if (bytes < 1024 * 1024) {
+
+    if (
+        bytes <
+        1024 * 1024
+    ) {
 
         return (
-            (bytes / 1024).toFixed(1)
+            (bytes / 1024)
+            .toFixed(1)
             + " KB"
         );
 
     }
 
+
     return (
-        (bytes / (1024 * 1024)).toFixed(2)
+        (bytes /
+        (1024 * 1024))
+        .toFixed(2)
         + " MB"
     );
 
@@ -1014,38 +1071,10 @@ function formatSize(bytes) {
 
 
 /* =========================
-   ESCAPE HTML
+   START
 ========================= */
 
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================
-   URL CLEANUP
-========================= */
-
-function clearObjectURLs() {
-
-    currentObjectURLs.forEach(
-        function(url) {
-
-            URL.revokeObjectURL(url);
-
-        }
-    );
-
-    currentObjectURLs = [];
-
-}
+loadReports();
 
 </script>
 
