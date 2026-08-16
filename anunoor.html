@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANU NOOR — India Countdown 🇮🇳</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --pink: #df356b;
+      --pink-light: #ff6f9d;
+      --bg: #fff5f8;
+      --text: #2b1820;
+      --muted: #806875;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #ffe1eb, transparent 35%),
+        linear-gradient(135deg, #ffffff, var(--bg));
+      min-height: 100vh;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid #f3d9e2;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      padding: 15px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      color: var(--pink);
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
+
+    .logo small {
+      display: block;
+      color: #a26c7d;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      margin-top: 3px;
+    }
+
+    .nav a {
+      color: #604751;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      padding: 55px 22px 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--pink);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-family: Georgia, serif;
+      color: #c82d60;
+      font-size: clamp(50px, 8vw, 82px);
+      line-height: .9;
+      margin-bottom: 20px;
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .photo-area {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .photo-area::before {
+      content: "";
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      border-radius: 45px;
+      background: #ffd7e4;
+      transform: rotate(5deg);
+    }
+
+    .baby-photo {
+      position: relative;
+      width: min(100%, 450px);
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 38px;
+      border: 8px solid white;
+      box-shadow: 0 25px 70px rgba(120, 35, 65, .22);
+    }
+
+    .countdown-section {
+      max-width: 1000px;
+      margin: 20px auto 60px;
+      padding: 0 22px;
+    }
+
+    .countdown-card {
+      background: rgba(255,255,255,.9);
+      border: 1px solid #f1d2dd;
+      border-radius: 34px;
+      padding: 35px;
+      box-shadow: 0 25px 75px rgba(190, 45, 95, .12);
+    }
+
+    .countdown-title {
+      text-align: center;
+      color: #c82d60;
+      font-family: Georgia, serif;
+      font-size: 34px;
+      margin-bottom: 7px;
+    }
+
+    .countdown-subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .route {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    .route-line {
+      width: 90px;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        var(--pink),
+        #f8bfd0
+      );
+      position: relative;
+    }
+
+    .route-line::after {
+      content: "✈";
+      position: absolute;
+      left: 50%;
+      top: -13px;
+      transform: translateX(-50%);
+      color: var(--pink);
+      font-size: 20px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .time-box {
+      background: #fff;
+      border: 1px solid #f1d9e2;
+      border-radius: 22px;
+      padding: 22px 8px;
+      text-align: center;
+    }
+
+    .number {
+      color: var(--pink);
+      font-size: clamp(38px, 7vw, 65px);
+      font-weight: 900;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .label {
+      color: #9a7b87;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 9px;
+    }
+
+    .arrival {
+      text-align: center;
+      margin-top: 25px;
+      font-weight: 800;
+      color: #604751;
+    }
+
+    .timezone {
+      text-align: center;
+      color: #9a7b87;
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .whatsapp {
+      background: linear-gradient(
+        135deg,
+        var(--pink),
+        var(--pink-light)
+      );
+      color: white;
+      box-shadow: 0 10px 25px rgba(220,48,104,.25);
+    }
+
+    .reminder {
+      background: white;
+      color: var(--pink);
+      border: 1px solid #efcbd8;
+    }
+
+    .dua {
+      text-align: center;
+      color: #806875;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto 55px;
+      padding: 0 22px;
+    }
+
+    footer {
+      background: #d82f67;
+      color: white;
+      text-align: center;
+      padding: 28px;
+    }
+
+    footer strong {
+      font-family: Georgia, serif;
+      font-size: 23px;
+    }
+
+    footer p {
+      margin-top: 7px;
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    @media (max-width: 760px) {
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 35px;
+      }
+
+      .intro {
+        margin: auto;
+      }
+
+      .photo-area {
+        order: -1;
+      }
+
+      .baby-photo {
+        width: min(100%, 350px);
+      }
+
+      .countdown-card {
+        padding: 25px 15px;
+      }
+
+      .countdown {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav a {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">
+      ANU NOOR
+      <small>A BLESSING FROM ALLAH ♥</small>
+    </div>
+
+    <a href="#countdown">
+      India Journey 🇮🇳
+    </a>
+  </div>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div>
+
+    <div class="eyebrow">
+      A Special Journey ✨
+    </div>
+
+    <h1>
+      ANU<br>
+      NOOR
+    </h1>
+
+    <p class="intro">
+      A beautiful countdown to our journey from
+      🇦🇪 UAE to 🇮🇳 India.
+      Every second brings us closer to home,
+      family and beautiful memories. ❤️
+    </p>
+
+  </div>
+
+
+  <div class="photo-area">
+
+    <!-- Your baby photo -->
+    <img
+      class="baby-photo"
+      src="YOUR_IMAGE_URL_HERE"
+      alt="Anu Noor"
+    >
+
+  </div>
+
+</section>
+
+
+<!-- COUNTDOWN -->
+
+<section
+  class="countdown-section"
+  id="countdown"
+>
+
+  <div class="countdown-card">
+
+    <h2 class="countdown-title">
+      India, Here We Come! 🇮🇳
+    </h2>
+
+    <p class="countdown-subtitle">
+      Live countdown to our arrival
+    </p>
+
+
+    <div class="route">
+
+      <span>🇦🇪 UAE</span>
+
+      <span class="route-line"></span>
+
+      <span>🇮🇳 INDIA</span>
+
+    </div>
+
+
+    <div
+      class="countdown"
+      aria-live="polite"
+    >
+
+      <div class="time-box">
+        <div
+          class="number"
+          id="days"
+        >00</div>
+
+        <div class="label">
+          Days
+        </div>
+      </div>
+
+
+      <div class="time-box">
+        <div
+          class="number"
+          id="hours"
+        >00</div>
+
+        <div class="label">
+          Hours
+        </div>
+      </div>
+
+
+      <div class="time-box">
+        <div
+          class="number"
+          id="minutes"
+        >00</div>
+
+        <div class="label">
+          Minutes
+        </div>
+      </div>
+
+
+      <div class="time-box">
+        <div
+          class="number"
+          id="seconds"
+        >00</div>
+
+        <div class="label">
+          Seconds
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="arrival">
+      Saturday • 29 August 2026 • 1:00 PM 🇮🇳
+    </div>
+
+    <div class="timezone">
+      India Standard Time (IST)
+    </div>
+
+
+    <div class="buttons">
+
+      <button
+        class="whatsapp"
+        onclick="shareWhatsApp()"
+      >
+        📲 Share on WhatsApp
+      </button>
+
+
+      <button
+        class="reminder"
+        onclick="addReminder()"
+      >
+        📅 Add Reminder
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="dua">
+
+  <strong>
+    May this journey be safe, joyful and blessed. 🤲
+  </strong>
+
+  <br>
+
+  May Allah protect us throughout our journey
+  and fill our time in India with happiness,
+  family and beautiful memories.
+
+</div>
+
+
+<footer>
+
+  <strong>
+    ANU NOOR ♥
+  </strong>
+
+  <p>
+    noor.yaseenis.com/anunoor
+  </p>
+
+</footer>
+
+
+<script>
+
+/*
+====================================================
+INDIA ARRIVAL DATE
+====================================================
+
+29 August 2026
+1:00 PM India Standard Time
+
+IST = UTC + 5:30
+
+Therefore:
+2026-08-29 07:30 UTC
+
+Using UTC makes the countdown accurate
+when the website is opened in UAE or India.
+====================================================
+*/
+
+const targetDate =
+  new Date("2026-08-29T07:30:00Z").getTime();
+
+
+function updateCountdown() {
+
+  let difference =
+    targetDate - Date.now();
+
+
+  // Arrival reached
+  if (difference <= 0) {
+
+    document.getElementById("days")
+      .textContent = "00";
+
+    document.getElementById("hours")
+      .textContent = "00";
+
+    document.getElementById("minutes")
+      .textContent = "00";
+
+    document.getElementById("seconds")
+      .textContent = "00";
+
+
+    document.querySelector(
+      ".countdown-title"
+    ).textContent =
+      "Welcome to India! 🇮🇳❤️";
+
+    document.querySelector(
+      ".countdown-subtitle"
+    ).textContent =
+      "The journey has arrived!";
+
+
+    return;
+  }
+
+
+  const days =
+    Math.floor(
+      difference / (1000 * 60 * 60 * 24)
+    );
+
+  difference %= 1000 * 60 * 60 * 24;
+
+
+  const hours =
+    Math.floor(
+      difference / (1000 * 60 * 60)
+    );
+
+  difference %= 1000 * 60 * 60;
+
+
+  const minutes =
+    Math.floor(
+      difference / (1000 * 60)
+    );
+
+  difference %= 1000 * 60;
+
+
+  const seconds =
+    Math.floor(
+      difference / 1000
+    );
+
+
+  document.getElementById("days")
+    .textContent =
+    String(days).padStart(2, "0");
+
+
+  document.getElementById("hours")
+    .textContent =
+    String(hours).padStart(2, "0");
+
+
+  document.getElementById("minutes")
+    .textContent =
+    String(minutes).padStart(2, "0");
+
+
+  document.getElementById("seconds")
+    .textContent =
+    String(seconds).padStart(2, "0");
+
+}
+
+
+// Start countdown
+updateCountdown();
+
+setInterval(
+  updateCountdown,
+  1000
+);
+
+
+// WhatsApp Share
+function shareWhatsApp() {
+
+  const message =
+`🇮🇳 ANU NOOR — INDIA JOURNEY
+
+🇦🇪 UAE → 🇮🇳 India
+
+📅 29 August 2026
+🕐 1:00 PM India Time
+
+⏳ Follow the live countdown:
+
+${window.location.href}`;
+
+
+  const whatsappURL =
+    "https://wa.me/?text=" +
+    encodeURIComponent(message);
+
+
+  window.open(
+    whatsappURL,
+    "_blank"
+  );
+}
+
+
+// Add calendar reminder
+function addReminder() {
+
+  const calendar =
+`BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+DTSTART:20260829T073000Z
+DTEND:20260829T083000Z
+SUMMARY:ANU NOOR — India Arrival 🇮🇳
+DESCRIPTION:Arrival in India — 29 August 2026 at 1:00 PM IST.
+END:VEVENT
+END:VCALENDAR`;
+
+
+  const blob =
+    new Blob(
+      [calendar],
+      { type: "text/calendar" }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+
+  link.download =
+    "anu-noor-india-arrival.ics";
+
+  link.click();
+
+
+  URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
