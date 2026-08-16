@@ -1,724 +1,1656 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ANU NOOR — India Countdown 🇮🇳</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<title>ANU NOOR ❤️ எங்கள் அழகான உலகம்</title>
+
+<style>
+
+/* =====================================================
+   BASIC
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        "Noto Sans Tamil",
+        "Latha",
+        "Nirmala UI",
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8fb,
+            #ffe8f1,
+            #fff
+        );
+
+    color:#321b25;
+    overflow-x:hidden;
+}
+
+
+/* =====================================================
+   LOVE BACKGROUND
+===================================================== */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background-image:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,105,150,.15),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(255,170,195,.20),
+            transparent 30%
+        );
+
+    pointer-events:none;
+    z-index:-3;
+}
+
+
+/* Floating Hearts */
+
+.hearts{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.heart{
+    position:absolute;
+    bottom:-80px;
+    font-size:25px;
+    opacity:.45;
+    animation:
+        floatHeart linear infinite;
+}
+
+.heart:nth-child(1){
+    left:5%;
+    animation-duration:12s;
+}
+
+.heart:nth-child(2){
+    left:15%;
+    animation-duration:16s;
+    animation-delay:2s;
+}
+
+.heart:nth-child(3){
+    left:30%;
+    animation-duration:13s;
+    animation-delay:4s;
+}
+
+.heart:nth-child(4){
+    left:50%;
+    animation-duration:18s;
+    animation-delay:1s;
+}
+
+.heart:nth-child(5){
+    left:68%;
+    animation-duration:14s;
+    animation-delay:5s;
+}
+
+.heart:nth-child(6){
+    left:82%;
+    animation-duration:17s;
+    animation-delay:3s;
+}
+
+.heart:nth-child(7){
+    left:93%;
+    animation-duration:11s;
+    animation-delay:6s;
+}
+
+@keyframes floatHeart{
+
+    0%{
+        transform:
+            translateY(0)
+            rotate(0deg)
+            scale(.7);
+
+        opacity:0;
     }
 
-    :root {
-      --pink: #df356b;
-      --pink-light: #ff6f9d;
-      --bg: #fff5f8;
-      --text: #2b1820;
-      --muted: #806875;
+    15%{
+        opacity:.5;
     }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, #ffe1eb, transparent 35%),
-        linear-gradient(135deg, #ffffff, var(--bg));
-      min-height: 100vh;
+    50%{
+        transform:
+            translateY(-50vh)
+            rotate(20deg)
+            scale(1);
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(255,255,255,.88);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid #f3d9e2;
+    100%{
+        transform:
+            translateY(-115vh)
+            rotate(-20deg)
+            scale(1.3);
+
+        opacity:0;
+    }
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+
+    background:
+        rgba(255,255,255,.86);
+
+    backdrop-filter:blur(20px);
+
+    border-bottom:
+        1px solid #f5d6e0;
+}
+
+.nav{
+    max-width:1100px;
+    margin:auto;
+
+    padding:15px 22px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#d92f67;
+    font-size:24px;
+    font-weight:900;
+}
+
+.logo small{
+    display:block;
+
+    color:#9c6b7a;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    margin-top:3px;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+    max-width:1100px;
+    margin:auto;
+
+    padding:
+        70px 22px
+        45px;
+
+    text-align:center;
+}
+
+.heart-title{
+    font-size:50px;
+    margin-bottom:12px;
+
+    animation:
+        heartbeat 2s infinite;
+}
+
+@keyframes heartbeat{
+
+    0%,100%{
+        transform:scale(1);
     }
 
-    .nav {
-      max-width: 1100px;
-      margin: auto;
-      padding: 15px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    50%{
+        transform:scale(1.12);
+    }
+}
+
+.hero h1{
+
+    font-family:Georgia,serif;
+
+    font-size:
+        clamp(45px,8vw,82px);
+
+    color:#cf2e61;
+
+    line-height:1;
+
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    color:#ff5f91;
+}
+
+.hero p{
+
+    max-width:720px;
+
+    margin:auto;
+
+    color:#765965;
+
+    font-size:18px;
+
+    line-height:1.9;
+}
+
+
+/* =====================================================
+   FAMILY ILLUSTRATION
+===================================================== */
+
+.family-section{
+
+    max-width:1000px;
+
+    margin:
+        0 auto 45px;
+
+    padding:0 20px;
+}
+
+.family-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:40px;
+
+    padding:
+        45px 25px 35px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff,
+            #fff0f5
+        );
+
+    border:
+        1px solid #f3ccd9;
+
+    box-shadow:
+        0 25px 70px
+        rgba(190,40,90,.14);
+}
+
+.family-card::before{
+
+    content:"❤";
+
+    position:absolute;
+
+    font-size:180px;
+
+    color:#ffbdd1;
+
+    opacity:.10;
+
+    left:-25px;
+
+    top:-55px;
+}
+
+.family-card::after{
+
+    content:"❤";
+
+    position:absolute;
+
+    font-size:160px;
+
+    color:#ffbdd1;
+
+    opacity:.10;
+
+    right:-20px;
+
+    bottom:-55px;
+}
+
+.family-title{
+
+    text-align:center;
+
+    font-family:Georgia,serif;
+
+    color:#c92d60;
+
+    font-size:30px;
+
+    margin-bottom:35px;
+}
+
+
+/* Family Characters */
+
+.family{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-end;
+
+    gap:18px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+.person{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    position:relative;
+}
+
+.person .head{
+
+    width:75px;
+    height:75px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f4c09d,
+            #d89470
+        );
+
+    position:relative;
+
+    box-shadow:
+        inset -7px -8px 15px
+        rgba(120,60,40,.12);
+}
+
+
+/* Hair */
+
+.man .head::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:72px;
+    height:34px;
+
+    background:#261a18;
+
+    border-radius:
+        50px 50px 20px 20px;
+
+    top:-2px;
+    left:2px;
+}
+
+.woman .head::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:86px;
+    height:90px;
+
+    background:#2a1b20;
+
+    border-radius:
+        50% 50% 45% 45%;
+
+    top:-5px;
+    left:-5px;
+
+    z-index:-1;
+}
+
+
+/* Eyes */
+
+.person .head::after{
+
+    content:"••";
+
+    position:absolute;
+
+    left:50%;
+
+    top:36px;
+
+    transform:translateX(-50%);
+
+    font-size:19px;
+
+    letter-spacing:10px;
+
+    color:#402b28;
+}
+
+
+/* Body */
+
+.person .body{
+
+    width:105px;
+    height:120px;
+
+    margin-top:-4px;
+
+    border-radius:
+        35px 35px 18px 18px;
+
+    background:#4274a8;
+
+    position:relative;
+}
+
+.man .body{
+    background:
+        linear-gradient(
+            135deg,
+            #243d63,
+            #416f9e
+        );
+}
+
+.woman .body{
+    width:110px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e94c82,
+            #ff8cad
+        );
+}
+
+.child .body{
+
+    width:70px;
+    height:75px;
+
+    border-radius:
+        25px 25px 15px 15px;
+
+    background:#ff75a0;
+}
+
+.baby .body{
+
+    width:55px;
+    height:60px;
+
+    border-radius:
+        20px 20px 13px 13px;
+
+    background:#8bb9dc;
+}
+
+
+/* Family Labels */
+
+.person-name{
+
+    margin-top:10px;
+
+    color:#7d5866;
+
+    font-size:13px;
+
+    font-weight:800;
+}
+
+.age{
+
+    font-size:11px;
+
+    color:#ad8492;
+
+    margin-top:3px;
+}
+
+
+/* =====================================================
+   TAMIL LOVE POEM
+===================================================== */
+
+.poem-section{
+
+    max-width:900px;
+
+    margin:
+        0 auto 50px;
+
+    padding:
+        0 22px;
+}
+
+.poem-card{
+
+    background:
+        rgba(255,255,255,.92);
+
+    border:
+        1px solid #f2cfdb;
+
+    border-radius:35px;
+
+    padding:
+        42px 30px;
+
+    text-align:center;
+
+    box-shadow:
+        0 20px 60px
+        rgba(190,40,90,.11);
+
+    position:relative;
+}
+
+.poem-card::before{
+    content:"❝";
+    position:absolute;
+    top:5px;
+    left:25px;
+
+    font-family:Georgia,serif;
+
+    font-size:90px;
+
+    color:#ff9cba;
+
+    opacity:.35;
+}
+
+.poem-title{
+
+    font-family:Georgia,serif;
+
+    color:#d12e61;
+
+    font-size:31px;
+
+    margin-bottom:25px;
+}
+
+.poem{
+
+    color:#684b57;
+
+    font-size:18px;
+
+    line-height:2.25;
+
+    font-weight:500;
+}
+
+.poem strong{
+    color:#d52f63;
+}
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+.countdown-section{
+
+    max-width:1000px;
+
+    margin:
+        0 auto 60px;
+
+    padding:0 22px;
+}
+
+.countdown-card{
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff,
+            #fff2f6
+        );
+
+    border:
+        1px solid #f0ccd8;
+
+    border-radius:35px;
+
+    padding:38px 25px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(190,40,90,.12);
+}
+
+.countdown-title{
+
+    text-align:center;
+
+    color:#c92d60;
+
+    font-family:Georgia,serif;
+
+    font-size:34px;
+
+    margin-bottom:8px;
+}
+
+.countdown-subtitle{
+
+    text-align:center;
+
+    color:#876875;
+
+    margin-bottom:28px;
+}
+
+.route{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:15px;
+
+    font-weight:900;
+
+    color:#624651;
+
+    margin-bottom:28px;
+}
+
+.route-line{
+
+    width:100px;
+
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #df356b,
+            #ffb0c8
+        );
+
+    position:relative;
+}
+
+.route-line::after{
+
+    content:"✈";
+
+    position:absolute;
+
+    left:50%;
+    top:-14px;
+
+    transform:
+        translateX(-50%);
+
+    color:#df356b;
+
+    font-size:21px;
+}
+
+.countdown{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+}
+
+.time-box{
+
+    background:#fff;
+
+    border:
+        1px solid #f0d9e1;
+
+    border-radius:22px;
+
+    padding:22px 8px;
+
+    text-align:center;
+}
+
+.number{
+
+    color:#df356b;
+
+    font-size:
+        clamp(38px,7vw,65px);
+
+    font-weight:900;
+
+    line-height:1;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+.label{
+
+    color:#9b7c88;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    font-weight:900;
+
+    text-transform:uppercase;
+
+    margin-top:9px;
+}
+
+.arrival{
+
+    text-align:center;
+
+    margin-top:25px;
+
+    font-weight:900;
+
+    color:#634953;
+}
+
+.timezone{
+
+    text-align:center;
+
+    color:#9d7d89;
+
+    font-size:12px;
+
+    margin-top:7px;
+}
+
+
+/* Buttons */
+
+.buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+    margin-top:25px;
+}
+
+button{
+
+    border:0;
+
+    border-radius:14px;
+
+    padding:
+        14px 20px;
+
+    font-size:14px;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.whatsapp{
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #df356b,
+            #ff6f9d
+        );
+
+    box-shadow:
+        0 10px 25px
+        rgba(220,48,104,.25);
+}
+
+.reminder{
+
+    background:#fff;
+
+    color:#df356b;
+
+    border:
+        1px solid #efcad7;
+}
+
+
+/* =====================================================
+   DUA
+===================================================== */
+
+.dua{
+
+    max-width:800px;
+
+    margin:
+        0 auto 60px;
+
+    padding:0 22px;
+
+    text-align:center;
+
+    color:#806572;
+
+    line-height:2;
+}
+
+.dua strong{
+
+    color:#c82e60;
+
+    font-size:18px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+    background:
+        linear-gradient(
+            135deg,
+            #d82f67,
+            #ed4b80
+        );
+
+    color:white;
+
+    text-align:center;
+
+    padding:32px 20px;
+}
+
+footer strong{
+
+    font-family:Georgia,serif;
+
+    font-size:25px;
+}
+
+footer p{
+
+    margin-top:8px;
+
+    font-size:13px;
+
+    opacity:.85;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:760px){
+
+    .family{
+
+        gap:8px;
+
+        transform:
+            scale(.88);
     }
 
-    .logo {
-      color: var(--pink);
-      font-size: 23px;
-      font-weight: 900;
-      letter-spacing: .5px;
+    .family-title{
+
+        font-size:25px;
     }
 
-    .logo small {
-      display: block;
-      color: #a26c7d;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      margin-top: 3px;
+    .countdown{
+
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    .nav a {
-      color: #604751;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
+    .poem{
+
+        font-size:16px;
+
+        line-height:2;
     }
 
-    .hero {
-      max-width: 1100px;
-      margin: auto;
-      padding: 55px 22px 30px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-      align-items: center;
+    .hero{
+
+        padding-top:45px;
     }
 
-    .eyebrow {
-      color: var(--pink);
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
+}
 
-    h1 {
-      font-family: Georgia, serif;
-      color: #c82d60;
-      font-size: clamp(50px, 8vw, 82px);
-      line-height: .9;
-      margin-bottom: 20px;
-    }
-
-    .intro {
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.7;
-      max-width: 520px;
-    }
-
-    .photo-area {
-      display: flex;
-      justify-content: center;
-      position: relative;
-    }
-
-    .photo-area::before {
-      content: "";
-      position: absolute;
-      width: 90%;
-      height: 90%;
-      border-radius: 45px;
-      background: #ffd7e4;
-      transform: rotate(5deg);
-    }
-
-    .baby-photo {
-      position: relative;
-      width: min(100%, 450px);
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
-      border-radius: 38px;
-      border: 8px solid white;
-      box-shadow: 0 25px 70px rgba(120, 35, 65, .22);
-    }
-
-    .countdown-section {
-      max-width: 1000px;
-      margin: 20px auto 60px;
-      padding: 0 22px;
-    }
-
-    .countdown-card {
-      background: rgba(255,255,255,.9);
-      border: 1px solid #f1d2dd;
-      border-radius: 34px;
-      padding: 35px;
-      box-shadow: 0 25px 75px rgba(190, 45, 95, .12);
-    }
-
-    .countdown-title {
-      text-align: center;
-      color: #c82d60;
-      font-family: Georgia, serif;
-      font-size: 34px;
-      margin-bottom: 7px;
-    }
-
-    .countdown-subtitle {
-      text-align: center;
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
-
-    .route {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      font-weight: 800;
-      margin-bottom: 28px;
-    }
-
-    .route-line {
-      width: 90px;
-      height: 2px;
-      background: linear-gradient(
-        90deg,
-        var(--pink),
-        #f8bfd0
-      );
-      position: relative;
-    }
-
-    .route-line::after {
-      content: "✈";
-      position: absolute;
-      left: 50%;
-      top: -13px;
-      transform: translateX(-50%);
-      color: var(--pink);
-      font-size: 20px;
-    }
-
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .time-box {
-      background: #fff;
-      border: 1px solid #f1d9e2;
-      border-radius: 22px;
-      padding: 22px 8px;
-      text-align: center;
-    }
-
-    .number {
-      color: var(--pink);
-      font-size: clamp(38px, 7vw, 65px);
-      font-weight: 900;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .label {
-      color: #9a7b87;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-top: 9px;
-    }
-
-    .arrival {
-      text-align: center;
-      margin-top: 25px;
-      font-weight: 800;
-      color: #604751;
-    }
-
-    .timezone {
-      text-align: center;
-      color: #9a7b87;
-      font-size: 12px;
-      margin-top: 7px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 25px;
-    }
-
-    button {
-      border: 0;
-      border-radius: 14px;
-      padding: 14px 20px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .whatsapp {
-      background: linear-gradient(
-        135deg,
-        var(--pink),
-        var(--pink-light)
-      );
-      color: white;
-      box-shadow: 0 10px 25px rgba(220,48,104,.25);
-    }
-
-    .reminder {
-      background: white;
-      color: var(--pink);
-      border: 1px solid #efcbd8;
-    }
-
-    .dua {
-      text-align: center;
-      color: #806875;
-      line-height: 1.7;
-      max-width: 800px;
-      margin: 0 auto 55px;
-      padding: 0 22px;
-    }
-
-    footer {
-      background: #d82f67;
-      color: white;
-      text-align: center;
-      padding: 28px;
-    }
-
-    footer strong {
-      font-family: Georgia, serif;
-      font-size: 23px;
-    }
-
-    footer p {
-      margin-top: 7px;
-      font-size: 13px;
-      opacity: .85;
-    }
-
-    @media (max-width: 760px) {
-
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding-top: 35px;
-      }
-
-      .intro {
-        margin: auto;
-      }
-
-      .photo-area {
-        order: -1;
-      }
-
-      .baby-photo {
-        width: min(100%, 350px);
-      }
-
-      .countdown-card {
-        padding: 25px 15px;
-      }
-
-      .countdown {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .nav a {
-        display: none;
-      }
-    }
-  </style>
+</style>
 </head>
+
 
 <body>
 
+
+<!-- Floating Hearts -->
+
+<div class="hearts">
+
+    <div class="heart">❤️</div>
+    <div class="heart">💕</div>
+    <div class="heart">💗</div>
+    <div class="heart">❤️</div>
+    <div class="heart">💖</div>
+    <div class="heart">💕</div>
+    <div class="heart">💗</div>
+
+</div>
+
+
+<!-- HEADER -->
+
 <header>
-  <div class="nav">
-    <div class="logo">
-      ANU NOOR
-      <small>A BLESSING FROM ALLAH ♥</small>
+
+    <div class="nav">
+
+        <div class="logo">
+
+            ANU NOOR
+
+            <small>
+                A BLESSING FROM ALLAH ♥
+            </small>
+
+        </div>
+
     </div>
 
-    <a href="#countdown">
-      India Journey 🇮🇳
-    </a>
-  </div>
 </header>
+
 
 
 <!-- HERO -->
 
 <section class="hero">
 
-  <div>
-
-    <div class="eyebrow">
-      A Special Journey ✨
+    <div class="heart-title">
+        ❤️
     </div>
 
     <h1>
-      ANU<br>
-      NOOR
+
+        எங்கள்
+        <span>அழகான</span>
+        உலகம்
+
     </h1>
 
-    <p class="intro">
-      A beautiful countdown to our journey from
-      🇦🇪 UAE to 🇮🇳 India.
-      Every second brings us closer to home,
-      family and beautiful memories. ❤️
+    <p>
+
+        அன்பால் இணைந்த இரு இதயங்கள்...
+        <br>
+
+        அந்த அன்பை முழுமையாக்க வந்த
+        எங்கள் இரு செல்ல மகள்கள்... 👨‍👩‍👧‍👧
+
     </p>
 
-  </div>
+</section>
 
 
-  <div class="photo-area">
 
-    <!-- Your baby photo -->
-    <img
-      class="baby-photo"
-      src="YOUR_IMAGE_URL_HERE"
-      alt="Anu Noor"
-    >
+<!-- FAMILY -->
 
-  </div>
+<section class="family-section">
+
+    <div class="family-card">
+
+        <h2 class="family-title">
+
+            எங்கள் அழகான குடும்பம் ❤️
+
+        </h2>
+
+
+        <div class="family">
+
+
+            <!-- MAN -->
+
+            <div class="person man">
+
+                <div class="head"></div>
+
+                <div class="body"></div>
+
+                <div class="person-name">
+                    கணவர்
+                </div>
+
+            </div>
+
+
+            <!-- WIFE -->
+
+            <div class="person woman">
+
+                <div class="head"></div>
+
+                <div class="body"></div>
+
+                <div class="person-name">
+                    மனைவி
+                </div>
+
+            </div>
+
+
+            <!-- 3 YEAR OLD -->
+
+            <div class="person child">
+
+                <div class="head"
+                     style="
+                     width:60px;
+                     height:60px;
+                     ">
+                </div>
+
+                <div class="body"></div>
+
+                <div class="person-name">
+                    செல்ல மகள்
+                </div>
+
+                <div class="age">
+                    3 வயது
+                </div>
+
+            </div>
+
+
+            <!-- 9 MONTH BABY -->
+
+            <div class="person baby">
+
+                <div class="head"
+                     style="
+                     width:52px;
+                     height:52px;
+                     ">
+                </div>
+
+                <div class="body"></div>
+
+                <div class="person-name">
+                    குட்டி மகள்
+                </div>
+
+                <div class="age">
+                    9 மாதம்
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
 
 </section>
+
+
+
+<!-- TAMIL LOVE KAVITHAI -->
+
+<section class="poem-section">
+
+    <div class="poem-card">
+
+        <h2 class="poem-title">
+
+            💕 எங்கள் காதல் கவிதை 💕
+
+        </h2>
+
+
+        <div class="poem">
+
+            நீ என் வாழ்க்கையில் வந்த நாள் முதல்,<br>
+
+            என் உலகமே அழகாகிப் போனது... ❤️<br><br>
+
+
+            உன் கையில் என் கை சேர்ந்தபோது,<br>
+
+            என் இதயம் ஒரு வீடாகியது... 💕<br><br>
+
+
+            அந்த வீட்டில்<br>
+
+            நம் அன்பின் சிரிப்பாக வந்தார்கள்<br>
+
+            <strong>நம் இரண்டு தேவதைகள்... 👧🏻👶🏻</strong><br><br>
+
+
+            ஒருத்தி என் கையைப் பிடித்து<br>
+
+            “அப்பா” என்று அழைக்கிறாள்... 🥰<br><br>
+
+
+            இன்னொருத்தி என் மார்பில் சாய்ந்து<br>
+
+            தன் சிரிப்பால் என் உலகத்தை நிறைக்கிறாள்... 💗<br><br>
+
+
+            நீ என் மனைவி மட்டுமல்ல...<br>
+
+            என் வாழ்வின் நிம்மதி,<br>
+
+            என் இதயத்தின் மகிழ்ச்சி,<br>
+
+            என் குழந்தைகளின் அன்பான அம்மா... ❤️<br><br>
+
+
+            <strong>
+
+                நீயும்... நம் இரண்டு மகள்களும்...<br>
+                தான் என் உலகம். 🌎❤️
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
 
 
 <!-- COUNTDOWN -->
 
 <section
-  class="countdown-section"
-  id="countdown"
+    class="countdown-section"
+    id="countdown"
 >
 
-  <div class="countdown-card">
-
-    <h2 class="countdown-title">
-      India, Here We Come! 🇮🇳
-    </h2>
-
-    <p class="countdown-subtitle">
-      Live countdown to our arrival
-    </p>
+    <div class="countdown-card">
 
 
-    <div class="route">
+        <h2 class="countdown-title">
 
-      <span>🇦🇪 UAE</span>
+            🇮🇳 இந்தியா... நாங்கள் வருகிறோம்! ❤️
 
-      <span class="route-line"></span>
-
-      <span>🇮🇳 INDIA</span>
-
-    </div>
+        </h2>
 
 
-    <div
-      class="countdown"
-      aria-live="polite"
-    >
+        <p class="countdown-subtitle">
 
-      <div class="time-box">
-        <div
-          class="number"
-          id="days"
-        >00</div>
+            குடும்பத்துடன் இந்தியா பயணத்திற்கான Countdown
 
-        <div class="label">
-          Days
+        </p>
+
+
+        <div class="route">
+
+            <span>
+                🇦🇪 UAE
+            </span>
+
+            <span class="route-line"></span>
+
+            <span>
+                🇮🇳 INDIA
+            </span>
+
         </div>
-      </div>
 
 
-      <div class="time-box">
-        <div
-          class="number"
-          id="hours"
-        >00</div>
+        <div class="countdown">
 
-        <div class="label">
-          Hours
+
+            <div class="time-box">
+
+                <div
+                    class="number"
+                    id="days"
+                >
+                    00
+                </div>
+
+                <div class="label">
+                    Days
+                </div>
+
+            </div>
+
+
+            <div class="time-box">
+
+                <div
+                    class="number"
+                    id="hours"
+                >
+                    00
+                </div>
+
+                <div class="label">
+                    Hours
+                </div>
+
+            </div>
+
+
+            <div class="time-box">
+
+                <div
+                    class="number"
+                    id="minutes"
+                >
+                    00
+                </div>
+
+                <div class="label">
+                    Minutes
+                </div>
+
+            </div>
+
+
+            <div class="time-box">
+
+                <div
+                    class="number"
+                    id="seconds"
+                >
+                    00
+                </div>
+
+                <div class="label">
+                    Seconds
+                </div>
+
+            </div>
+
+
         </div>
-      </div>
 
 
-      <div class="time-box">
-        <div
-          class="number"
-          id="minutes"
-        >00</div>
+        <div class="arrival">
 
-        <div class="label">
-          Minutes
+            சனிக்கிழமை • 29 ஆகஸ்ட் 2026 • பிற்பகல் 1:00 🇮🇳
+
         </div>
-      </div>
 
 
-      <div class="time-box">
-        <div
-          class="number"
-          id="seconds"
-        >00</div>
+        <div class="timezone">
 
-        <div class="label">
-          Seconds
+            India Standard Time (IST)
+
         </div>
-      </div>
+
+
+        <div class="buttons">
+
+
+            <button
+                class="whatsapp"
+                onclick="shareWhatsApp()"
+            >
+
+                📲 WhatsApp-ல் பகிரவும்
+
+            </button>
+
+
+            <button
+                class="reminder"
+                onclick="addReminder()"
+            >
+
+                📅 Reminder சேர்க்கவும்
+
+            </button>
+
+
+        </div>
+
 
     </div>
-
-
-    <div class="arrival">
-      Saturday • 29 August 2026 • 1:00 PM 🇮🇳
-    </div>
-
-    <div class="timezone">
-      India Standard Time (IST)
-    </div>
-
-
-    <div class="buttons">
-
-      <button
-        class="whatsapp"
-        onclick="shareWhatsApp()"
-      >
-        📲 Share on WhatsApp
-      </button>
-
-
-      <button
-        class="reminder"
-        onclick="addReminder()"
-      >
-        📅 Add Reminder
-      </button>
-
-    </div>
-
-  </div>
 
 </section>
 
 
+
+<!-- DUA -->
+
 <div class="dua">
 
-  <strong>
-    May this journey be safe, joyful and blessed. 🤲
-  </strong>
+    <strong>
 
-  <br>
+        🤲 அல்லாஹ்வே!
 
-  May Allah protect us throughout our journey
-  and fill our time in India with happiness,
-  family and beautiful memories.
+    </strong>
+
+    <br>
+
+    எங்கள் குடும்பத்தை எப்போதும்
+    அன்பிலும், அமைதியிலும்,
+    ஆரோக்கியத்திலும், ஈமானிலும்
+    ஒன்றாக வைத்தருள்வாயாக.
+
+    <br>
+
+    எங்கள் பயணத்தை பாதுகாப்பானதாகவும்,
+    மகிழ்ச்சியானதாகவும் ஆக்குவாயாக.
+
+    ❤️ آمين ❤️
 
 </div>
 
 
+
+<!-- FOOTER -->
+
 <footer>
 
-  <strong>
-    ANU NOOR ♥
-  </strong>
+    <strong>
+        ANU NOOR ❤️
+    </strong>
 
-  <p>
-    noor.yaseenis.com/anunoor
-  </p>
+    <p>
+        எங்கள் அன்பான குடும்பத்தின் அழகான நினைவுகள்
+    </p>
+
+    <p>
+        noor.yaseenis.com/anunoor
+    </p>
 
 </footer>
 
 
+
 <script>
 
-/*
-====================================================
-INDIA ARRIVAL DATE
-====================================================
 
-29 August 2026
-1:00 PM India Standard Time
+/* =====================================================
+   COUNTDOWN
 
-IST = UTC + 5:30
+   29 August 2026
+   1:00 PM India Time
 
-Therefore:
-2026-08-29 07:30 UTC
+   IST = UTC + 5:30
 
-Using UTC makes the countdown accurate
-when the website is opened in UAE or India.
-====================================================
-*/
+   1:00 PM IST
+   =
+   07:30 UTC
+===================================================== */
+
 
 const targetDate =
-  new Date("2026-08-29T07:30:00Z").getTime();
+    new Date(
+        "2026-08-29T07:30:00Z"
+    ).getTime();
 
 
-function updateCountdown() {
+function updateCountdown(){
 
-  let difference =
-    targetDate - Date.now();
-
-
-  // Arrival reached
-  if (difference <= 0) {
-
-    document.getElementById("days")
-      .textContent = "00";
-
-    document.getElementById("hours")
-      .textContent = "00";
-
-    document.getElementById("minutes")
-      .textContent = "00";
-
-    document.getElementById("seconds")
-      .textContent = "00";
+    let difference =
+        targetDate - Date.now();
 
 
-    document.querySelector(
-      ".countdown-title"
+    if(difference <= 0){
+
+        document.getElementById(
+            "days"
+        ).textContent = "00";
+
+        document.getElementById(
+            "hours"
+        ).textContent = "00";
+
+        document.getElementById(
+            "minutes"
+        ).textContent = "00";
+
+        document.getElementById(
+            "seconds"
+        ).textContent = "00";
+
+
+        document.querySelector(
+            ".countdown-title"
+        ).textContent =
+            "🇮🇳 இந்தியாவிற்கு வரவேற்கிறோம்! ❤️";
+
+
+        return;
+
+    }
+
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    difference %=
+        1000 * 60 * 60 * 24;
+
+
+    const hours =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60)
+        );
+
+
+    difference %=
+        1000 * 60 * 60;
+
+
+    const minutes =
+        Math.floor(
+            difference /
+            (1000 * 60)
+        );
+
+
+    difference %=
+        1000 * 60;
+
+
+    const seconds =
+        Math.floor(
+            difference / 1000
+        );
+
+
+    document.getElementById(
+        "days"
     ).textContent =
-      "Welcome to India! 🇮🇳❤️";
+        String(days).padStart(2,"0");
 
-    document.querySelector(
-      ".countdown-subtitle"
+
+    document.getElementById(
+        "hours"
     ).textContent =
-      "The journey has arrived!";
+        String(hours).padStart(2,"0");
 
 
-    return;
-  }
+    document.getElementById(
+        "minutes"
+    ).textContent =
+        String(minutes).padStart(2,"0");
 
 
-  const days =
-    Math.floor(
-      difference / (1000 * 60 * 60 * 24)
-    );
-
-  difference %= 1000 * 60 * 60 * 24;
-
-
-  const hours =
-    Math.floor(
-      difference / (1000 * 60 * 60)
-    );
-
-  difference %= 1000 * 60 * 60;
-
-
-  const minutes =
-    Math.floor(
-      difference / (1000 * 60)
-    );
-
-  difference %= 1000 * 60;
-
-
-  const seconds =
-    Math.floor(
-      difference / 1000
-    );
-
-
-  document.getElementById("days")
-    .textContent =
-    String(days).padStart(2, "0");
-
-
-  document.getElementById("hours")
-    .textContent =
-    String(hours).padStart(2, "0");
-
-
-  document.getElementById("minutes")
-    .textContent =
-    String(minutes).padStart(2, "0");
-
-
-  document.getElementById("seconds")
-    .textContent =
-    String(seconds).padStart(2, "0");
+    document.getElementById(
+        "seconds"
+    ).textContent =
+        String(seconds).padStart(2,"0");
 
 }
 
 
-// Start countdown
 updateCountdown();
 
 setInterval(
-  updateCountdown,
-  1000
+    updateCountdown,
+    1000
 );
 
 
-// WhatsApp Share
-function shareWhatsApp() {
 
-  const message =
-`🇮🇳 ANU NOOR — INDIA JOURNEY
+/* =====================================================
+   WHATSAPP SHARE
+===================================================== */
+
+function shareWhatsApp(){
+
+    const message =
+
+`❤️ ANU NOOR — எங்கள் அழகான குடும்பம் ❤️
 
 🇦🇪 UAE → 🇮🇳 India
 
 📅 29 August 2026
 🕐 1:00 PM India Time
 
-⏳ Follow the live countdown:
+⏳ எங்கள் India Journey Countdown:
 
 ${window.location.href}`;
 
 
-  const whatsappURL =
-    "https://wa.me/?text=" +
-    encodeURIComponent(message);
+    const url =
+        "https://wa.me/?text=" +
+        encodeURIComponent(message);
 
 
-  window.open(
-    whatsappURL,
-    "_blank"
-  );
+    window.open(
+        url,
+        "_blank"
+    );
+
 }
 
 
-// Add calendar reminder
-function addReminder() {
 
-  const calendar =
+/* =====================================================
+   REMINDER
+===================================================== */
+
+function addReminder(){
+
+    const calendar =
+
 `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
 DTSTART:20260829T073000Z
 DTEND:20260829T083000Z
 SUMMARY:ANU NOOR — India Arrival 🇮🇳
-DESCRIPTION:Arrival in India — 29 August 2026 at 1:00 PM IST.
+DESCRIPTION:Family India Journey — 29 August 2026 at 1:00 PM IST.
 END:VEVENT
 END:VCALENDAR`;
 
 
-  const blob =
-    new Blob(
-      [calendar],
-      { type: "text/calendar" }
-    );
+    const blob =
+        new Blob(
+            [calendar],
+            {
+                type:
+                "text/calendar"
+            }
+        );
 
 
-  const url =
-    URL.createObjectURL(blob);
+    const url =
+        URL.createObjectURL(blob);
 
 
-  const link =
-    document.createElement("a");
-
-  link.href = url;
-
-  link.download =
-    "anu-noor-india-arrival.ics";
-
-  link.click();
+    const link =
+        document.createElement("a");
 
 
-  URL.revokeObjectURL(url);
+    link.href = url;
+
+
+    link.download =
+        "anu-noor-india-arrival.ics";
+
+
+    link.click();
+
+
+    URL.revokeObjectURL(url);
+
 }
 
+
 </script>
+
 
 </body>
 </html>
