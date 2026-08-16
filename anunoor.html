@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ANU NOOR ❤️ எங்கள் அழகான உலகம்</title>
+<title>நூர் ❤️ ஹனீபியா | எங்கள் காதல் உலகம்</title>
 
 <style>
 
 /* =====================================================
-   BASIC
+   RESET
 ===================================================== */
 
 *{
@@ -25,137 +25,140 @@ html{
 body{
     font-family:
         "Noto Sans Tamil",
-        "Latha",
         "Nirmala UI",
+        "Latha",
         Arial,
         sans-serif;
 
+    color:#321923;
+
     background:
+        radial-gradient(
+            circle at 15% 10%,
+            #ffdce8 0%,
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 25%,
+            #ffe8f0 0%,
+            transparent 30%
+        ),
         linear-gradient(
             135deg,
-            #fff8fb,
-            #ffe8f1,
-            #fff
+            #fff,
+            #fff5f8 50%,
+            #ffeef4
         );
 
-    color:#321b25;
+    min-height:100vh;
     overflow-x:hidden;
 }
 
 
 /* =====================================================
-   LOVE BACKGROUND
+   FLOATING LOVE PARTICLES
 ===================================================== */
 
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-
-    background-image:
-        radial-gradient(
-            circle at 20% 20%,
-            rgba(255,105,150,.15),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            rgba(255,170,195,.20),
-            transparent 30%
-        );
-
-    pointer-events:none;
-    z-index:-3;
-}
-
-
-/* Floating Hearts */
-
-.hearts{
+.love-background{
     position:fixed;
     inset:0;
     overflow:hidden;
     pointer-events:none;
-    z-index:-1;
+    z-index:0;
 }
 
-.heart{
+.float{
     position:absolute;
-    bottom:-80px;
-    font-size:25px;
-    opacity:.45;
+    bottom:-60px;
+
+    opacity:0;
+
     animation:
-        floatHeart linear infinite;
+        rise linear infinite;
 }
 
-.heart:nth-child(1){
-    left:5%;
+.float:nth-child(1){
+    left:4%;
+    font-size:18px;
     animation-duration:12s;
 }
 
-.heart:nth-child(2){
-    left:15%;
-    animation-duration:16s;
+.float:nth-child(2){
+    left:14%;
+    font-size:25px;
+    animation-duration:17s;
     animation-delay:2s;
 }
 
-.heart:nth-child(3){
-    left:30%;
-    animation-duration:13s;
-    animation-delay:4s;
-}
-
-.heart:nth-child(4){
-    left:50%;
-    animation-duration:18s;
-    animation-delay:1s;
-}
-
-.heart:nth-child(5){
-    left:68%;
+.float:nth-child(3){
+    left:27%;
+    font-size:15px;
     animation-duration:14s;
     animation-delay:5s;
 }
 
-.heart:nth-child(6){
-    left:82%;
-    animation-duration:17s;
-    animation-delay:3s;
+.float:nth-child(4){
+    left:42%;
+    font-size:28px;
+    animation-duration:19s;
+    animation-delay:1s;
 }
 
-.heart:nth-child(7){
-    left:93%;
-    animation-duration:11s;
+.float:nth-child(5){
+    left:59%;
+    font-size:19px;
+    animation-duration:15s;
+    animation-delay:4s;
+}
+
+.float:nth-child(6){
+    left:74%;
+    font-size:27px;
+    animation-duration:18s;
     animation-delay:6s;
 }
 
-@keyframes floatHeart{
+.float:nth-child(7){
+    left:88%;
+    font-size:17px;
+    animation-duration:13s;
+    animation-delay:3s;
+}
+
+.float:nth-child(8){
+    left:96%;
+    font-size:24px;
+    animation-duration:16s;
+    animation-delay:7s;
+}
+
+@keyframes rise{
 
     0%{
         transform:
             translateY(0)
             rotate(0deg)
-            scale(.7);
+            scale(.6);
 
         opacity:0;
     }
 
     15%{
-        opacity:.5;
+        opacity:.45;
     }
 
     50%{
         transform:
             translateY(-50vh)
-            rotate(20deg)
+            rotate(15deg)
             scale(1);
     }
 
     100%{
         transform:
             translateY(-115vh)
-            rotate(-20deg)
-            scale(1.3);
+            rotate(-15deg)
+            scale(1.2);
 
         opacity:0;
     }
@@ -172,41 +175,67 @@ header{
     z-index:100;
 
     background:
-        rgba(255,255,255,.86);
+        rgba(255,255,255,.84);
 
-    backdrop-filter:blur(20px);
+    backdrop-filter:
+        blur(20px);
 
     border-bottom:
-        1px solid #f5d6e0;
+        1px solid #f4d6df;
 }
 
 .nav{
-    max-width:1100px;
+    max-width:1150px;
+
     margin:auto;
 
-    padding:15px 22px;
+    padding:
+        14px 22px;
 
     display:flex;
-    justify-content:space-between;
+
     align-items:center;
+
+    justify-content:space-between;
 }
 
-.logo{
-    color:#d92f67;
-    font-size:24px;
+.brand{
+    color:#d52e65;
+
+    font-size:23px;
+
     font-weight:900;
 }
 
-.logo small{
+.brand small{
     display:block;
 
-    color:#9c6b7a;
+    color:#9d6c7b;
 
-    font-size:10px;
+    font-size:9px;
 
     letter-spacing:2px;
 
     margin-top:3px;
+}
+
+.nav-badge{
+
+    padding:
+        8px 13px;
+
+    border-radius:50px;
+
+    background:#fff0f5;
+
+    color:#cf3162;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    border:
+        1px solid #f4d2de;
 }
 
 
@@ -215,32 +244,37 @@ header{
 ===================================================== */
 
 .hero{
-    max-width:1100px;
+    position:relative;
+    z-index:1;
+
+    max-width:1050px;
+
     margin:auto;
 
     padding:
-        70px 22px
-        45px;
+        75px 22px 45px;
 
     text-align:center;
 }
 
-.heart-title{
-    font-size:50px;
-    margin-bottom:12px;
+.hero-heart{
+
+    font-size:55px;
+
+    display:inline-block;
 
     animation:
-        heartbeat 2s infinite;
+        heartBeat 2s ease-in-out infinite;
 }
 
-@keyframes heartbeat{
+@keyframes heartBeat{
 
     0%,100%{
         transform:scale(1);
     }
 
     50%{
-        transform:scale(1.12);
+        transform:scale(1.14);
     }
 }
 
@@ -248,46 +282,50 @@ header{
 
     font-family:Georgia,serif;
 
+    color:#c92c5e;
+
     font-size:
         clamp(45px,8vw,82px);
 
-    color:#cf2e61;
-
     line-height:1;
 
-    margin-bottom:20px;
+    margin:
+        18px 0;
 }
 
 .hero h1 span{
-    color:#ff5f91;
+    color:#ff6094;
 }
 
-.hero p{
+.hero .intro{
 
     max-width:720px;
 
     margin:auto;
 
-    color:#765965;
+    color:#765964;
 
     font-size:18px;
 
-    line-height:1.9;
+    line-height:2;
 }
 
 
 /* =====================================================
-   FAMILY ILLUSTRATION
+   FAMILY CARD
 ===================================================== */
 
 .family-section{
 
-    max-width:1000px;
+    position:relative;
+    z-index:1;
 
-    margin:
-        0 auto 45px;
+    max-width:1100px;
 
-    padding:0 20px;
+    margin:auto;
+
+    padding:
+        0 20px 55px;
 }
 
 .family-card{
@@ -296,24 +334,24 @@ header{
 
     overflow:hidden;
 
-    border-radius:40px;
+    border-radius:42px;
 
     padding:
-        45px 25px 35px;
+        42px 20px 38px;
 
     background:
         linear-gradient(
             145deg,
-            #fff,
-            #fff0f5
+            rgba(255,255,255,.96),
+            rgba(255,237,244,.94)
         );
 
     border:
-        1px solid #f3ccd9;
+        1px solid #efcad7;
 
     box-shadow:
-        0 25px 70px
-        rgba(190,40,90,.14);
+        0 28px 80px
+        rgba(184,42,87,.14);
 }
 
 .family-card::before{
@@ -322,15 +360,14 @@ header{
 
     position:absolute;
 
-    font-size:180px;
+    left:-45px;
+    top:-70px;
 
-    color:#ffbdd1;
+    font-size:190px;
 
-    opacity:.10;
+    color:#ff7da7;
 
-    left:-25px;
-
-    top:-55px;
+    opacity:.07;
 }
 
 .family-card::after{
@@ -339,34 +376,43 @@ header{
 
     position:absolute;
 
-    font-size:160px;
+    right:-40px;
+    bottom:-80px;
 
-    color:#ffbdd1;
+    font-size:210px;
 
-    opacity:.10;
+    color:#ff7da7;
 
-    right:-20px;
-
-    bottom:-55px;
+    opacity:.07;
 }
 
 .family-title{
+
+    position:relative;
+    z-index:2;
 
     text-align:center;
 
     font-family:Georgia,serif;
 
-    color:#c92d60;
+    color:#c82d60;
 
-    font-size:30px;
+    font-size:32px;
 
-    margin-bottom:35px;
+    margin-bottom:38px;
 }
 
 
-/* Family Characters */
+/* =====================================================
+   FAMILY ILLUSTRATION
+===================================================== */
 
 .family{
+
+    position:relative;
+    z-index:2;
+
+    min-height:350px;
 
     display:flex;
 
@@ -375,10 +421,6 @@ header{
     align-items:flex-end;
 
     gap:18px;
-
-    position:relative;
-
-    z-index:2;
 }
 
 .person{
@@ -392,29 +434,54 @@ header{
     position:relative;
 }
 
-.person .head{
 
-    width:75px;
-    height:75px;
+/* HEAD */
+
+.head{
+
+    position:relative;
+
+    width:74px;
+    height:74px;
 
     border-radius:50%;
 
     background:
         linear-gradient(
             145deg,
-            #f4c09d,
-            #d89470
+            #f6c5a2,
+            #d99472
         );
 
-    position:relative;
-
     box-shadow:
-        inset -7px -8px 15px
-        rgba(120,60,40,.12);
+        inset -8px -9px 15px
+        rgba(100,50,30,.12);
+
+    z-index:3;
 }
 
 
-/* Hair */
+/* EYES */
+
+.eyes{
+
+    position:absolute;
+
+    left:50%;
+    top:39px;
+
+    transform:
+        translateX(-50%);
+
+    font-size:13px;
+
+    letter-spacing:9px;
+
+    color:#3a2422;
+}
+
+
+/* MAN HAIR */
 
 .man .head::before{
 
@@ -422,17 +489,25 @@ header{
 
     position:absolute;
 
-    width:72px;
+    width:70px;
     height:34px;
 
-    background:#261a18;
+    left:2px;
+    top:-2px;
 
     border-radius:
-        50px 50px 20px 20px;
+        50px 50px 18px 18px;
 
-    top:-2px;
-    left:2px;
+    background:
+        linear-gradient(
+            135deg,
+            #171313,
+            #332422
+        );
 }
+
+
+/* WOMAN HAIR */
 
 .woman .head::before{
 
@@ -440,202 +515,483 @@ header{
 
     position:absolute;
 
-    width:86px;
-    height:90px;
+    width:90px;
+    height:95px;
 
-    background:#2a1b20;
+    left:-8px;
+    top:-7px;
 
     border-radius:
         50% 50% 45% 45%;
 
-    top:-5px;
-    left:-5px;
+    background:
+        linear-gradient(
+            135deg,
+            #211719,
+            #392327
+        );
 
     z-index:-1;
 }
 
 
-/* Eyes */
+/* BODY */
 
-.person .head::after{
+.body{
 
-    content:"••";
+    position:relative;
+
+    width:105px;
+    height:125px;
+
+    margin-top:-3px;
+
+    border-radius:
+        36px 36px 18px 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #304f78,
+            #5d83ae
+        );
+
+    box-shadow:
+        inset -7px -10px 15px
+        rgba(0,0,0,.10);
+}
+
+
+/* WOMAN BODY */
+
+.woman .body{
+
+    width:120px;
+
+    height:140px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #df3e75,
+            #ff91ae
+        );
+
+    border-radius:
+        38px 38px 20px 20px;
+}
+
+
+/* =====================================================
+   PREGNANT BELLY
+===================================================== */
+
+.belly{
+
+    position:absolute;
+
+    width:108px;
+    height:105px;
+
+    left:50%;
+    bottom:-45px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        52% 52% 48% 48%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffdce5,
+            #f5a9bd 72%,
+            #e98fa9
+        );
+
+    box-shadow:
+
+        inset -8px -12px 18px
+        rgba(143,52,78,.12),
+
+        0 8px 15px
+        rgba(160,55,85,.08);
+
+    z-index:2;
+}
+
+
+/* Soft shine */
+
+.belly::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:25px;
+    height:18px;
+
+    left:25px;
+    top:18px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.45);
+
+    filter:blur(4px);
+}
+
+
+/* =====================================================
+   BABY BOY INSIDE BELLY
+===================================================== */
+
+.baby-boy{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #a9d9f5,
+            #5ba8dc
+        );
+
+    border:
+        3px solid
+        rgba(255,255,255,.7);
+
+    box-shadow:
+        0 5px 15px
+        rgba(45,130,185,.25);
+
+    animation:
+        babyGlow 2.8s ease-in-out infinite;
+
+    z-index:4;
+}
+
+
+/* baby face */
+
+.baby-boy::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:15px;
+    height:7px;
+
+    left:50%;
+    top:23px;
+
+    transform:
+        translateX(-50%);
+
+    border-bottom:
+        2px solid #466779;
+
+    border-radius:50%;
+}
+
+
+/* baby hair */
+
+.baby-boy::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:37px;
+    height:17px;
+
+    left:5px;
+    top:1px;
+
+    border-radius:
+        50% 50% 20% 20%;
+
+    background:#345263;
+}
+
+@keyframes babyGlow{
+
+    0%,100%{
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+
+    50%{
+        transform:
+            translate(-50%,-50%)
+            scale(1.08);
+    }
+}
+
+
+/* Baby heart */
+
+.baby-heart{
+
+    position:absolute;
+
+    right:-12px;
+    bottom:5px;
+
+    font-size:15px;
+
+    animation:
+        miniHeart 1.8s infinite;
+}
+
+@keyframes miniHeart{
+
+    50%{
+        transform:scale(1.25);
+    }
+}
+
+
+/* Baby boy label */
+
+.baby-label{
 
     position:absolute;
 
     left:50%;
 
-    top:36px;
+    bottom:-72px;
 
-    transform:translateX(-50%);
+    transform:
+        translateX(-50%);
 
-    font-size:19px;
+    white-space:nowrap;
 
-    letter-spacing:10px;
-
-    color:#402b28;
-}
-
-
-/* Body */
-
-.person .body{
-
-    width:105px;
-    height:120px;
-
-    margin-top:-4px;
-
-    border-radius:
-        35px 35px 18px 18px;
-
-    background:#4274a8;
-
-    position:relative;
-}
-
-.man .body{
-    background:
-        linear-gradient(
-            135deg,
-            #243d63,
-            #416f9e
-        );
-}
-
-.woman .body{
-    width:110px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #e94c82,
-            #ff8cad
-        );
-}
-
-.child .body{
-
-    width:70px;
-    height:75px;
-
-    border-radius:
-        25px 25px 15px 15px;
-
-    background:#ff75a0;
-}
-
-.baby .body{
-
-    width:55px;
-    height:60px;
-
-    border-radius:
-        20px 20px 13px 13px;
-
-    background:#8bb9dc;
-}
-
-
-/* Family Labels */
-
-.person-name{
-
-    margin-top:10px;
-
-    color:#7d5866;
-
-    font-size:13px;
-
-    font-weight:800;
-}
-
-.age{
+    color:#4c94c3;
 
     font-size:11px;
 
-    color:#ad8492;
-
-    margin-top:3px;
+    font-weight:900;
 }
 
 
 /* =====================================================
-   TAMIL LOVE POEM
+   CHILDREN
+===================================================== */
+
+.child-one .head{
+
+    width:60px;
+    height:60px;
+}
+
+.child-one .body{
+
+    width:70px;
+    height:80px;
+
+    border-radius:
+        25px 25px 14px 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff6e9c,
+            #ffa5be
+        );
+}
+
+.child-two .head{
+
+    width:51px;
+    height:51px;
+}
+
+.child-two .body{
+
+    width:57px;
+    height:63px;
+
+    border-radius:
+        21px 21px 13px 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7fb9df,
+            #b1d8ef
+        );
+}
+
+
+/* NAME */
+
+.name{
+
+    margin-top:11px;
+
+    color:#684953;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    text-align:center;
+
+    white-space:nowrap;
+}
+
+.age{
+
+    margin-top:3px;
+
+    color:#a27d8a;
+
+    font-size:11px;
+
+    text-align:center;
+}
+
+
+/* =====================================================
+   FAMILY NOTE
+===================================================== */
+
+.family-note{
+
+    position:relative;
+    z-index:3;
+
+    text-align:center;
+
+    margin-top:35px;
+
+    color:#956c7a;
+
+    font-family:Georgia,serif;
+
+    font-size:18px;
+
+    line-height:1.9;
+}
+
+
+/* =====================================================
+   LOVE POEM
 ===================================================== */
 
 .poem-section{
 
-    max-width:900px;
+    position:relative;
+    z-index:1;
+
+    max-width:920px;
 
     margin:
-        0 auto 50px;
+        0 auto 60px;
 
     padding:
-        0 22px;
+        0 20px;
 }
 
 .poem-card{
 
+    position:relative;
+
+    overflow:hidden;
+
     background:
-        rgba(255,255,255,.92);
+        rgba(255,255,255,.95);
 
     border:
-        1px solid #f2cfdb;
+        1px solid #f0cbd8;
 
-    border-radius:35px;
+    border-radius:40px;
 
     padding:
-        42px 30px;
+        48px 28px;
 
     text-align:center;
 
     box-shadow:
-        0 20px 60px
-        rgba(190,40,90,.11);
-
-    position:relative;
+        0 25px 70px
+        rgba(184,42,87,.12);
 }
 
 .poem-card::before{
+
     content:"❝";
+
     position:absolute;
-    top:5px;
-    left:25px;
+
+    left:20px;
+    top:0;
 
     font-family:Georgia,serif;
 
-    font-size:90px;
+    font-size:100px;
 
-    color:#ff9cba;
+    color:#ffabc2;
 
-    opacity:.35;
+    opacity:.28;
 }
 
 .poem-title{
 
+    color:#ca2d60;
+
     font-family:Georgia,serif;
 
-    color:#d12e61;
+    font-size:33px;
 
-    font-size:31px;
-
-    margin-bottom:25px;
+    margin-bottom:28px;
 }
 
 .poem{
 
-    color:#684b57;
+    color:#694d59;
 
     font-size:18px;
 
-    line-height:2.25;
-
-    font-weight:500;
+    line-height:2.35;
 }
 
-.poem strong{
-    color:#d52f63;
+.red{
+    color:#d42d62;
+
+    font-weight:900;
+}
+
+.blue{
+    color:#4b99cb;
+
+    font-weight:900;
+}
+
+.big-love{
+
+    color:#dc3268;
+
+    font-size:20px;
+
+    font-weight:900;
 }
 
 
@@ -645,12 +1001,16 @@ header{
 
 .countdown-section{
 
+    position:relative;
+    z-index:1;
+
     max-width:1000px;
 
     margin:
         0 auto 60px;
 
-    padding:0 22px;
+    padding:
+        0 20px;
 }
 
 .countdown-card{
@@ -659,26 +1019,27 @@ header{
         linear-gradient(
             145deg,
             #fff,
-            #fff2f6
+            #fff1f6
         );
 
     border:
-        1px solid #f0ccd8;
+        1px solid #efcbd8;
 
-    border-radius:35px;
+    border-radius:38px;
 
-    padding:38px 25px;
+    padding:
+        40px 24px;
 
     box-shadow:
-        0 25px 70px
-        rgba(190,40,90,.12);
+        0 25px 75px
+        rgba(184,42,87,.12);
 }
 
 .countdown-title{
 
     text-align:center;
 
-    color:#c92d60;
+    color:#c82d60;
 
     font-family:Georgia,serif;
 
@@ -691,7 +1052,7 @@ header{
 
     text-align:center;
 
-    color:#876875;
+    color:#806572;
 
     margin-bottom:28px;
 }
@@ -708,7 +1069,7 @@ header{
 
     font-weight:900;
 
-    color:#624651;
+    color:#624650;
 
     margin-bottom:28px;
 }
@@ -723,7 +1084,7 @@ header{
         linear-gradient(
             90deg,
             #df356b,
-            #ffb0c8
+            #ffb7cb
         );
 
     position:relative;
@@ -736,6 +1097,7 @@ header{
     position:absolute;
 
     left:50%;
+
     top:-14px;
 
     transform:
@@ -761,11 +1123,12 @@ header{
     background:#fff;
 
     border:
-        1px solid #f0d9e1;
+        1px solid #f0d9e2;
 
     border-radius:22px;
 
-    padding:22px 8px;
+    padding:
+        23px 8px;
 
     text-align:center;
 }
@@ -775,7 +1138,7 @@ header{
     color:#df356b;
 
     font-size:
-        clamp(38px,7vw,65px);
+        clamp(38px,7vw,66px);
 
     font-weight:900;
 
@@ -806,9 +1169,9 @@ header{
 
     margin-top:25px;
 
-    font-weight:900;
+    color:#604650;
 
-    color:#634953;
+    font-weight:900;
 }
 
 .timezone{
@@ -823,7 +1186,7 @@ header{
 }
 
 
-/* Buttons */
+/* BUTTONS */
 
 .buttons{
 
@@ -845,7 +1208,7 @@ button{
     border-radius:14px;
 
     padding:
-        14px 20px;
+        14px 21px;
 
     font-size:14px;
 
@@ -856,7 +1219,7 @@ button{
 
 .whatsapp{
 
-    color:#fff;
+    color:white;
 
     background:
         linear-gradient(
@@ -867,17 +1230,17 @@ button{
 
     box-shadow:
         0 10px 25px
-        rgba(220,48,104,.25);
+        rgba(220,48,104,.24);
 }
 
 .reminder{
 
-    background:#fff;
-
     color:#df356b;
 
+    background:white;
+
     border:
-        1px solid #efcad7;
+        1px solid #efcbd8;
 }
 
 
@@ -887,12 +1250,16 @@ button{
 
 .dua{
 
+    position:relative;
+    z-index:1;
+
     max-width:800px;
 
     margin:
         0 auto 60px;
 
-    padding:0 22px;
+    padding:
+        0 20px;
 
     text-align:center;
 
@@ -903,9 +1270,9 @@ button{
 
 .dua strong{
 
-    color:#c82e60;
+    color:#c82d60;
 
-    font-size:18px;
+    font-size:19px;
 }
 
 
@@ -915,18 +1282,22 @@ button{
 
 footer{
 
+    position:relative;
+    z-index:1;
+
     background:
         linear-gradient(
             135deg,
             #d82f67,
-            #ed4b80
+            #ed4d80
         );
 
-    color:white;
+    color:#fff;
 
     text-align:center;
 
-    padding:32px 20px;
+    padding:
+        32px 20px;
 }
 
 footer strong{
@@ -942,7 +1313,7 @@ footer p{
 
     font-size:13px;
 
-    opacity:.85;
+    opacity:.9;
 }
 
 
@@ -950,19 +1321,21 @@ footer p{
    MOBILE
 ===================================================== */
 
-@media(max-width:760px){
+@media(max-width:780px){
 
     .family{
 
-        gap:8px;
+        gap:5px;
 
-        transform:
-            scale(.88);
+        transform:scale(.78);
+
+        margin:
+            -15px -35px;
     }
 
     .family-title{
 
-        font-size:25px;
+        font-size:26px;
     }
 
     .countdown{
@@ -975,14 +1348,24 @@ footer p{
 
         font-size:16px;
 
-        line-height:2;
+        line-height:2.05;
+    }
+
+    .poem-card{
+
+        padding:
+            42px 19px;
     }
 
     .hero{
 
-        padding-top:45px;
+        padding-top:48px;
     }
 
+    .nav-badge{
+
+        display:none;
+    }
 }
 
 </style>
@@ -992,34 +1375,45 @@ footer p{
 <body>
 
 
-<!-- Floating Hearts -->
+<!-- =====================================================
+     LOVE BACKGROUND
+===================================================== -->
 
-<div class="hearts">
+<div class="love-background">
 
-    <div class="heart">❤️</div>
-    <div class="heart">💕</div>
-    <div class="heart">💗</div>
-    <div class="heart">❤️</div>
-    <div class="heart">💖</div>
-    <div class="heart">💕</div>
-    <div class="heart">💗</div>
+    <div class="float">❤️</div>
+    <div class="float">💕</div>
+    <div class="float">💗</div>
+    <div class="float">💖</div>
+    <div class="float">❤️</div>
+    <div class="float">💕</div>
+    <div class="float">💗</div>
+    <div class="float">💞</div>
 
 </div>
 
 
-<!-- HEADER -->
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
 <header>
 
     <div class="nav">
 
-        <div class="logo">
+        <div class="brand">
 
-            ANU NOOR
+            நூர் ❤️ ஹனீபியா
 
             <small>
-                A BLESSING FROM ALLAH ♥
+                OUR BEAUTIFUL FAMILY
             </small>
+
+        </div>
+
+        <div class="nav-badge">
+
+            எங்கள் காதல் கதை ❤️
 
         </div>
 
@@ -1029,11 +1423,13 @@ footer p{
 
 
 
-<!-- HERO -->
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <section class="hero">
 
-    <div class="heart-title">
+    <div class="hero-heart">
         ❤️
     </div>
 
@@ -1045,13 +1441,18 @@ footer p{
 
     </h1>
 
-    <p>
+    <p class="intro">
 
-        அன்பால் இணைந்த இரு இதயங்கள்...
+        இரண்டு இதயங்கள் ஒன்றாகி...
         <br>
 
-        அந்த அன்பை முழுமையாக்க வந்த
-        எங்கள் இரு செல்ல மகள்கள்... 👨‍👩‍👧‍👧
+        ஒரு குடும்பமாகி...
+        <br>
+
+        இன்று அன்பும்,
+        சிரிப்பும்,
+        குழந்தைகளின் மழலையும்
+        நிறைந்த அழகான உலகமாகி விட்டது. ❤️
 
     </p>
 
@@ -1059,7 +1460,9 @@ footer p{
 
 
 
-<!-- FAMILY -->
+<!-- =====================================================
+     FAMILY
+===================================================== -->
 
 <section class="family-section">
 
@@ -1067,7 +1470,9 @@ footer p{
 
         <h2 class="family-title">
 
-            எங்கள் அழகான குடும்பம் ❤️
+            👨‍👩‍👧‍👧
+            எங்கள் குடும்பம்
+            ❤️
 
         </h2>
 
@@ -1075,83 +1480,177 @@ footer p{
         <div class="family">
 
 
-            <!-- MAN -->
+            <!-- =================================
+                 HUSBAND
+            ================================== -->
 
             <div class="person man">
 
-                <div class="head"></div>
+                <div class="head">
+
+                    <div class="eyes">
+                        ••
+                    </div>
+
+                </div>
 
                 <div class="body"></div>
 
-                <div class="person-name">
-                    கணவர்
+                <div class="name">
+                    நூர்
+                </div>
+
+                <div class="age">
+                    கணவர் ❤️
                 </div>
 
             </div>
 
 
-            <!-- WIFE -->
+
+            <!-- =================================
+                 PREGNANT WIFE
+            ================================== -->
 
             <div class="person woman">
 
-                <div class="head"></div>
+                <div class="head">
 
-                <div class="body"></div>
+                    <div class="eyes">
+                        ••
+                    </div>
 
-                <div class="person-name">
-                    மனைவி
+                </div>
+
+
+                <div class="body">
+
+
+                    <!-- Pregnant Belly -->
+
+                    <div class="belly">
+
+
+                        <!-- Baby Boy -->
+
+                        <div class="baby-boy">
+
+                            <div class="baby-heart">
+                                💙
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="baby-label">
+
+                        குட்டி இளவரசன் 💙
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="name">
+
+                    ஹனீபியா
+
+                </div>
+
+
+                <div class="age">
+
+                    மனைவி ❤️
+
                 </div>
 
             </div>
 
 
-            <!-- 3 YEAR OLD -->
 
-            <div class="person child">
+            <!-- =================================
+                 FIRST DAUGHTER
+            ================================== -->
 
-                <div class="head"
-                     style="
-                     width:60px;
-                     height:60px;
-                     ">
+            <div
+                class="person child-one"
+            >
+
+                <div class="head">
+
+                    <div class="eyes">
+                        ••
+                    </div>
+
                 </div>
 
                 <div class="body"></div>
 
-                <div class="person-name">
-                    செல்ல மகள்
+                <div class="name">
+
+                    பாஹிரா பாத்திமா
+
                 </div>
 
                 <div class="age">
-                    3 வயது
+
+                    3 வயது 👧🏻
+
                 </div>
 
             </div>
 
 
-            <!-- 9 MONTH BABY -->
 
-            <div class="person baby">
+            <!-- =================================
+                 SECOND BABY
+            ================================== -->
 
-                <div class="head"
-                     style="
-                     width:52px;
-                     height:52px;
-                     ">
+            <div
+                class="person child-two"
+            >
+
+                <div class="head">
+
+                    <div class="eyes">
+                        ••
+                    </div>
+
                 </div>
 
                 <div class="body"></div>
 
-                <div class="person-name">
-                    குட்டி மகள்
+                <div class="name">
+
+                    மாஹிரா பாத்திமா
+
                 </div>
 
                 <div class="age">
-                    9 மாதம்
+
+                    9 மாதம் 👶🏻
+
                 </div>
 
             </div>
 
+
+        </div>
+
+
+        <div class="family-note">
+
+            எங்கள் காதலின் நினைவாக
+            இரண்டு தேவதைகள்... 👧🏻👶🏻
+
+            <br>
+
+            மேலும் எங்கள் இதயத்தில்
+            ஒரு புதிய கனவு... 💙
 
         </div>
 
@@ -1161,7 +1660,9 @@ footer p{
 
 
 
-<!-- TAMIL LOVE KAVITHAI -->
+<!-- =====================================================
+     ROMANTIC TAMIL POEM
+===================================================== -->
 
 <section class="poem-section">
 
@@ -1169,55 +1670,225 @@ footer p{
 
         <h2 class="poem-title">
 
-            💕 எங்கள் காதல் கவிதை 💕
+            💕 நம் காதல் கவிதை 💕
 
         </h2>
 
 
         <div class="poem">
 
-            நீ என் வாழ்க்கையில் வந்த நாள் முதல்,<br>
 
-            என் உலகமே அழகாகிப் போனது... ❤️<br><br>
+            <span class="red">
+                ஹனீபியா...
+            </span>
 
+            <br>
 
-            உன் கையில் என் கை சேர்ந்தபோது,<br>
+            நீ என் வாழ்க்கையில்
+            வந்த நாள் முதல்,
 
-            என் இதயம் ஒரு வீடாகியது... 💕<br><br>
+            <br>
 
+            என் உலகத்தின்
+            அர்த்தமே மாறியது... ❤️
 
-            அந்த வீட்டில்<br>
-
-            நம் அன்பின் சிரிப்பாக வந்தார்கள்<br>
-
-            <strong>நம் இரண்டு தேவதைகள்... 👧🏻👶🏻</strong><br><br>
-
-
-            ஒருத்தி என் கையைப் பிடித்து<br>
-
-            “அப்பா” என்று அழைக்கிறாள்... 🥰<br><br>
+            <br><br>
 
 
-            இன்னொருத்தி என் மார்பில் சாய்ந்து<br>
+            உன் கையைப் பிடித்தபோது
+            காதலை உணர்ந்தேன்...
 
-            தன் சிரிப்பால் என் உலகத்தை நிறைக்கிறாள்... 💗<br><br>
+            <br>
 
+            உன் அருகில் வாழும்போது
+            வாழ்க்கையை உணர்ந்தேன்... 💕
 
-            நீ என் மனைவி மட்டுமல்ல...<br>
-
-            என் வாழ்வின் நிம்மதி,<br>
-
-            என் இதயத்தின் மகிழ்ச்சி,<br>
-
-            என் குழந்தைகளின் அன்பான அம்மா... ❤️<br><br>
+            <br><br>
 
 
-            <strong>
+            நம் காதலின்
+            முதல் அழகான பரிசாக
 
-                நீயும்... நம் இரண்டு மகள்களும்...<br>
-                தான் என் உலகம். 🌎❤️
+            <br>
 
-            </strong>
+            <span class="red">
+                பாஹிரா பாத்திமா
+            </span>
+
+            வந்தாள்... 👧🏻❤️
+
+            <br><br>
+
+
+            அவள் சிரிப்பு
+            எங்கள் வீட்டின்
+            முதல் வசந்தம்...
+
+            <br>
+
+            அவள் “அப்பா” என்ற
+            ஒவ்வொரு அழைப்பும்
+
+            <br>
+
+            என் இதயத்தின்
+            அழகான இசை... 🎶❤️
+
+            <br><br>
+
+
+            பின்னர்...
+
+            <br>
+
+            உன் வயிற்றில்
+            எங்கள் காதலின்
+            இன்னொரு கனவு
+            வளர்ந்தது... 🤰❤️
+
+            <br><br>
+
+
+            அந்த வயிற்றை
+            நான் பார்த்தபோது,
+
+            <br>
+
+            ஒரு குழந்தையை மட்டும்
+            பார்க்கவில்லை...
+
+            <br>
+
+            எங்கள் காதலின்
+            இன்னொரு அத்தியாயத்தை
+            பார்த்தேன்... ❤️
+
+            <br><br>
+
+
+            அந்தக் கனவு
+
+            <br>
+
+            <span class="red">
+                மாஹிரா பாத்திமா
+            </span>
+
+            என்ற பெயரில்
+            எங்கள் வாழ்க்கைக்குள் வந்தாள்... 👶🏻💕
+
+            <br><br>
+
+
+            இன்று...
+
+            <br>
+
+            பாஹிராவின் சிரிப்பு... 👧🏻
+
+            <br>
+
+            மாஹிராவின் மழலை... 👶🏻
+
+            <br>
+
+            உன் அன்பு... ❤️
+
+            <br><br>
+
+
+            இவை எல்லாவற்றுக்கும்
+            நடுவில்...
+
+            <br>
+
+            என் இதயத்தில்
+            இன்னொரு சிறிய கனவு... 💙
+
+            <br>
+
+            <span class="blue">
+                எங்கள் குட்டி இளவரசன்...
+            </span>
+
+            <br>
+
+            இன்னும் எங்கள்
+            அன்பின் உலகத்திற்குள்
+            வர காத்திருக்கிறான்... 👶🏻💙
+
+            <br><br>
+
+
+            <span class="big-love">
+
+                ஹனீபியா...
+
+                <br>
+
+                நீ என் மனைவி மட்டும் அல்ல...
+
+                <br>
+
+                என் நிம்மதி,
+                என் மகிழ்ச்சி,
+                என் வாழ்க்கையின்
+                அழகான பாதி... ❤️
+
+            </span>
+
+            <br><br>
+
+
+            என் கையில்
+            உன் கை...
+
+            <br>
+
+            என் அருகில்
+            நம் குழந்தைகள்...
+
+            <br>
+
+            நம் வாழ்க்கையில்
+            அல்லாஹ்வின் அருள்...
+
+            <br><br>
+
+
+            <span class="big-love">
+
+                இதைவிட பெரிய
+                செல்வம் எனக்கு
+                இந்த உலகத்தில்
+                வேறு எதுவும் இல்லை. ❤️
+
+            </span>
+
+            <br><br>
+
+
+            <span class="red">
+
+                நூர் ❤️ ஹனீபியா
+
+            </span>
+
+            <br>
+
+            ஒரு காதல்...
+
+            <br>
+
+            ஒரு குடும்பம்...
+
+            <br>
+
+            ஒரு வாழ்க்கை...
+
+            <br>
+
+            என்றும் ஒன்றாக... ❤️
 
         </div>
 
@@ -1227,7 +1898,9 @@ footer p{
 
 
 
-<!-- COUNTDOWN -->
+<!-- =====================================================
+     INDIA COUNTDOWN
+===================================================== -->
 
 <section
     class="countdown-section"
@@ -1239,14 +1912,18 @@ footer p{
 
         <h2 class="countdown-title">
 
-            🇮🇳 இந்தியா... நாங்கள் வருகிறோம்! ❤️
+            🇮🇳
+            இந்தியா...
+            நாங்கள் வருகிறோம்!
+            ❤️
 
         </h2>
 
 
         <p class="countdown-subtitle">
 
-            குடும்பத்துடன் இந்தியா பயணத்திற்கான Countdown
+            எங்கள் குடும்பத்தின்
+            India Journey Countdown
 
         </p>
 
@@ -1338,7 +2015,12 @@ footer p{
 
         <div class="arrival">
 
-            சனிக்கிழமை • 29 ஆகஸ்ட் 2026 • பிற்பகல் 1:00 🇮🇳
+            சனிக்கிழமை
+            •
+            29 ஆகஸ்ட் 2026
+            •
+            பிற்பகல் 1:00
+            🇮🇳
 
         </div>
 
@@ -1368,7 +2050,7 @@ footer p{
                 onclick="addReminder()"
             >
 
-                📅 Reminder சேர்க்கவும்
+                📅 Reminder
 
             </button>
 
@@ -1382,27 +2064,46 @@ footer p{
 
 
 
-<!-- DUA -->
+<!-- =====================================================
+     DUA
+===================================================== -->
 
 <div class="dua">
 
     <strong>
-
-        🤲 அல்லாஹ்வே!
-
+        🤲 அல்லாஹ்வே...
     </strong>
 
-    <br>
+    <br><br>
 
-    எங்கள் குடும்பத்தை எப்போதும்
+    எங்கள் குடும்பத்தை
     அன்பிலும், அமைதியிலும்,
-    ஆரோக்கியத்திலும், ஈமானிலும்
+    ஆரோக்கியத்திலும்,
+    ஈமானிலும் எப்போதும்
     ஒன்றாக வைத்தருள்வாயாக.
 
     <br>
 
-    எங்கள் பயணத்தை பாதுகாப்பானதாகவும்,
-    மகிழ்ச்சியானதாகவும் ஆக்குவாயாக.
+    எங்கள் பிள்ளைகளை
+    நல்ல முறையில் வளர்க்கும்
+    பாக்கியத்தை வழங்குவாயாக.
+
+    <br>
+
+    எங்கள் வரவிருக்கும்
+    குட்டி இளவரசனையும்
+    ஆரோக்கியமாகவும்
+    நல்லொழுக்கத்துடனும்
+    எங்களுக்கு வழங்குவாயாக.
+
+    <br>
+
+    எங்கள் பயணத்தை
+    பாதுகாப்பானதாகவும்,
+    மகிழ்ச்சியானதாகவும்
+    ஆக்குவாயாக.
+
+    <br><br>
 
     ❤️ آمين ❤️
 
@@ -1410,16 +2111,26 @@ footer p{
 
 
 
-<!-- FOOTER -->
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
     <strong>
-        ANU NOOR ❤️
+        நூர் ❤️ ஹனீபியா
     </strong>
 
     <p>
-        எங்கள் அன்பான குடும்பத்தின் அழகான நினைவுகள்
+        பாஹிரா பாத்திமா 👧🏻
+        •
+        மாஹிரா பாத்திமா 👶🏻
+        •
+        குட்டி இளவரசன் 💙
+    </p>
+
+    <p>
+        எங்கள் காதல் • எங்கள் குடும்பம் • எங்கள் உலகம் ❤️
     </p>
 
     <p>
@@ -1432,20 +2143,18 @@ footer p{
 
 <script>
 
-
 /* =====================================================
    COUNTDOWN
 
+   Target:
    29 August 2026
-   1:00 PM India Time
+   1:00 PM India Standard Time
 
    IST = UTC + 5:30
 
-   1:00 PM IST
-   =
+   Therefore:
    07:30 UTC
 ===================================================== */
-
 
 const targetDate =
     new Date(
@@ -1463,19 +2172,19 @@ function updateCountdown(){
 
         document.getElementById(
             "days"
-        ).textContent = "00";
+        ).textContent="00";
 
         document.getElementById(
             "hours"
-        ).textContent = "00";
+        ).textContent="00";
 
         document.getElementById(
             "minutes"
-        ).textContent = "00";
+        ).textContent="00";
 
         document.getElementById(
             "seconds"
-        ).textContent = "00";
+        ).textContent="00";
 
 
         document.querySelector(
@@ -1484,47 +2193,49 @@ function updateCountdown(){
             "🇮🇳 இந்தியாவிற்கு வரவேற்கிறோம்! ❤️";
 
 
-        return;
+        document.querySelector(
+            ".countdown-subtitle"
+        ).textContent =
+            "எங்கள் பயணம் வந்துவிட்டது!";
 
+
+        return;
     }
 
 
     const days =
         Math.floor(
             difference /
-            (1000 * 60 * 60 * 24)
+            (1000*60*60*24)
         );
 
-
     difference %=
-        1000 * 60 * 60 * 24;
+        1000*60*60*24;
 
 
     const hours =
         Math.floor(
             difference /
-            (1000 * 60 * 60)
+            (1000*60*60)
         );
 
-
     difference %=
-        1000 * 60 * 60;
+        1000*60*60;
 
 
     const minutes =
         Math.floor(
             difference /
-            (1000 * 60)
+            (1000*60)
         );
 
-
     difference %=
-        1000 * 60;
+        1000*60;
 
 
     const seconds =
         Math.floor(
-            difference / 1000
+            difference/1000
         );
 
 
@@ -1562,7 +2273,6 @@ setInterval(
 );
 
 
-
 /* =====================================================
    WHATSAPP SHARE
 ===================================================== */
@@ -1571,20 +2281,26 @@ function shareWhatsApp(){
 
     const message =
 
-`❤️ ANU NOOR — எங்கள் அழகான குடும்பம் ❤️
+`❤️ நூர் & ஹனீபியா ❤️
+
+எங்கள் அழகான குடும்பம் 👨‍👩‍👧‍👧
+
+👧🏻 பாஹிரா பாத்திமா
+👶🏻 மாஹிரா பாத்திமா
+💙 எங்கள் குட்டி இளவரசன்
 
 🇦🇪 UAE → 🇮🇳 India
 
 📅 29 August 2026
 🕐 1:00 PM India Time
 
-⏳ எங்கள் India Journey Countdown:
+⏳ எங்கள் குடும்ப Countdown:
 
 ${window.location.href}`;
 
 
     const url =
-        "https://wa.me/?text=" +
+        "https://wa.me/?text="+
         encodeURIComponent(message);
 
 
@@ -1596,21 +2312,19 @@ ${window.location.href}`;
 }
 
 
-
 /* =====================================================
-   REMINDER
+   CALENDAR REMINDER
 ===================================================== */
 
 function addReminder(){
 
     const calendar =
-
 `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
 DTSTART:20260829T073000Z
 DTEND:20260829T083000Z
-SUMMARY:ANU NOOR — India Arrival 🇮🇳
+SUMMARY:நூர் & ஹனீபியா — India Journey 🇮🇳
 DESCRIPTION:Family India Journey — 29 August 2026 at 1:00 PM IST.
 END:VEVENT
 END:VCALENDAR`;
@@ -1634,11 +2348,10 @@ END:VCALENDAR`;
         document.createElement("a");
 
 
-    link.href = url;
+    link.href=url;
 
-
-    link.download =
-        "anu-noor-india-arrival.ics";
+    link.download=
+        "noor-hanifiya-india-journey.ics";
 
 
     link.click();
@@ -1648,9 +2361,7 @@ END:VCALENDAR`;
 
 }
 
-
 </script>
-
 
 </body>
 </html>
