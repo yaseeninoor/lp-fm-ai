@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#061322">
+
+<title>LP-FM Stock Movement</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:linear-gradient(135deg,#04101f,#0a1b31,#061322);
+    color:white;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    padding:14px 18px;
+    background:#061322f5;
+    border-bottom:1px solid #ffffff15;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#2188ff,#0757c8);
+    display:grid;
+    place-items:center;
+    font-weight:900;
+}
+
+.brand h2{
+    margin:0;
+    font-size:18px;
+}
+
+.brand small{
+    color:#7890a9;
+}
+
+.user{
+    color:#9fcaff;
+    font-size:11px;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:11px 14px;
+    color:white;
+    background:#1677ff;
+    font-weight:700;
+    cursor:pointer;
+}
+
+button.secondary{
+    background:#17314f;
+}
+
+button.in{
+    background:#15803d;
+}
+
+button.out{
+    background:#b42335;
+}
+
+button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.main{
+    max-width:1200px;
+    margin:auto;
+    padding:25px 16px 60px;
+}
+
+.page-title{
+    margin-bottom:20px;
+}
+
+.page-title h1{
+    margin:0;
+    font-size:28px;
+}
+
+.page-title p{
+    margin-top:7px;
+    color:#8fa5bc;
+    font-size:12px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:380px 1fr;
+    gap:18px;
+}
+
+.panel{
+    background:#071426dd;
+    border:1px solid #ffffff12;
+    border-radius:16px;
+    padding:20px;
+}
+
+.panel h2{
+    margin-top:0;
+    font-size:18px;
+}
+
+.tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:18px;
+}
+
+.tab{
+    background:#17314f;
+}
+
+.tab.active-in{
+    background:#15803d;
+}
+
+.tab.active-out{
+    background:#b42335;
+}
+
+label{
+    display:block;
+    color:#8fa5bc;
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    background:#0b2038;
+    color:white;
+    border:1px solid #ffffff18;
+    border-radius:9px;
+    padding:11px;
+    outline:none;
+    margin-bottom:12px;
+}
+
+textarea{
+    min-height:75px;
+    resize:vertical;
+}
+
+.stock-card{
+    padding:15px;
+    margin:5px 0 15px;
+    border-radius:12px;
+    background:#ffffff08;
+    border:1px solid #ffffff10;
+}
+
+.stock-label{
+    color:#7890a9;
+    font-size:10px;
+}
+
+.stock-number{
+    font-size:28px;
+    font-weight:800;
+    margin-top:5px;
+}
+
+.stock-unit{
+    color:#8fa5bc;
+    font-size:11px;
+}
+
+.warning{
+    padding:10px;
+    border-radius:9px;
+    background:#ef444422;
+    color:#ff9b9b;
+    font-size:11px;
+    margin-bottom:12px;
+    display:none;
+}
+
+.success{
+    padding:10px;
+    border-radius:9px;
+    background:#22c55e20;
+    color:#70e491;
+    font-size:11px;
+    margin-bottom:12px;
+    display:none;
+}
+
+.history-toolbar{
+    display:flex;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.history-toolbar input{
+    margin:0;
+    flex:1;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    min-width:900px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:11px 9px;
+    border-bottom:1px solid #ffffff0d;
+    text-align:left;
+    font-size:11px;
+}
+
+th{
+    color:#86a0ba;
+    font-size:10px;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:20px;
+    font-size:9px;
+    font-weight:800;
+}
+
+.badge-in{
+    color:#70e491;
+    background:#22c55e20;
+}
+
+.badge-out{
+    color:#ff8d8d;
+    background:#ef444422;
+}
+
+.empty{
+    text-align:center;
+    padding:35px;
+    color:#7890a9;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    margin-top:5px;
+}
+
+.actions button{
+    flex:1;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:#000b;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:15px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(430px,100%);
+    background:#0a1b31;
+    border:1px solid #ffffff18;
+    border-radius:16px;
+    padding:22px;
+}
+
+.login-input{
+    margin-bottom:10px;
+}
+
+.footer{
+    text-align:center;
+    color:#536b84;
+    font-size:9px;
+    margin-top:25px;
+}
+
+@media(max-width:850px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:550px){
+
+    header{
+        align-items:flex-start;
+    }
+
+    .user{
+        display:none;
+    }
+
+    .main{
+        padding:18px 10px 50px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="brand">
+
+        <div class="logo">
+            LP
+        </div>
+
+        <div>
+            <h2>Stock Movement</h2>
+            <small>LP-FM Material Inventory</small>
+        </div>
+
+    </div>
+
+    <div>
+
+        <span
+            class="user"
+            id="userEmail">
+        </span>
+
+        <button
+            class="secondary"
+            onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+    <div class="page-title">
+
+        <h1>
+            Stock In / Stock Out
+        </h1>
+
+        <p>
+            Update material balance and maintain movement history
+        </p>
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <!-- MOVEMENT FORM -->
+
+        <section class="panel">
+
+            <h2>
+                Material Movement
+            </h2>
+
+
+            <div class="tabs">
+
+                <button
+                    id="inTab"
+                    class="tab active-in"
+                    onclick="setMovement('IN')">
+
+                    ➕ Stock In
+
+                </button>
+
+
+                <button
+                    id="outTab"
+                    class="tab"
+                    onclick="setMovement('OUT')">
+
+                    ➖ Stock Out
+
+                </button>
+
+            </div>
+
+
+            <label>
+                Select Material
+            </label>
+
+            <select
+                id="materialSelect"
+                onchange="materialChanged()">
+
+                <option value="">
+                    Loading materials...
+                </option>
+
+            </select>
+
+
+            <div
+                id="stockCard"
+                class="stock-card"
+                style="display:none">
+
+                <div class="stock-label">
+                    CURRENT STOCK
+                </div>
+
+                <div
+                    id="currentStock"
+                    class="stock-number">
+                    0
+                </div>
+
+                <div
+                    id="currentUnit"
+                    class="stock-unit">
+                    -
+                </div>
+
+            </div>
+
+
+            <div
+                id="lowWarning"
+                class="warning">
+
+                ⚠️ This material is already at or below minimum stock.
+
+            </div>
+
+
+            <label>
+                Quantity *
+            </label>
+
+            <input
+                id="quantity"
+                type="number"
+                min="1"
+                step="any"
+                placeholder="Enter quantity"
+                oninput="calculateBalance()">
+
+
+            <div
+                id="balancePreview"
+                class="stock-card"
+                style="display:none">
+
+                <div class="stock-label">
+                    BALANCE AFTER MOVEMENT
+                </div>
+
+                <div
+                    id="newBalance"
+                    class="stock-number">
+                    0
+                </div>
+
+            </div>
+
+
+            <label>
+                PR / PO / Reference No.
+            </label>
+
+            <input
+                id="reference"
+                placeholder="Example: PO-2026-001">
+
+
+            <label>
+                Reason
+            </label>
+
+            <select id="reason">
+
+                <option value="">
+                    Select reason
+                </option>
+
+                <option value="Purchase">
+                    Purchase
+                </option>
+
+                <option value="Material Received">
+                    Material Received
+                </option>
+
+                <option value="Department Issue">
+                    Department Issue
+                </option>
+
+                <option value="Production">
+                    Production
+                </option>
+
+                <option value="Maintenance">
+                    Maintenance
+                </option>
+
+                <option value="Damage">
+                    Damage
+                </option>
+
+                <option value="Return">
+                    Return
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <label>
+                Remarks
+            </label>
+
+            <textarea
+                id="remarks"
+                placeholder="Additional information...">
+            </textarea>
+
+
+            <div
+                id="successMessage"
+                class="success">
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="secondary"
+                    onclick="resetForm()">
+
+                    Clear
+
+                </button>
+
+
+                <button
+                    id="saveButton"
+                    class="in"
+                    onclick="saveMovement()">
+
+                    Save Stock In
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- HISTORY -->
+
+        <section class="panel">
+
+            <h2>
+                Movement History
+            </h2>
+
+
+            <div class="history-toolbar">
+
+                <input
+                    id="historySearch"
+                    placeholder="Search material / reference..."
+                    oninput="renderHistory()">
+
+                <button
+                    class="secondary"
+                    onclick="loadHistory()">
+
+                    ↻ Refresh
+
+                </button>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+                            <th>Material</th>
+                            <th>Type</th>
+                            <th>Qty</th>
+                            <th>Balance</th>
+                            <th>Reference</th>
+                            <th>Reason</th>
+                            <th>User</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody
+                        id="historyRows">
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="empty">
+
+                                Loading...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <div class="footer">
+        LP-FM Inventory • Firebase Firestore
+    </div>
+
+</main>
+
+
+
+<!-- LOGIN MODAL -->
+
+<div
+    id="loginModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <h2>
+            LP-FM Login
+        </h2>
+
+        <p style="color:#8fa5bc;font-size:11px">
+            Sign in to manage stock.
+        </p>
+
+
+        <label>
+            Email
+        </label>
+
+        <input
+            id="loginEmail"
+            class="login-input"
+            type="email"
+            placeholder="Email">
+
+
+        <label>
+            Password
+        </label>
+
+        <input
+            id="loginPassword"
+            class="login-input"
+            type="password"
+            placeholder="Password">
+
+
+        <button
+            onclick="login()">
+
+            Login
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    doc,
+    query,
+    orderBy,
+    limit,
+    serverTimestamp
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+
+
+/* =========================================
+   FIREBASE
+========================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",
+
+    authDomain:
+        "lp-store-23212.firebaseapp.com",
+
+    projectId:
+        "lp-store-23212",
+
+    storageBucket:
+        "lp-store-23212.firebasestorage.app",
+
+    messagingSenderId:
+        "200245726085",
+
+    appId:
+        "1:200245726085:web:081aa1315c64e5b4bc12ec",
+
+    measurementId:
+        "G-21VPLM3N6S"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let materials = [];
+
+let history = [];
+
+let movementType = "IN";
+
+let currentUser = null;
+
+
+
+/* =========================================
+   AUTH
+========================================= */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        currentUser = user;
+
+
+        if(!user){
+
+            document
+                .getElementById("loginModal")
+                .classList.add("show");
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("loginModal")
+            .classList.remove("show");
+
+
+        document
+            .getElementById("userEmail")
+            .textContent =
+            user.email;
+
+
+        await loadMaterials();
+
+        await loadHistory();
+
+    }
+);
+
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+window.login =
+async function(){
+
+    const email =
+        document
+        .getElementById("loginEmail")
+        .value
+        .trim();
+
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value;
+
+
+    if(!email || !password){
+
+        alert(
+            "Please enter email and password."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+    }
+    catch(error){
+
+        alert(
+            "Login failed:\n" +
+            error.message
+        );
+
+    }
+
+};
+
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+window.logout =
+async function(){
+
+    await signOut(auth);
+
+};
+
+
+
+/* =========================================
+   LOAD MATERIALS
+========================================= */
+
+async function loadMaterials(){
+
+    try{
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "materials"
+                )
+            );
+
+
+        materials =
+            snapshot.docs.map(
+                item => ({
+
+                    id:item.id,
+
+                    ...item.data()
+
+                })
+            );
+
+
+        populateMaterials();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not load materials:\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+
+/* =========================================
+   MATERIAL DROPDOWN
+========================================= */
+
+function populateMaterials(){
+
+    const select =
+        document
+        .getElementById(
+            "materialSelect"
+        );
+
+
+    select.innerHTML = `
+
+        <option value="">
+            Select material
+        </option>
+
+    `;
+
+
+    materials
+        .sort(
+            (a,b) =>
+                String(
+                    a.code || ""
+                )
+                .localeCompare(
+                    String(
+                        b.code || ""
+                    )
+                )
+        )
+        .forEach(item => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                item.id;
+
+
+            option.textContent =
+                `${item.code || ""} — ${item.description || ""}`;
+
+
+            select.appendChild(
+                option
+            );
+
+        });
+
+}
+
+
+
+/* =========================================
+   MATERIAL CHANGE
+========================================= */
+
+window.materialChanged =
+function(){
+
+    const id =
+        document
+        .getElementById(
+            "materialSelect"
+        )
+        .value;
+
+
+    const item =
+        materials.find(
+            x => x.id === id
+        );
+
+
+    const card =
+        document
+        .getElementById(
+            "stockCard"
+        );
+
+
+    const warning =
+        document
+        .getElementById(
+            "lowWarning"
+        );
+
+
+    if(!item){
+
+        card.style.display =
+            "none";
+
+        warning.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    card.style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "currentStock"
+        )
+        .textContent =
+        Number(
+            item.stock || 0
+        );
+
+
+    document
+        .getElementById(
+            "currentUnit"
+        )
+        .textContent =
+        item.unit || "";
+
+
+    if(
+        Number(item.stock || 0)
+        <=
+        Number(item.minimum || 0)
+    ){
+
+        warning.style.display =
+            "block";
+
+    }
+    else{
+
+        warning.style.display =
+            "none";
+
+    }
+
+
+    calculateBalance();
+
+};
+
+
+
+/* =========================================
+   MOVEMENT TYPE
+========================================= */
+
+window.setMovement =
+function(type){
+
+    movementType =
+        type;
+
+
+    const inTab =
+        document
+        .getElementById(
+            "inTab"
+        );
+
+
+    const outTab =
+        document
+        .getElementById(
+            "outTab"
+        );
+
+
+    const save =
+        document
+        .getElementById(
+            "saveButton"
+        );
+
+
+    if(type === "IN"){
+
+        inTab.className =
+            "tab active-in";
+
+        outTab.className =
+            "tab";
+
+        save.className =
+            "in";
+
+        save.textContent =
+            "Save Stock In";
+
+    }
+    else{
+
+        inTab.className =
+            "tab";
+
+        outTab.className =
+            "tab active-out";
+
+        save.className =
+            "out";
+
+        save.textContent =
+            "Save Stock Out";
+
+    }
+
+
+    calculateBalance();
+
+};
+
+
+
+/* =========================================
+   CALCULATE BALANCE
+========================================= */
+
+window.calculateBalance =
+function(){
+
+    const id =
+        document
+        .getElementById(
+            "materialSelect"
+        )
+        .value;
+
+
+    const item =
+        materials.find(
+            x => x.id === id
+        );
+
+
+    const quantity =
+        Number(
+            document
+            .getElementById(
+                "quantity"
+            )
+            .value
+        ) || 0;
+
+
+    const preview =
+        document
+        .getElementById(
+            "balancePreview"
+        );
+
+
+    if(!item || quantity <= 0){
+
+        preview.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    const current =
+        Number(
+            item.stock || 0
+        );
+
+
+    let balance;
+
+
+    if(movementType === "IN"){
+
+        balance =
+            current + quantity;
+
+    }
+    else{
+
+        balance =
+            current - quantity;
+
+    }
+
+
+    preview.style.display =
+        "block";
+
+
+    const newBalance =
+        document
+        .getElementById(
+            "newBalance"
+        );
+
+
+    newBalance.textContent =
+        balance;
+
+
+    if(balance < 0){
+
+        newBalance.style.color =
+            "#ff7070";
+
+    }
+    else{
+
+        newBalance.style.color =
+            "white";
+
+    }
+
+};
+
+
+
+/* =========================================
+   SAVE MOVEMENT
+========================================= */
+
+window.saveMovement =
+async function(){
+
+    if(!currentUser){
+
+        alert(
+            "Please login first."
+        );
+
+        return;
+
+    }
+
+
+    const materialId =
+        document
+        .getElementById(
+            "materialSelect"
+        )
+        .value;
+
+
+    const quantity =
+        Number(
+            document
+            .getElementById(
+                "quantity"
+            )
+            .value
+        );
+
+
+    const reference =
+        document
+        .getElementById(
+            "reference"
+        )
+        .value
+        .trim();
+
+
+    const reason =
+        document
+        .getElementById(
+            "reason"
+        )
+        .value;
+
+
+    const remarks =
+        document
+        .getElementById(
+            "remarks"
+        )
+        .value
+        .trim();
+
+
+    if(!materialId){
+
+        alert(
+            "Please select a material."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !quantity ||
+        quantity <= 0
+    ){
+
+        alert(
+            "Please enter a valid quantity."
+        );
+
+        return;
+
+    }
+
+
+    const item =
+        materials.find(
+            x => x.id === materialId
+        );
+
+
+    if(!item){
+
+        alert(
+            "Material not found."
+        );
+
+        return;
+
+    }
+
+
+    const current =
+        Number(
+            item.stock || 0
+        );
+
+
+    let newBalance;
+
+
+    if(movementType === "IN"){
+
+        newBalance =
+            current + quantity;
+
+    }
+    else{
+
+        newBalance =
+            current - quantity;
+
+    }
+
+
+    /* Prevent negative stock */
+
+    if(
+        movementType === "OUT" &&
+        newBalance < 0
+    ){
+
+        alert(
+            `Stock Out cannot be greater than current stock.\n\nCurrent stock: ${current}\nRequested: ${quantity}`
+        );
+
+        return;
+
+    }
+
+
+    const saveButton =
+        document
+        .getElementById(
+            "saveButton"
+        );
+
+
+    saveButton.disabled =
+        true;
+
+
+    saveButton.textContent =
+        "Saving...";
+
+
+    try{
+
+        /* Update material balance */
+
+        await updateDoc(
+            doc(
+                db,
+                "materials",
+                materialId
+            ),
+            {
+
+                stock:
+                    newBalance,
+
+                updatedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        /* Save movement history */
+
+        await addDoc(
+            collection(
+                db,
+                "stockMovements"
+            ),
+            {
+
+                materialId:
+                    materialId,
+
+                materialCode:
+                    item.code || "",
+
+                description:
+                    item.description || "",
+
+                type:
+                    movementType,
+
+                quantity:
+                    quantity,
+
+                previousStock:
+                    current,
+
+                newBalance:
+                    newBalance,
+
+                unit:
+                    item.unit || "",
+
+                reference:
+                    reference,
+
+                reason:
+                    reason,
+
+                remarks:
+                    remarks,
+
+                user:
+                    currentUser.email,
+
+                userId:
+                    currentUser.uid,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        /* Refresh local data */
+
+        await loadMaterials();
+
+        await loadHistory();
+
+
+        showSuccess(
+            `${movementType === "IN" ? "Stock In" : "Stock Out"} saved successfully. New balance: ${newBalance} ${item.unit || ""}`
+        );
+
+
+        resetForm();
+
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not save movement:\n" +
+            error.message
+        );
+
+    }
+
+
+    saveButton.disabled =
+        false;
+
+
+    saveButton.textContent =
+        movementType === "IN"
+        ? "Save Stock In"
+        : "Save Stock Out";
+
+};
+
+
+
+/* =========================================
+   RESET
+========================================= */
+
+window.resetForm =
+function(){
+
+    document
+        .getElementById(
+            "materialSelect"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "quantity"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "reference"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "reason"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "remarks"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "stockCard"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "balancePreview"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "lowWarning"
+        )
+        .style.display =
+        "none";
+
+};
+
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+window.loadHistory =
+async function(){
+
+    try{
+
+        const movementQuery =
+            query(
+                collection(
+                    db,
+                    "stockMovements"
+                ),
+                orderBy(
+                    "createdAt",
+                    "desc"
+                ),
+                limit(50)
+            );
+
+
+        const snapshot =
+            await getDocs(
+                movementQuery
+            );
+
+
+        history =
+            snapshot.docs.map(
+                item => ({
+
+                    id:item.id,
+
+                    ...item.data()
+
+                })
+            );
+
+
+        renderHistory();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        /*
+         * If there are no movements yet,
+         * Firestore may not have an index.
+         */
+
+        if(
+            error.code ===
+            "failed-precondition"
+        ){
+
+            alert(
+                "Firebase needs a Firestore index for movement history. Open the link shown in the Firebase error and create the index."
+            );
+
+        }
+        else{
+
+            document
+                .getElementById(
+                    "historyRows"
+                )
+                .innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="empty">
+
+                        No movement history yet.
+
+                    </td>
+
+                </tr>
+
+                `;
+
+        }
+
+    }
+
+};
+
+
+
+/* =========================================
+   RENDER HISTORY
+========================================= */
+
+window.renderHistory =
+function(){
+
+    const search =
+        document
+        .getElementById(
+            "historySearch"
+        )
+        .value
+        .toLowerCase();
+
+
+    const filtered =
+        history.filter(item => {
+
+            const text =
+
+                `${item.materialCode || ""}
+                 ${item.description || ""}
+                 ${item.reference || ""}
+                 ${item.reason || ""}
+                 ${item.user || ""}`
+                .toLowerCase();
+
+
+            return text.includes(
+                search
+            );
+
+        });
+
+
+    const rows =
+        document
+        .getElementById(
+            "historyRows"
+        );
+
+
+    if(!filtered.length){
+
+        rows.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty">
+
+                    No movement history found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    rows.innerHTML =
+        filtered.map(
+            item => {
+
+                let date =
+                    "-";
+
+
+                if(
+                    item.createdAt &&
+                    item.createdAt.toDate
+                ){
+
+                    date =
+                        item.createdAt
+                        .toDate()
+                        .toLocaleString();
+
+                }
+
+
+                const typeClass =
+                    item.type === "IN"
+                    ? "badge-in"
+                    : "badge-out";
+
+
+                const typeText =
+                    item.type === "IN"
+                    ? "STOCK IN"
+                    : "STOCK OUT";
+
+
+                return `
+
+                <tr>
+
+                    <td>
+                        ${escapeHtml(date)}
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            ${escapeHtml(
+                                item.materialCode || ""
+                            )}
+                        </strong>
+
+                        <br>
+
+                        <span
+                            style="color:#7890a9">
+
+                            ${escapeHtml(
+                                item.description || ""
+                            )}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="badge ${typeClass}">
+
+                            ${typeText}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        ${Number(
+                            item.quantity || 0
+                        )}
+
+                        ${escapeHtml(
+                            item.unit || ""
+                        )}
+
+                    </td>
+
+                    <td>
+
+                        ${Number(
+                            item.newBalance || 0
+                        )}
+
+                    </td>
+
+                    <td>
+
+                        ${escapeHtml(
+                            item.reference || "-"
+                        )}
+
+                    </td>
+
+                    <td>
+
+                        ${escapeHtml(
+                            item.reason || "-"
+                        )}
+
+                    </td>
+
+                    <td>
+
+                        ${escapeHtml(
+                            item.user || "-"
+                        )}
+
+                    </td>
+
+                </tr>
+
+                `;
+
+            }
+        ).join("");
+
+};
+
+
+
+/* =========================================
+   SUCCESS MESSAGE
+========================================= */
+
+function showSuccess(text){
+
+    const box =
+        document
+        .getElementById(
+            "successMessage"
+        );
+
+
+    box.textContent =
+        text;
+
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            box.style.display =
+                "none";
+
+        },
+        5000
+    );
+
+}
+
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
