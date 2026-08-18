@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#061322">
 
 <title>LP-FM Material Inventory</title>
@@ -10,54 +10,102 @@
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
     background:linear-gradient(135deg,#04101f,#0a1b31,#061322);
     color:white;
 }
+
 header{
     position:sticky;
     top:0;
-    z-index:10;
-    padding:14px 20px;
+    z-index:20;
+    padding:14px 18px;
     background:#061322f5;
-    border-bottom:1px solid #ffffff18;
+    border-bottom:1px solid #ffffff15;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
+
 .brand{
     display:flex;
     align-items:center;
     gap:12px;
 }
+
 .logo{
     width:45px;
     height:45px;
     border-radius:12px;
-    background:linear-gradient(135deg,#2188ff,#0757c8);
+
+    background:linear-gradient(
+        135deg,
+        #2188ff,
+        #0757c8
+    );
+
     display:grid;
     place-items:center;
+
     font-weight:900;
 }
+
 .brand h2{
     margin:0;
     font-size:18px;
 }
+
 .brand small{
     color:#7890a9;
 }
-.back{
+
+.user{
     color:#9fcaff;
-    text-decoration:none;
+    font-size:11px;
 }
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:11px 14px;
+
+    color:white;
+    background:#1677ff;
+
+    font-weight:700;
+    cursor:pointer;
+}
+
+button.secondary{
+    background:#17314f;
+}
+
+button.green{
+    background:#15803d;
+}
+
+button.red{
+    background:#9f2434;
+}
+
+button:disabled{
+    opacity:.5;
+}
+
 .main{
-    max-width:1250px;
+    max-width:1400px;
     margin:auto;
     padding:25px 16px 60px;
 }
+
 .top{
     display:flex;
     justify-content:space-between;
@@ -65,280 +113,344 @@ header{
     gap:15px;
     margin-bottom:20px;
 }
+
 .top h1{
     margin:0;
     font-size:28px;
 }
+
 .top p{
     color:#8fa5bc;
     font-size:12px;
 }
+
 .buttons{
     display:flex;
     gap:8px;
     flex-wrap:wrap;
 }
-button{
-    border:0;
-    border-radius:9px;
-    padding:11px 14px;
-    background:#1677ff;
-    color:white;
-    font-weight:700;
-    cursor:pointer;
+
+.file{
+    display:none;
 }
-button.secondary{
-    background:#17314f;
-}
-button.danger{
-    background:#8b2635;
-}
+
 .stats{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:
+        repeat(5,1fr);
+
     gap:12px;
+
     margin-bottom:20px;
 }
+
 .stat{
-    padding:18px;
+    padding:17px;
+
     border:1px solid #ffffff12;
     border-radius:15px;
+
     background:#ffffff06;
 }
+
 .stat span{
     color:#7890a9;
     font-size:10px;
 }
+
 .stat strong{
     display:block;
-    font-size:27px;
+    font-size:25px;
     margin-top:8px;
 }
+
 .panel{
     background:#071426dd;
     border:1px solid #ffffff12;
     border-radius:16px;
     padding:18px;
 }
+
 .toolbar{
     display:flex;
     gap:10px;
     flex-wrap:wrap;
     margin-bottom:15px;
 }
-input,select{
-    background:#0b2038;
-    color:white;
-    border:1px solid #ffffff18;
-    border-radius:9px;
-    padding:11px;
-    outline:none;
-}
+
 .search{
     flex:1;
     min-width:220px;
 }
-.file{
+
+input,
+select{
+    background:#0b2038;
+    color:white;
+
+    border:1px solid #ffffff18;
+    border-radius:9px;
+
+    padding:11px;
+
+    outline:none;
+}
+
+.message{
+    margin:10px 0;
+    padding:11px;
+
+    border-radius:9px;
+
+    background:#22c55e20;
+    color:#70e491;
+
+    font-size:11px;
+
     display:none;
 }
-.upload{
-    background:#15803d;
-}
+
 .table-wrap{
     overflow:auto;
 }
+
 table{
     width:100%;
-    min-width:1050px;
+    min-width:1250px;
+
     border-collapse:collapse;
 }
-th,td{
-    padding:12px 9px;
-    border-bottom:1px solid #ffffff0d;
+
+th,
+td{
+    padding:11px 9px;
+
+    border-bottom:
+        1px solid #ffffff0d;
+
     text-align:left;
+
     font-size:11px;
 }
+
 th{
     color:#86a0ba;
     font-size:10px;
 }
+
 .status{
     padding:5px 8px;
+
     border-radius:20px;
+
     font-size:9px;
+
     font-weight:800;
 }
+
 .available{
     color:#70e491;
     background:#22c55e20;
 }
+
 .low{
-    color:#ff8d8d;
+    color:#ff9b9b;
     background:#ef444422;
 }
+
 .out{
     color:#ffc15c;
     background:#f59e0b22;
 }
-.small-btn{
-    padding:6px 8px;
+
+.small{
+    padding:6px 9px;
     font-size:10px;
-    margin-right:3px;
-    background:#17314f;
 }
+
 .empty{
     text-align:center;
     padding:35px;
     color:#7890a9;
 }
-.user{
-    color:#9fcaff;
-    font-size:11px;
-}
+
 .modal{
     position:fixed;
     inset:0;
+
     background:#000b;
+
     display:none;
+
     align-items:center;
     justify-content:center;
+
     z-index:100;
+
     padding:15px;
 }
+
 .modal.show{
     display:flex;
 }
+
 .modal-box{
     width:min(500px,100%);
+
     background:#0a1b31;
-    border:1px solid #ffffff18;
+
+    border:
+        1px solid #ffffff18;
+
     border-radius:16px;
+
     padding:22px;
 }
+
 .modal-box h2{
     margin-top:0;
 }
-.form{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+
+.form-group{
+    margin-bottom:10px;
 }
+
 .form-group label{
     display:block;
     color:#8fa5bc;
     font-size:10px;
     margin-bottom:5px;
 }
+
 .form-group input{
     width:100%;
 }
-.full{
-    grid-column:1/-1;
-}
-.message{
-    margin:10px 0;
-    padding:10px;
-    border-radius:8px;
-    background:#ffffff08;
-    color:#9fcaff;
-    font-size:11px;
-}
+
 .footer{
     text-align:center;
     color:#536b84;
     font-size:9px;
     margin-top:25px;
 }
-@media(max-width:800px){
+
+@media(max-width:900px){
+
     .stats{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:
+            repeat(2,1fr);
     }
+
     .top{
         flex-direction:column;
         align-items:flex-start;
     }
+
 }
-@media(max-width:550px){
-    .form{
-        grid-template-columns:1fr;
-    }
-    .full{
-        grid-column:auto;
-    }
-}
+
 </style>
+
 </head>
 
 <body>
 
+
 <header>
 
     <div class="brand">
-        <div class="logo">LP</div>
+
+        <div class="logo">
+            LP
+        </div>
 
         <div>
-            <h2>Material Inventory</h2>
-            <small>LP-FM • Stock Control</small>
+
+            <h2>
+                Material Inventory
+            </h2>
+
+            <small>
+                LP-FM • Stock Control
+            </small>
+
         </div>
+
     </div>
 
+
     <div>
-        <span class="user" id="userEmail"></span>
-        &nbsp;
+
+        <span
+            id="userEmail"
+            class="user">
+        </span>
+
         <button
             class="secondary"
             onclick="logout()">
+
             Logout
+
         </button>
+
     </div>
 
 </header>
 
 
+
 <main class="main">
+
 
 <section class="top">
 
     <div>
-        <h1>Inventory Dashboard</h1>
+
+        <h1>
+            Inventory Dashboard
+        </h1>
+
         <p>
-            Firebase Cloud Inventory Management
+            Life Pharma • ST26 Material Stock
         </p>
+
     </div>
+
 
     <div class="buttons">
 
-        <label class="upload">
 
-            <input
-                id="excelFile"
-                class="file"
-                type="file"
-                accept=".xlsx,.xls"
-                onchange="importExcel(event)">
-
-            <button
-                type="button"
-                class="upload"
-                onclick="document.getElementById('excelFile').click()">
-
-                📊 Upload Excel
-
-            </button>
-
-        </label>
+        <input
+            id="excelFile"
+            class="file"
+            type="file"
+            accept=".xlsx,.xls"
+            onchange="importExcel(event)">
 
 
         <button
-            class="secondary"
-            onclick="downloadTemplate()">
+            class="green"
+            onclick="
+                document
+                .getElementById('excelFile')
+                .click()
+            ">
 
-            📥 Excel Template
+            📊 Upload Stocks Report
 
         </button>
 
 
-        <button onclick="openAdd()">
+        <button
+            class="secondary"
+            onclick="openTemplate()">
+
+            📋 Excel Format
+
+        </button>
+
+
+        <button
+            onclick="openAdd()">
 
             + Add Material
 
@@ -349,328 +461,484 @@ th{
 </section>
 
 
+
 <section class="stats">
 
-    <div class="stat">
-        <span>TOTAL MATERIALS</span>
-        <strong id="total">0</strong>
-    </div>
 
     <div class="stat">
-        <span>AVAILABLE</span>
-        <strong id="available">0</strong>
+
+        <span>
+            TOTAL MATERIALS
+        </span>
+
+        <strong id="total">
+            0
+        </strong>
+
     </div>
 
-    <div class="stat">
-        <span>LOW STOCK</span>
-        <strong id="low">0</strong>
-    </div>
 
     <div class="stat">
-        <span>OUT OF STOCK</span>
-        <strong id="out">0</strong>
+
+        <span>
+            WITH STOCK
+        </span>
+
+        <strong id="withStock">
+            0
+        </strong>
+
     </div>
+
+
+    <div class="stat">
+
+        <span>
+            ZERO STOCK
+        </span>
+
+        <strong id="zeroStock">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <span>
+            LOW STOCK
+        </span>
+
+        <strong id="low">
+            0
+        </strong>
+
+    </div>
+
+
+    <div class="stat">
+
+        <span>
+            TOTAL VALUE
+        </span>
+
+        <strong id="value">
+            0
+        </strong>
+
+    </div>
+
 
 </section>
+
 
 
 <section class="panel">
 
-    <div class="toolbar">
 
-        <input
-            class="search"
-            id="search"
-            placeholder="Search material..."
-            oninput="render()">
+<div class="toolbar">
 
 
-        <select
-            id="filter"
-            onchange="render()">
-
-            <option value="all">All Status</option>
-            <option value="available">Available</option>
-            <option value="low">Low Stock</option>
-            <option value="out">Out of Stock</option>
-
-        </select>
-
-    </div>
+    <input
+        id="search"
+        class="search"
+        placeholder="Search Material Code / Description..."
+        oninput="render()">
 
 
-    <div
-        id="message"
-        class="message"
-        style="display:none">
-    </div>
+    <select
+        id="filter"
+        onchange="render()">
+
+        <option value="all">
+            All Materials
+        </option>
+
+        <option value="stock">
+            With Stock
+        </option>
+
+        <option value="zero">
+            Zero Stock
+        </option>
+
+        <option value="low">
+            Low Stock
+        </option>
+
+    </select>
 
 
-    <div class="table-wrap">
+</div>
 
-        <table>
 
-            <thead>
 
-                <tr>
+<div
+    id="message"
+    class="message">
+</div>
 
-                    <th>Material Code</th>
-                    <th>Description</th>
-                    <th>Material Group</th>
-                    <th>Storage</th>
-                    <th>Unit</th>
-                    <th>Current</th>
-                    <th>Minimum</th>
-                    <th>Status</th>
-                    <th>Action</th>
 
-                </tr>
 
-            </thead>
+<div class="table-wrap">
 
-            <tbody id="rows"></tbody>
 
-        </table>
+<table>
 
-    </div>
+
+<thead>
+
+<tr>
+
+<th>
+Material Code
+</th>
+
+<th>
+Description
+</th>
+
+<th>
+Material Type
+</th>
+
+<th>
+Material Group
+</th>
+
+<th>
+Plant
+</th>
+
+<th>
+Storage
+</th>
+
+<th>
+Unit
+</th>
+
+<th>
+Stock
+</th>
+
+<th>
+Quality
+</th>
+
+<th>
+Blocked
+</th>
+
+<th>
+Value
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+    id="rows">
+</tbody>
+
+
+</table>
+
+</div>
+
 
 </section>
 
 
+
 <div class="footer">
-    LP-FM Inventory • Firebase Firestore
+
+LP-FM Inventory • Firebase Firestore
+
 </div>
+
 
 </main>
 
 
+
 <!-- LOGIN -->
+
 
 <div
     id="loginModal"
     class="modal">
 
-    <div class="modal-box">
 
-        <h2>LP-FM Login</h2>
-
-        <p style="color:#8fa5bc;font-size:11px">
-            Sign in to access material inventory.
-        </p>
-
-        <br>
-
-        <div class="form">
-
-            <div class="form-group full">
-
-                <label>Email</label>
-
-                <input
-                    id="loginEmail"
-                    type="email"
-                    placeholder="Email">
-
-            </div>
+<div class="modal-box">
 
 
-            <div class="form-group full">
-
-                <label>Password</label>
-
-                <input
-                    id="loginPassword"
-                    type="password"
-                    placeholder="Password">
-
-            </div>
+<h2>
+LP-FM Login
+</h2>
 
 
-            <div class="full">
+<p
+style="color:#8fa5bc;font-size:11px">
 
-                <button
-                    onclick="login()">
+Sign in to access material inventory.
 
-                    Login
+</p>
 
-                </button>
 
-            </div>
+<div class="form-group">
 
-        </div>
+<label>
+Email
+</label>
 
-    </div>
+<input
+id="loginEmail"
+type="email"
+placeholder="Email">
 
 </div>
 
 
-<!-- MATERIAL MODAL -->
+<div class="form-group">
+
+<label>
+Password
+</label>
+
+<input
+id="loginPassword"
+type="password"
+placeholder="Password">
+
+</div>
+
+
+<button
+onclick="login()">
+
+Login
+
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<!-- ADD / EDIT -->
+
 
 <div
     id="materialModal"
     class="modal">
 
-    <div class="modal-box">
 
-        <h2 id="modalTitle">
-            Add Material
-        </h2>
+<div class="modal-box">
 
 
-        <form
-            id="materialForm"
-            class="form">
+<h2
+id="modalTitle">
 
-            <input
-                type="hidden"
-                id="editId">
+Add Material
 
-
-            <div class="form-group">
-
-                <label>Material Code *</label>
-
-                <input
-                    id="code"
-                    required>
-
-            </div>
+</h2>
 
 
-            <div class="form-group">
-
-                <label>Description *</label>
-
-                <input
-                    id="description"
-                    required>
-
-            </div>
+<form
+id="materialForm">
 
 
-            <div class="form-group">
+<div class="form-group">
 
-                <label>Material Group</label>
+<label>
+Material Code
+</label>
 
-                <input
-                    id="group"
-                    value="ZCON">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Storage Location</label>
-
-                <input
-                    id="storage"
-                    value="STR">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Unit</label>
-
-                <input
-                    id="unit"
-                    value="NOS">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Current Stock</label>
-
-                <input
-                    id="stock"
-                    type="number"
-                    min="0"
-                    value="0">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Minimum Stock</label>
-
-                <input
-                    id="minimum"
-                    type="number"
-                    min="0"
-                    value="10">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Note</label>
-
-                <input id="note">
-
-            </div>
-
-
-            <div class="full buttons">
-
-                <button
-                    type="button"
-                    class="secondary"
-                    onclick="closeMaterial()">
-
-                    Cancel
-
-                </button>
-
-                <button
-                    type="submit">
-
-                    Save
-
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
+<input
+id="code"
+required>
 
 </div>
 
 
+<div class="form-group">
+
+<label>
+Description
+</label>
+
+<input
+id="description"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Material Type
+</label>
+
+<input
+id="materialType">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Material Group
+</label>
+
+<input
+id="group">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Storage Location
+</label>
+
+<input
+id="storage">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Unit
+</label>
+
+<input
+id="unit">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Current Stock
+</label>
+
+<input
+id="stock"
+type="number"
+step="any">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Minimum Stock
+</label>
+
+<input
+id="minimum"
+type="number"
+step="any"
+value="0">
+
+</div>
+
+
+<div
+style="
+display:flex;
+gap:8px;
+margin-top:15px;
+">
+
+<button
+type="button"
+class="secondary"
+onclick="closeMaterial()">
+
+Cancel
+
+</button>
+
+
+<button
+type="submit">
+
+Save Material
+
+</button>
+
+</div>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+
+
 <script type="module">
+
 
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
 
 import {
     getAuth,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     signOut
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
 
 import {
     getFirestore,
     collection,
     getDocs,
-    addDoc,
-    updateDoc,
-    deleteDoc,
     doc,
-    writeBatch,
-    query,
-    orderBy
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+    setDoc,
+    updateDoc,
+    deleteDoc
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 
-/* FIREBASE */
+
+/* ==============================
+   FIREBASE
+============================== */
+
 
 const firebaseConfig = {
 
@@ -699,7 +967,9 @@ const firebaseConfig = {
 
 
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
 
 
 const auth =
@@ -713,7 +983,11 @@ const db =
 let inventory = [];
 
 
-/* AUTH */
+
+/* ==============================
+   AUTH
+============================== */
+
 
 onAuthStateChanged(
     auth,
@@ -722,8 +996,11 @@ onAuthStateChanged(
         if(!user){
 
             document
-                .getElementById("loginModal")
-                .classList.add("show");
+            .getElementById(
+                "loginModal"
+            )
+            .classList
+            .add("show");
 
             return;
 
@@ -731,14 +1008,19 @@ onAuthStateChanged(
 
 
         document
-            .getElementById("loginModal")
-            .classList.remove("show");
+        .getElementById(
+            "loginModal"
+        )
+        .classList
+        .remove("show");
 
 
         document
-            .getElementById("userEmail")
-            .textContent =
-            user.email;
+        .getElementById(
+            "userEmail"
+        )
+        .textContent =
+        user.email;
 
 
         await loadInventory();
@@ -747,20 +1029,29 @@ onAuthStateChanged(
 );
 
 
-/* LOGIN */
 
-window.login = async function(){
+/* ==============================
+   LOGIN
+============================== */
+
+
+window.login =
+async function(){
 
     const email =
         document
-        .getElementById("loginEmail")
+        .getElementById(
+            "loginEmail"
+        )
         .value
         .trim();
 
 
     const password =
         document
-        .getElementById("loginPassword")
+        .getElementById(
+            "loginPassword"
+        )
         .value;
 
 
@@ -776,7 +1067,7 @@ window.login = async function(){
     catch(error){
 
         alert(
-            "Login failed: " +
+            "Login failed:\n" +
             error.message
         );
 
@@ -785,16 +1076,25 @@ window.login = async function(){
 };
 
 
-/* LOGOUT */
 
-window.logout = async function(){
+/* ==============================
+   LOGOUT
+============================== */
+
+
+window.logout =
+async function(){
 
     await signOut(auth);
 
 };
 
 
-/* LOAD */
+
+/* ==============================
+   LOAD INVENTORY
+============================== */
+
 
 async function loadInventory(){
 
@@ -811,9 +1111,12 @@ async function loadInventory(){
 
         inventory =
             snapshot.docs.map(
-                d => ({
-                    id:d.id,
-                    ...d.data()
+                item => ({
+
+                    id:item.id,
+
+                    ...item.data()
+
                 })
             );
 
@@ -823,8 +1126,10 @@ async function loadInventory(){
     }
     catch(error){
 
-        showMessage(
-            "Could not load inventory: " +
+        console.error(error);
+
+        alert(
+            "Could not load inventory:\n" +
             error.message
         );
 
@@ -833,28 +1138,122 @@ async function loadInventory(){
 }
 
 
-/* STATUS */
+
+/* ==============================
+   NORMALIZE MATERIAL CODE
+============================== */
+
+
+function normalizeMaterialCode(
+    value
+){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return "";
+
+    }
+
+
+    /*
+       Excel often reads numeric
+       material codes as 180001392.0
+    */
+
+    let code =
+        String(value)
+        .trim();
+
+
+    if(
+        code.endsWith(".0")
+    ){
+
+        code =
+            code.slice(
+                0,
+                -2
+            );
+
+    }
+
+
+    return code;
+
+}
+
+
+
+/* ==============================
+   NORMALIZE NUMBER
+============================== */
+
+
+function numberValue(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+
+        return 0;
+
+    }
+
+
+    const number =
+        Number(
+            String(value)
+            .replace(/,/g,"")
+            .trim()
+        );
+
+
+    return Number.isFinite(number)
+        ? number
+        : 0;
+
+}
+
+
+
+/* ==============================
+   STATUS
+============================== */
+
 
 function getStatus(item){
 
     const stock =
-        Number(item.stock || 0);
+        numberValue(
+            item.stock
+        );
+
 
     const minimum =
-        Number(item.minimum || 0);
+        numberValue(
+            item.minimum
+        );
 
 
     if(stock <= 0){
 
         return {
             type:"out",
-            text:"OUT OF STOCK"
+            text:"ZERO STOCK"
         };
 
     }
 
 
-    if(stock <= minimum){
+    if(
+        minimum > 0 &&
+        stock <= minimum
+    ){
 
         return {
             type:"low",
@@ -872,77 +1271,130 @@ function getStatus(item){
 }
 
 
-/* RENDER */
 
-window.render = function(){
+/* ==============================
+   RENDER
+============================== */
+
+
+window.render =
+function(){
 
     const search =
         document
-        .getElementById("search")
+        .getElementById(
+            "search"
+        )
         .value
-        .toLowerCase();
+        .toLowerCase()
+        .trim();
 
 
     const filter =
         document
-        .getElementById("filter")
+        .getElementById(
+            "filter"
+        )
         .value;
 
 
     const list =
-        inventory.filter(item => {
+        inventory.filter(
+            item => {
 
-            const status =
-                getStatus(item);
+                const text =
 
-
-            const matchesSearch =
-                !search ||
-
-                String(item.code || "")
-                    .toLowerCase()
-                    .includes(search)
-
-                ||
-
-                String(item.description || "")
-                    .toLowerCase()
-                    .includes(search);
+                    `${item.code || ""}
+                     ${item.description || ""}
+                     ${item.group || ""}
+                     ${item.storage || ""}`
+                    .toLowerCase();
 
 
-            return (
-                matchesSearch &&
-                (
-                    filter === "all" ||
-                    filter === status.type
-                )
-            );
-
-        });
+                const status =
+                    getStatus(item);
 
 
-    updateStats();
+                const searchOK =
+                    !search ||
+                    text.includes(search);
+
+
+                let filterOK =
+                    true;
+
+
+                if(
+                    filter === "stock"
+                ){
+
+                    filterOK =
+                        numberValue(
+                            item.stock
+                        ) > 0;
+
+                }
+
+
+                if(
+                    filter === "zero"
+                ){
+
+                    filterOK =
+                        numberValue(
+                            item.stock
+                        ) <= 0;
+
+                }
+
+
+                if(
+                    filter === "low"
+                ){
+
+                    filterOK =
+                        status.type ===
+                        "low";
+
+                }
+
+
+                return (
+                    searchOK &&
+                    filterOK
+                );
+
+            }
+        );
+
+
+    updateStats(
+        inventory
+    );
 
 
     const rows =
-        document.getElementById("rows");
+        document
+        .getElementById(
+            "rows"
+        );
 
 
     if(!list.length){
 
         rows.innerHTML = `
 
-            <tr>
+        <tr>
 
-                <td
-                    colspan="9"
-                    class="empty">
+            <td
+                colspan="13"
+                class="empty">
 
-                    No materials found.
+                No materials found.
 
-                </td>
+            </td>
 
-            </tr>
+        </tr>
 
         `;
 
@@ -952,13 +1404,14 @@ window.render = function(){
 
 
     rows.innerHTML =
-        list.map(item => {
+        list.map(
+            item => {
 
-            const status =
-                getStatus(item);
+                const status =
+                    getStatus(item);
 
 
-            return `
+                return `
 
                 <tr>
 
@@ -968,34 +1421,86 @@ window.render = function(){
                         </strong>
                     </td>
 
-                    <td>
-                        ${safe(item.description)}
-                    </td>
 
                     <td>
-                        ${safe(item.group)}
+                        ${safe(
+                            item.description
+                        )}
                     </td>
 
-                    <td>
-                        ${safe(item.storage)}
-                    </td>
 
                     <td>
-                        ${safe(item.unit)}
+                        ${safe(
+                            item.materialType
+                        )}
                     </td>
 
-                    <td>
-                        ${Number(item.stock || 0)}
-                    </td>
 
                     <td>
-                        ${Number(item.minimum || 0)}
+                        ${safe(
+                            item.group
+                        )}
                     </td>
+
+
+                    <td>
+                        ${safe(
+                            item.plant
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${safe(
+                            item.storage
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${safe(
+                            item.unit
+                        )}
+                    </td>
+
+
+                    <td>
+                        <strong>
+                            ${numberValue(
+                                item.stock
+                            )}
+                        </strong>
+                    </td>
+
+
+                    <td>
+                        ${numberValue(
+                            item.qualityStock
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${numberValue(
+                            item.blockedStock
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${formatNumber(
+                            item.valueUnrestricted
+                        )}
+                    </td>
+
 
                     <td>
 
                         <span
-                            class="status ${status.type}">
+                            class="
+                            status
+                            ${status.type}
+                            ">
 
                             ${status.text}
 
@@ -1003,423 +1508,210 @@ window.render = function(){
 
                     </td>
 
+
                     <td>
 
                         <button
-                            class="small-btn"
-                            onclick="editMaterial('${item.id}')">
+                            class="small"
+                            onclick="
+                                editMaterial(
+                                    '${safeAttr(item.id)}'
+                                )
+                            ">
 
                             Edit
 
                         </button>
 
 
-                        <button
-                            class="small-btn danger"
-                            onclick="deleteMaterial('${item.id}')">
-
-                            Delete
-
-                        </button>
-
                     </td>
 
                 </tr>
 
-            `;
+                `;
 
-        }).join("");
-
-};
-
-
-/* SAFE HTML */
-
-function safe(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* STATS */
-
-function updateStats(){
-
-    document.getElementById("total")
-        .textContent =
-        inventory.length;
-
-
-    document.getElementById("available")
-        .textContent =
-        inventory.filter(
-            x =>
-                getStatus(x).type
-                === "available"
-        ).length;
-
-
-    document.getElementById("low")
-        .textContent =
-        inventory.filter(
-            x =>
-                getStatus(x).type
-                === "low"
-        ).length;
-
-
-    document.getElementById("out")
-        .textContent =
-        inventory.filter(
-            x =>
-                getStatus(x).type
-                === "out"
-        ).length;
-
-}
-
-
-/* ADD */
-
-window.openAdd = function(){
-
-    document
-        .getElementById("materialForm")
-        .reset();
-
-
-    document
-        .getElementById("editId")
-        .value = "";
-
-
-    document
-        .getElementById("group")
-        .value = "ZCON";
-
-
-    document
-        .getElementById("storage")
-        .value = "STR";
-
-
-    document
-        .getElementById("unit")
-        .value = "NOS";
-
-
-    document
-        .getElementById("modalTitle")
-        .textContent =
-        "Add Material";
-
-
-    document
-        .getElementById("materialModal")
-        .classList.add("show");
+            }
+        ).join("");
 
 };
 
 
-/* CLOSE */
 
-window.closeMaterial = function(){
-
-    document
-        .getElementById("materialModal")
-        .classList.remove("show");
-
-};
+/* ==============================
+   STATS
+============================== */
 
 
-/* SAVE */
+function updateStats(list){
 
-document
-    .getElementById("materialForm")
-    .addEventListener(
-        "submit",
-        async event => {
-
-            event.preventDefault();
+    const total =
+        list.length;
 
 
-            const id =
-                document
-                .getElementById("editId")
-                .value;
+    const withStock =
+        list.filter(
+            x =>
+                numberValue(
+                    x.stock
+                ) > 0
+        ).length;
 
 
-            const data = {
-
-                code:
-                    document
-                    .getElementById("code")
-                    .value
-                    .trim(),
-
-                description:
-                    document
-                    .getElementById("description")
-                    .value
-                    .trim(),
-
-                group:
-                    document
-                    .getElementById("group")
-                    .value
-                    .trim(),
-
-                storage:
-                    document
-                    .getElementById("storage")
-                    .value
-                    .trim(),
-
-                unit:
-                    document
-                    .getElementById("unit")
-                    .value
-                    .trim(),
-
-                stock:
-                    Number(
-                        document
-                        .getElementById("stock")
-                        .value
-                    ) || 0,
-
-                minimum:
-                    Number(
-                        document
-                        .getElementById("minimum")
-                        .value
-                    ) || 0,
-
-                note:
-                    document
-                    .getElementById("note")
-                    .value
-                    .trim(),
-
-                updatedAt:
-                    new Date().toISOString()
-
-            };
+    const zero =
+        list.filter(
+            x =>
+                numberValue(
+                    x.stock
+                ) <= 0
+        ).length;
 
 
-            try{
+    const low =
+        list.filter(
+            x => {
 
-                if(id){
-
-                    await updateDoc(
-                        doc(
-                            db,
-                            "materials",
-                            id
-                        ),
-                        data
+                const stock =
+                    numberValue(
+                        x.stock
                     );
 
-                }
-                else{
-
-                    await addDoc(
-                        collection(
-                            db,
-                            "materials"
-                        ),
-                        data
+                const minimum =
+                    numberValue(
+                        x.minimum
                     );
 
-                }
-
-
-                closeMaterial();
-
-                await loadInventory();
-
-                showMessage(
-                    "Material saved successfully."
+                return (
+                    minimum > 0 &&
+                    stock <= minimum
                 );
 
             }
-            catch(error){
-
-                alert(
-                    "Save failed: " +
-                    error.message
-                );
-
-            }
-
-        }
-    );
+        ).length;
 
 
-/* EDIT */
-
-window.editMaterial = function(id){
-
-    const item =
-        inventory.find(
-            x => x.id === id
+    const value =
+        list.reduce(
+            (
+                total,
+                item
+            ) =>
+                total +
+                numberValue(
+                    item.valueUnrestricted
+                ),
+            0
         );
 
 
-    if(!item) return;
+    document
+    .getElementById(
+        "total"
+    )
+    .textContent =
+    total;
 
 
     document
-        .getElementById("editId")
-        .value = id;
+    .getElementById(
+        "withStock"
+    )
+    .textContent =
+    withStock;
 
 
     document
-        .getElementById("code")
-        .value =
-        item.code || "";
+    .getElementById(
+        "zeroStock"
+    )
+    .textContent =
+    zero;
 
 
     document
-        .getElementById("description")
-        .value =
-        item.description || "";
+    .getElementById(
+        "low"
+    )
+    .textContent =
+    low;
 
 
     document
-        .getElementById("group")
-        .value =
-        item.group || "";
+    .getElementById(
+        "value"
+    )
+    .textContent =
+    formatNumber(value);
+
+}
 
 
-    document
-        .getElementById("storage")
-        .value =
-        item.storage || "";
 
-
-    document
-        .getElementById("unit")
-        .value =
-        item.unit || "";
-
-
-    document
-        .getElementById("stock")
-        .value =
-        item.stock || 0;
-
-
-    document
-        .getElementById("minimum")
-        .value =
-        item.minimum || 0;
-
-
-    document
-        .getElementById("note")
-        .value =
-        item.note || "";
-
-
-    document
-        .getElementById("modalTitle")
-        .textContent =
-        "Edit Material";
-
-
-    document
-        .getElementById("materialModal")
-        .classList.add("show");
-
-};
-
-
-/* DELETE */
-
-window.deleteMaterial =
-    async function(id){
-
-        const item =
-            inventory.find(
-                x => x.id === id
-            );
-
-
-        if(!item) return;
-
-
-        if(
-            !confirm(
-                "Delete " +
-                item.description +
-                "?"
-            )
-        ){
-
-            return;
-
-        }
-
-
-        try{
-
-            await deleteDoc(
-                doc(
-                    db,
-                    "materials",
-                    id
-                )
-            );
-
-
-            await loadInventory();
-
-        }
-        catch(error){
-
-            alert(
-                "Delete failed: " +
-                error.message
-            );
-
-        }
-
-    };
-
-
-/* =====================================================
+/* ==============================
    EXCEL IMPORT
-===================================================== */
+============================== */
+
 
 window.importExcel =
-    async function(event){
+async function(event){
 
-        const file =
-            event.target.files[0];
+    const file =
+        event.target.files[0];
 
 
-        if(!file) return;
+    if(!file){
+
+        return;
+
+    }
+
+
+    try{
+
+        showMessage(
+            "Reading Stocks Report..."
+        );
+
+
+        const buffer =
+            await file.arrayBuffer();
+
+
+        const workbook =
+            XLSX.read(
+                buffer,
+                {
+                    type:"array",
+                    cellDates:true
+                }
+            );
+
+
+        const sheetName =
+            workbook
+            .SheetNames[0];
+
+
+        const sheet =
+            workbook
+            .Sheets[sheetName];
+
+
+        const rows =
+            XLSX.utils
+            .sheet_to_json(
+                sheet,
+                {
+                    defval:""
+                }
+            );
 
 
         if(
-            !file.name
-                .toLowerCase()
-                .endsWith(".xlsx")
-            &&
-            !file.name
-                .toLowerCase()
-                .endsWith(".xls")
+            !rows.length
         ){
 
             alert(
-                "Please select an Excel .xlsx or .xls file."
+                "Excel file is empty."
             );
 
             return;
@@ -1427,392 +1719,756 @@ window.importExcel =
         }
 
 
-        try{
+        /*
+          Validate actual Stocks Report
+        */
 
-            showMessage(
-                "Reading Excel file..."
-            );
+        const requiredColumns = [
 
+            "Material",
 
-            const arrayBuffer =
-                await file.arrayBuffer();
+            "Material Description",
 
+            "Material Type",
 
-            const workbook =
-                XLSX.read(
-                    arrayBuffer,
-                    {
-                        type:"array"
-                    }
-                );
+            "Material Group",
 
+            "Plant",
 
-            const sheetName =
-                workbook.SheetNames[0];
+            "Storage Location",
 
+            "Base Unit of Measure",
 
-            const sheet =
-                workbook.Sheets[
-                    sheetName
-                ];
-
-
-            const rows =
-                XLSX.utils.sheet_to_json(
-                    sheet,
-                    {
-                        defval:""
-                    }
-                );
-
-
-            if(!rows.length){
-
-                alert(
-                    "Excel file is empty."
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * Convert Excel headings
-             * to lower-case normalized names.
-             */
-
-            const normalize =
-                value =>
-                    String(value || "")
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]/g,"");
-
-
-            const findValue =
-                (row, names) => {
-
-                    const keys =
-                        Object.keys(row);
-
-
-                    for(
-                        const name
-                        of names
-                    ){
-
-                        const target =
-                            normalize(name);
-
-
-                        const key =
-                            keys.find(
-                                k =>
-                                    normalize(k)
-                                    === target
-                            );
-
-
-                        if(
-                            key !== undefined
-                        ){
-
-                            return row[key];
-
-                        }
-
-                    }
-
-
-                    return "";
-
-                };
-
-
-            const imported =
-                rows.map(row => {
-
-                    return {
-
-                        code:
-                            String(
-                                findValue(
-                                    row,
-                                    [
-                                        "Material Code",
-                                        "MaterialCode",
-                                        "Code",
-                                        "Matkl"
-                                    ]
-                                )
-                            ).trim(),
-
-                        description:
-                            String(
-                                findValue(
-                                    row,
-                                    [
-                                        "Description",
-                                        "Material Description",
-                                        "MaterialDescription"
-                                    ]
-                                )
-                            ).trim(),
-
-                        group:
-                            String(
-                                findValue(
-                                    row,
-                                    [
-                                        "Material Group",
-                                        "MaterialGroup",
-                                        "Group"
-                                    ]
-                                )
-                            ).trim(),
-
-                        storage:
-                            String(
-                                findValue(
-                                    row,
-                                    [
-                                        "Storage Location",
-                                        "StorageLocation",
-                                        "Storage"
-                                    ]
-                                )
-                            ).trim(),
-
-                        unit:
-                            String(
-                                findValue(
-                                    row,
-                                    [
-                                        "Unit",
-                                        "Base Unit",
-                                        "BaseUnit"
-                                    ]
-                                )
-                            ).trim(),
-
-                        stock:
-                            Number(
-                                findValue(
-                                    row,
-                                    [
-                                        "Current Stock",
-                                        "CurrentStock",
-                                        "Stock",
-                                        "Quantity"
-                                    ]
-                                )
-                            ) || 0,
-
-                        minimum:
-                            Number(
-                                findValue(
-                                    row,
-                                    [
-                                        "Minimum Stock",
-                                        "MinimumStock",
-                                        "Minimum",
-                                        "Min Stock"
-                                    ]
-                                )
-                            ) || 0,
-
-                        note:
-                            String(
-                                findValue(
-                                    row,
-                                    [
-                                        "Note",
-                                        "Remarks"
-                                    ]
-                                )
-                            ).trim(),
-
-                        importedAt:
-                            new Date().toISOString()
-
-                    };
-
-                })
-                .filter(
-                    x =>
-                        x.code ||
-                        x.description
-                );
-
-
-            if(!imported.length){
-
-                alert(
-                    "No valid material rows found."
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * Firestore batch maximum is 500 writes.
-             * Split large Excel files into chunks.
-             */
-
-            let count = 0;
-
-
-            for(
-                let start = 0;
-                start < imported.length;
-                start += 450
-            ){
-
-                const chunk =
-                    imported.slice(
-                        start,
-                        start + 450
-                    );
-
-
-                const batch =
-                    writeBatch(db);
-
-
-                chunk.forEach(
-                    item => {
-
-                        const ref =
-                            doc(
-                                collection(
-                                    db,
-                                    "materials"
-                                )
-                            );
-
-
-                        batch.set(
-                            ref,
-                            item
-                        );
-
-                    }
-                );
-
-
-                await batch.commit();
-
-
-                count += chunk.length;
-
-            }
-
-
-            await loadInventory();
-
-
-            showMessage(
-                count +
-                " materials imported successfully."
-            );
-
-
-        }
-        catch(error){
-
-            console.error(error);
-
-            alert(
-                "Excel import failed:\n" +
-                error.message
-            );
-
-        }
-
-
-        event.target.value = "";
-
-    };
-
-
-/* =====================================================
-   EXCEL TEMPLATE
-===================================================== */
-
-window.downloadTemplate =
-    function(){
-
-        const data = [
-
-            {
-
-                "Material Code":
-                    "ST26",
-
-                "Description":
-                    "LIFEPHARMA STAMP",
-
-                "Material Group":
-                    "ZCON",
-
-                "Storage Location":
-                    "STR",
-
-                "Unit":
-                    "NOS",
-
-                "Current Stock":
-                    100,
-
-                "Minimum Stock":
-                    20,
-
-                "Note":
-                    "Miscellaneous"
-
-            }
+            "Unrestricted"
 
         ];
 
 
-        const worksheet =
-            XLSX.utils.json_to_sheet(
-                data
+        const headers =
+            Object.keys(
+                rows[0]
             );
 
 
-        const workbook =
-            XLSX.utils.book_new();
+        const missing =
+            requiredColumns.filter(
+                col =>
+                    !headers.includes(col)
+            );
 
 
-        XLSX.utils.book_append_sheet(
-            workbook,
-            worksheet,
-            "Materials"
+        if(missing.length){
+
+            alert(
+                "This does not look like the expected Stocks Report.\n\nMissing columns:\n" +
+                missing.join("\n")
+            );
+
+            return;
+
+        }
+
+
+        /*
+          Import row by row
+        */
+
+        let created = 0;
+
+        let updated = 0;
+
+        let skipped = 0;
+
+
+        for(
+            const row
+            of rows
+        ){
+
+            const code =
+                normalizeMaterialCode(
+                    row["Material"]
+                );
+
+
+            if(!code){
+
+                skipped++;
+
+                continue;
+
+            }
+
+
+            const material = {
+
+                code:
+
+                    code,
+
+
+                description:
+
+                    String(
+                        row[
+                            "Material Description"
+                        ] || ""
+                    ).trim(),
+
+
+                materialType:
+
+                    String(
+                        row[
+                            "Material Type"
+                        ] || ""
+                    ).trim(),
+
+
+                group:
+
+                    String(
+                        row[
+                            "Material Group"
+                        ] || ""
+                    ).trim(),
+
+
+                plant:
+
+                    normalizeMaterialCode(
+                        row["Plant"]
+                    ),
+
+
+                storage:
+
+                    String(
+                        row[
+                            "Storage Location"
+                        ] || ""
+                    ).trim(),
+
+
+                unit:
+
+                    String(
+                        row[
+                            "Base Unit of Measure"
+                        ] || ""
+                    ).trim(),
+
+
+                stock:
+
+                    numberValue(
+                        row["Unrestricted"]
+                    ),
+
+
+                qualityStock:
+
+                    numberValue(
+                        row[
+                            "In Quality Insp."
+                        ]
+                    ),
+
+
+                blockedStock:
+
+                    numberValue(
+                        row["Blocked"]
+                    ),
+
+
+                restrictedStock:
+
+                    numberValue(
+                        row[
+                            "Restricted-Use Stock"
+                        ]
+                    ),
+
+
+                valueUnrestricted:
+
+                    numberValue(
+                        row[
+                            "Value Unrestricted"
+                        ]
+                    ),
+
+
+                valueQuality:
+
+                    numberValue(
+                        row[
+                            "Value in QualInsp."
+                        ]
+                    ),
+
+
+                valueBlocked:
+
+                    numberValue(
+                        row[
+                            "Value BlockedStock"
+                        ]
+                    ),
+
+
+                valueRestricted:
+
+                    numberValue(
+                        row[
+                            "Value Restricted"
+                        ]
+                    ),
+
+
+                manufacturingDate:
+
+                    cleanDate(
+                        row[
+                            "Date of Manf."
+                        ]
+                    ),
+
+
+                expiryDate:
+
+                    cleanDate(
+                        row[
+                            "Expiry date"
+                        ]
+                    ),
+
+
+                /*
+                  Important:
+                  Existing minimum is preserved.
+                */
+
+                minimum: 0,
+
+
+                importedAt:
+
+                    new Date()
+                    .toISOString()
+
+            };
+
+
+            /*
+              Material code becomes
+              Firestore document ID.
+            */
+
+            const materialRef =
+                doc(
+                    db,
+                    "materials",
+                    code
+                );
+
+
+            /*
+              Check if already exists.
+            */
+
+            const existing =
+                inventory.find(
+                    x =>
+                        String(
+                            x.id
+                        ) ===
+                        code
+                );
+
+
+            if(existing){
+
+                /*
+                  Preserve manually
+                  configured minimum stock.
+                */
+
+                material.minimum =
+                    numberValue(
+                        existing.minimum
+                    );
+
+
+                await updateDoc(
+                    materialRef,
+                    material
+                );
+
+
+                updated++;
+
+            }
+            else{
+
+                await setDoc(
+                    materialRef,
+                    material
+                );
+
+
+                created++;
+
+            }
+
+        }
+
+
+        await loadInventory();
+
+
+        showMessage(
+            `Import completed: ${created} new, ${updated} updated, ${skipped} skipped. Total rows: ${rows.length}`
         );
 
 
-        XLSX.writeFile(
-            workbook,
-            "LP-FM-Material-Template.xlsx"
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Excel import failed:\n\n" +
+            error.message
         );
 
-    };
+    }
 
 
-/* MESSAGE */
+    event.target.value = "";
+
+};
+
+
+
+/* ==============================
+   DATE
+============================== */
+
+
+function cleanDate(value){
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ){
+
+        return "";
+
+    }
+
+
+    if(
+        value instanceof Date
+    ){
+
+        return value
+        .toISOString()
+        .split("T")[0];
+
+    }
+
+
+    return String(
+        value
+    );
+
+}
+
+
+
+/* ==============================
+   ADD MATERIAL
+============================== */
+
+
+window.openAdd =
+function(){
+
+    document
+    .getElementById(
+        "materialForm"
+    )
+    .reset();
+
+
+    document
+    .getElementById(
+        "modalTitle"
+    )
+    .textContent =
+    "Add Material";
+
+
+    document
+    .getElementById(
+        "materialModal"
+    )
+    .classList
+    .add("show");
+
+};
+
+
+
+/* ==============================
+   EDIT
+============================== */
+
+
+window.editMaterial =
+function(id){
+
+    const item =
+        inventory.find(
+            x =>
+                x.id === id
+        );
+
+
+    if(!item){
+
+        return;
+
+    }
+
+
+    document
+    .getElementById(
+        "code"
+    )
+    .value =
+    item.code || "";
+
+
+    document
+    .getElementById(
+        "description"
+    )
+    .value =
+    item.description || "";
+
+
+    document
+    .getElementById(
+        "materialType"
+    )
+    .value =
+    item.materialType || "";
+
+
+    document
+    .getElementById(
+        "group"
+    )
+    .value =
+    item.group || "";
+
+
+    document
+    .getElementById(
+        "storage"
+    )
+    .value =
+    item.storage || "";
+
+
+    document
+    .getElementById(
+        "unit"
+    )
+    .value =
+    item.unit || "";
+
+
+    document
+    .getElementById(
+        "stock"
+    )
+    .value =
+    numberValue(
+        item.stock
+    );
+
+
+    document
+    .getElementById(
+        "minimum"
+    )
+    .value =
+    numberValue(
+        item.minimum
+    );
+
+
+    document
+    .getElementById(
+        "modalTitle"
+    )
+    .textContent =
+    "Edit Material";
+
+
+    document
+    .getElementById(
+        "materialModal"
+    )
+    .classList
+    .add("show");
+
+};
+
+
+
+/* ==============================
+   SAVE MATERIAL
+============================== */
+
+
+document
+.getElementById(
+    "materialForm"
+)
+.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const code =
+            normalizeMaterialCode(
+                document
+                .getElementById(
+                    "code"
+                )
+                .value
+            );
+
+
+        if(!code){
+
+            alert(
+                "Material Code is required."
+            );
+
+            return;
+
+        }
+
+
+        const data = {
+
+            code:
+
+                code,
+
+
+            description:
+
+                document
+                .getElementById(
+                    "description"
+                )
+                .value
+                .trim(),
+
+
+            materialType:
+
+                document
+                .getElementById(
+                    "materialType"
+                )
+                .value
+                .trim(),
+
+
+            group:
+
+                document
+                .getElementById(
+                    "group"
+                )
+                .value
+                .trim(),
+
+
+            storage:
+
+                document
+                .getElementById(
+                    "storage"
+                )
+                .value
+                .trim(),
+
+
+            unit:
+
+                document
+                .getElementById(
+                    "unit"
+                )
+                .value
+                .trim(),
+
+
+            stock:
+
+                numberValue(
+                    document
+                    .getElementById(
+                        "stock"
+                    )
+                    .value
+                ),
+
+
+            minimum:
+
+                numberValue(
+                    document
+                    .getElementById(
+                        "minimum"
+                    )
+                    .value
+                ),
+
+
+            updatedAt:
+
+                new Date()
+                .toISOString()
+
+        };
+
+
+        try{
+
+            await setDoc(
+                doc(
+                    db,
+                    "materials",
+                    code
+                ),
+                data,
+                {
+                    merge:true
+                }
+            );
+
+
+            closeMaterial();
+
+            await loadInventory();
+
+
+            showMessage(
+                "Material saved successfully."
+            );
+
+        }
+        catch(error){
+
+            alert(
+                "Save failed:\n" +
+                error.message
+            );
+
+        }
+
+    }
+);
+
+
+
+/* ==============================
+   CLOSE MODAL
+============================== */
+
+
+window.closeMaterial =
+function(){
+
+    document
+    .getElementById(
+        "materialModal"
+    )
+    .classList
+    .remove("show");
+
+};
+
+
+
+/* ==============================
+   TEMPLATE INFORMATION
+============================== */
+
+
+window.openTemplate =
+function(){
+
+    alert(
+
+`Your Stocks Report Excel should contain these columns:
+
+Material
+Material Description
+Material Type
+Material Group
+Plant
+Storage Location
+Date of Manf.
+Expiry date
+Base Unit of Measure
+Unrestricted
+In Quality Insp.
+Blocked
+Value Unrestricted
+Value in QualInsp.
+Value BlockedStock
+Restricted-Use Stock
+Value Restricted
+
+Your current ST26 Stocks Report already matches this format.`
+
+    );
+
+};
+
+
+
+/* ==============================
+   MESSAGE
+============================== */
+
 
 function showMessage(text){
 
     const box =
-        document.getElementById(
+        document
+        .getElementById(
             "message"
         );
 
 
-    box.textContent = text;
+    box.textContent =
+        text;
+
 
     box.style.display =
         "block";
@@ -1825,7 +2481,69 @@ function showMessage(text){
                 "none";
 
         },
-        5000
+        7000
+    );
+
+}
+
+
+
+/* ==============================
+   SAFE
+============================== */
+
+
+function safe(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function safeAttr(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    );
+
+}
+
+
+function formatNumber(value){
+
+    return numberValue(
+        value
+    ).toLocaleString(
+        "en-US",
+        {
+            maximumFractionDigits:2
+        }
     );
 
 }
