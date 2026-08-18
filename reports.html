@@ -3,1080 +3,139 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<title>LP-FM Inventory Reports</title>
 
-<title>Material Reports - LP-Store</title>
+<meta name="theme-color" content="#061322">
 
 <style>
 
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+body{
+    margin:0;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
 
     background:
-        radial-gradient(
-            circle at top right,
-            #123b68 0%,
-            transparent 35%
-        ),
         linear-gradient(
             135deg,
-            #061a30,
-            #031322
+            #04101f,
+            #0a1b31,
+            #061322
         );
 
-    color: white;
-    min-height: 100vh;
+    color:white;
+    min-height:100vh;
 }
 
-.header {
+header{
 
-    padding: 18px 24px;
+    position:sticky;
+    top:0;
+    z-index:50;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding:14px 18px;
 
-    background: rgba(3,18,34,.96);
+    background:#061322f5;
 
     border-bottom:
-        1px solid rgba(100,160,220,.25);
+        1px solid #ffffff15;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.brand {
-
-    display: flex;
-    align-items: center;
-    gap: 14px;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.logo {
+.logo{
 
-    width: 62px;
-    height: 62px;
+    width:46px;
+    height:46px;
 
-    border-radius: 18px;
+    border-radius:13px;
 
     background:
         linear-gradient(
             135deg,
-            #1688ff,
-            #075fd1
+            #2188ff,
+            #0757c8
         );
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:grid;
+    place-items:center;
 
-    font-size: 25px;
-    font-weight: 800;
+    font-weight:900;
 }
 
-.brand h2 {
-
-    margin: 0;
-    font-size: 25px;
+.brand h2{
+    margin:0;
+    font-size:18px;
 }
 
-.brand p {
-
-    margin: 5px 0 0;
-    color: #7894b2;
+.brand small{
+    color:#7890a9;
+    font-size:10px;
 }
 
-.user {
-
-    width: 48px;
-    height: 48px;
-
-    border-radius: 50%;
-
-    background: #087bf5;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: bold;
-    font-size: 20px;
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.container {
-
-    max-width: 1000px;
-
-    margin: auto;
-
-    padding:
-        30px 20px 60px;
+.user-email{
+    color:#9fcaff;
+    font-size:11px;
 }
 
-.back {
+button{
 
-    color: #82bdff;
+    border:0;
+    border-radius:9px;
 
-    text-decoration: none;
+    padding:10px 14px;
 
-    font-size: 16px;
+    color:white;
+
+    background:#1677ff;
+
+    font-weight:700;
+
+    cursor:pointer;
 }
 
-h1 {
-
-    font-size: 40px;
-
-    margin:
-        25px 0 10px;
+button.secondary{
+    background:#17314f;
 }
 
-h1 span {
+.main{
 
-    color: #42a5ff;
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:25px 16px 60px;
 }
 
-.subtitle {
+.top{
 
-    color: #91aac3;
+    display:flex;
 
-    font-size: 18px;
+    justify-content:
+        space-between;
 
-    line-height: 1.7;
-
-    margin-bottom: 30px;
-}
-
-.search {
-
-    width: 100%;
-
-    padding: 18px 20px;
-
-    border-radius: 18px;
-
-    border:
-        1px solid #315273;
-
-    background:
-        rgba(23,47,73,.8);
-
-    color: white;
-
-    font-size: 17px;
-
-    outline: none;
-
-    margin-bottom: 35px;
-}
-
-.search::placeholder {
-
-    color: #7c94ac;
-}
-
-.section {
-
-    margin-bottom: 40px;
-}
-
-.section-title {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    font-size: 25px;
-
-    font-weight: bold;
-
-    margin-bottom: 18px;
-}
-
-.section-icon {
-
-    width: 54px;
-    height: 54px;
-
-    border-radius: 15px;
-
-    background:
-        rgba(10,100,210,.25);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 27px;
-}
-
-.report-list {
-
-    display: grid;
-
-    gap: 15px;
-}
-
-.report {
-
-    background:
-        rgba(14,42,70,.75);
-
-    border:
-        1px solid rgba(100,160,220,.25);
-
-    border-radius: 18px;
-
-    padding: 20px;
-}
-
-.report-name {
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    word-break: break-word;
-}
-
-.report-info {
-
-    color: #8fa9c5;
-
-    font-size: 14px;
-
-    margin-top: 8px;
-}
-
-.buttons {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-
-    margin-top: 18px;
-}
-
-.btn {
-
-    border: 0;
-
-    padding:
-        11px 17px;
-
-    border-radius: 11px;
-
-    cursor: pointer;
-
-    color: white;
-
-    font-weight: bold;
-
-    font-size: 14px;
-
-    text-decoration: none;
-
-    display: inline-block;
-}
-
-.view {
-
-    background: #167ff0;
-}
-
-.download {
-
-    background: #1d9b62;
-}
-
-.empty {
-
-    border:
-        1px dashed #294766;
-
-    border-radius: 20px;
-
-    padding: 40px 20px;
-
-    text-align: center;
-
-    color: #7e97b0;
-}
-
-.loading {
-
-    text-align: center;
-
-    padding: 40px;
-
-    color: #8fa9c5;
-}
-
-.error {
-
-    padding: 20px;
-
-    border-radius: 15px;
-
-    color: #ff9baa;
-
-    background:
-        rgba(150,30,50,.2);
-
-    border:
-        1px solid #a83e50;
-}
-
-.footer {
-
-    text-align: center;
-
-    color: #68829d;
-
-    margin-top: 45px;
-
-    padding-top: 25px;
-
-    border-top:
-        1px solid rgba(100,160,220,.15);
-}
-
-@media(max-width:600px) {
-
-    .header {
-
-        padding: 15px;
-    }
-
-    .brand h2 {
-
-        font-size: 21px;
-    }
-
-    .brand p {
-
-        font-size: 13px;
-    }
-
-    .container {
-
-        padding:
-            25px 15px 50px;
-    }
-
-    h1 {
-
-        font-size: 34px;
-    }
-
-    .buttons {
-
-        flex-direction: column;
-    }
-
-    .btn {
-
-        width: 100%;
-
-        text-align: center;
-    }
-}
-
-</style>
-
-</head>
-
-<body>
-
-
-<header class="header">
-
-    <div class="brand">
-
-        <div class="logo">
-            LP
-        </div>
-
-        <div>
-
-            <h2>LP-Store</h2>
-
-            <p>
-                Pharma Material Intelligence
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="user">
-        Y
-    </div>
-
-</header>
-
-
-<main class="container">
-
-
-<a href="dashboard.html"
-   class="back">
-
-    ← Back to Dashboard
-
-</a>
-
-
-<h1>
-    Material <span>Reports</span>
-</h1>
-
-
-<div class="subtitle">
-
-    Pharmaceutical material inventory,
-    Facility Management and store reports
-    uploaded to LP-Store.
-
-</div>
-
-
-<input
-    type="search"
-    id="search"
-    class="search"
-    placeholder="🔎 Search reports..."
->
-
-
-<div
-    id="loading"
-    class="loading">
-
-    Loading reports from GitHub...
-
-</div>
-
-
-<div
-    id="error"
-    style="display:none;"
-    class="error">
-</div>
-
-
-<div
-    id="content"
-    style="display:none;"
->
-
-
-<!-- GATE ENTRY -->
-
-<section class="section">
-
-<div class="section-title">
-
-    <div class="section-icon">
-        📋
-    </div>
-
-    Gate Entry Reports
-
-</div>
-
-<div
-    id="gate-entry"
-    class="report-list">
-</div>
-
-</section>
-
-
-<!-- MATERIAL STOCK -->
-
-<section class="section">
-
-<div class="section-title">
-
-    <div class="section-icon">
-        📦
-    </div>
-
-    Material Stock Reports
-
-</div>
-
-<div
-    id="material-stock"
-    class="report-list">
-</div>
-
-</section>
-
-
-<!-- PR PO -->
-
-<section class="section">
-
-<div class="section-title">
-
-    <div class="section-icon">
-        🧾
-    </div>
-
-    PR / PO Reports
-
-</div>
-
-<div
-    id="pr-po"
-    class="report-list">
-</div>
-
-</section>
-
-
-<!-- WAREHOUSE -->
-
-<section class="section">
-
-<div class="section-title">
-
-    <div class="section-icon">
-        🏭
-    </div>
-
-    Warehouse Reports
-
-</div>
-
-<div
-    id="warehouse"
-    class="report-list">
-</div>
-
-</section>
-
-
-<!-- FM -->
-
-<section class="section">
-
-<div class="section-title">
-
-    <div class="section-icon">
-        🛠️
-    </div>
-
-    Facility Management Reports
-
-</div>
-
-<div
-    id="facility-management"
-    class="report-list">
-</div>
-
-</section>
-
-
-</div>
-
-
-<div class="footer">
-
-🔒 Secure LP-Store Facility Management Portal
-
-<br><br>
-
-Authorized Facility Management users only
-
-</div>
-
-
-</main>
-
-
-<script>
-
-
-const GITHUB_USER =
-    "yaseeninoor";
-
-const GITHUB_REPO =
-    "lp-fm-ai";
-
-const GITHUB_BRANCH =
-    "main";
-
-
-const folders = {
-
-    "gate-entry":
-        "reports/gate-entry",
-
-    "material-stock":
-        "reports/material-stock",
-
-    "pr-po":
-        "reports/pr-po",
-
-    "warehouse":
-        "reports/warehouse",
-
-    "facility-management":
-        "reports/facility-management"
-
-};
-
-
-let allFiles = [];
-
-
-/* =========================
-   LOAD GITHUB FILES
-========================= */
-
-async function loadReports() {
-
-    try {
-
-        for (
-            const category in folders
-        ) {
-
-            const url =
-                "https://api.github.com/repos/"
-                + GITHUB_USER
-                + "/"
-                + GITHUB_REPO
-                + "/contents/"
-                + folders[category]
-                + "?ref="
-                + GITHUB_BRANCH;
-
-
-            const response =
-                await fetch(url);
-
-
-            if (!response.ok) {
-
-                continue;
-
-            }
-
-
-            const files =
-                await response.json();
-
-
-            if (!Array.isArray(files)) {
-
-                continue;
-
-            }
-
-
-            files.forEach(
-                function(file) {
-
-                    if (
-                        file.type === "file"
-                        &&
-                        isSupportedFile(file.name)
-                    ) {
-
-                        allFiles.push({
-
-                            name:
-                                file.name,
-
-                            url:
-                                file.download_url,
-
-                            html_url:
-                                file.html_url,
-
-                            category:
-                                category,
-
-                            size:
-                                file.size
-
-                        });
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        document.getElementById(
-            "loading"
-        ).style.display = "none";
-
-
-        document.getElementById(
-            "content"
-        ).style.display = "block";
-
-
-        renderReports(allFiles);
-
-    }
-
-    catch(error) {
-
-        document.getElementById(
-            "loading"
-        ).style.display = "none";
-
-
-        const errorBox =
-            document.getElementById(
-                "error"
-            );
-
-
-        errorBox.style.display =
-            "block";
-
-
-        errorBox.innerHTML =
-            "⚠️ Unable to load GitHub reports.<br><br>"
-            +
-            "Please check your GitHub repository and folders.";
-
-    }
-
-}
-
-
-/* =========================
-   SUPPORTED FILES
-========================= */
-
-function isSupportedFile(name) {
-
-    const extensions = [
-
-        ".pdf",
-        ".xlsx",
-        ".xls",
-        ".csv",
-        ".doc",
-        ".docx",
-        ".jpg",
-        ".jpeg",
-        ".png"
-
-    ];
-
-
-    const lower =
-        name.toLowerCase();
-
-
-    return extensions.some(
-        function(extension) {
-
-            return lower.endsWith(
-                extension
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================
-   RENDER
-========================= */
-
-function renderReports(files) {
-
-
-    Object.keys(folders).forEach(
-        function(category) {
-
-            document.getElementById(
-                category
-            ).innerHTML = "";
-
-        }
-    );
-
-
-    files.forEach(
-        function(file) {
-
-            const container =
-                document.getElementById(
-                    file.category
-                );
-
-
-            if (!container) {
-
-                return;
-
-            }
-
-
-            container.appendChild(
-                createCard(file)
-            );
-
-        }
-    );
-
-
-    Object.keys(folders).forEach(
-        function(category) {
-
-            const container =
-                document.getElementById(
-                    category
-                );
-
-
-            if (
-                container.children.length === 0
-            ) {
-
-                container.innerHTML =
-
-                    '<div class="empty">'
-                    +
-                    '📂 No reports uploaded yet.'
-                    +
-                    '</div>';
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================
-   CARD
-========================= */
-
-function createCard(file) {
-
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.className =
-        "report";
-
-
-    div.innerHTML = `
-
-        <div class="report-name">
-
-            📄 ${escapeHTML(file.name)}
-
-        </div>
-
-
-        <div class="report-info">
-
-            GitHub •
-            ${formatSize(file.size)}
-
-        </div>
-
-
-        <div class="buttons">
-
-
-            <a
-                href="${file.html_url}"
-                target="_blank"
-                class="btn view"
-            >
-
-                👁 View
-
-            </a>
-
-
-            <a
-                href="${file.url}"
-                download
-                class="btn download"
-            >
-
-                ⬇ Download
-
-            </a>
-
-
-        </div>
-
-    `;
-
-
-    return div;
-
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-document
-.getElementById("search")
-.addEventListener(
-    "input",
-    function() {
-
-
-        const text =
-            this.value
-                .toLowerCase()
-                .trim();
-
-
-        if (!text) {
-
-            renderReports(
-                allFiles
-            );
-
-            return;
-
-        }
-
-
-        const filtered =
-            allFiles.filter(
-                function(file) {
-
-                    return file.name
-                        .toLowerCase()
-                        .includes(text);
-
-                }
-            );
-
-
-        renderReports(
-            filtered
-        );
-
-    }
-);
-
-
-/* =========================
-   ESCAPE
-========================= */
-
-function escapeHTML(text) {
-
-    return String(text)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =========================
-   SIZE
-========================= */
-
-function formatSize(bytes) {
-
-    if (!bytes) {
-
-        return "Unknown size";
-
-    }
-
-
-    if (bytes < 1024) {
-
-        return bytes + " Bytes";
-
-    }
-
-
-    if (
-        bytes <
-        1024 * 1024
-    ) {
-
-        return (
-            (bytes / 1024)
-            .toFixed(1)
-            + " KB"
-        );
-
-    }
-
-
-    return (
-        (bytes /
-        (1024 * 1024))
-        .toFixed(2)
-        + " MB"
-    );
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-loadReports();
-
-</script>
-
-</body>
-</html>
+    align-items:
+       
