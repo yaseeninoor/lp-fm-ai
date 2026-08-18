@@ -1,0 +1,9 @@
+{
+  "name": "lp-fm-whatsapp-stock-alert",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LP-FM material inventory WhatsApp stock alert",
+  "dependencies": {
+    "google-auth-library": "^9.15.1"
+  }
+}
