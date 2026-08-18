@@ -2,798 +2,1920 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>LP-FM Low Stock Alert</title>
 
+<meta name="theme-color" content="#061322">
+
 <style>
-*{box-sizing:border-box}
+
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    background:linear-gradient(135deg,#04101f,#0a1b31,#061322);
-    color:#fff;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #04101f,
+            #0a1b31,
+            #061322
+        );
+
+    color:#ffffff;
+    min-height:100vh;
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
-    padding:15px 20px;
-    background:#061322;
-    border-bottom:1px solid #ffffff15;
+
+    position:sticky;
+    top:0;
+    z-index:50;
+
+    padding:14px 18px;
+
+    background:#061322f5;
+
+    border-bottom:
+        1px solid #ffffff15;
+
     display:flex;
-    justify-content:space-between;
+
+    justify-content:
+        space-between;
+
     align-items:center;
-}
 
-.brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.logo{
-    width:45px;
-    height:45px;
-    border-radius:12px;
-    background:#1677ff;
-    display:grid;
-    place-items:center;
-    font-weight:900;
-}
-
-h2,h1{margin:0}
-
-small{
-    color:#7890a9;
-}
-
-.user{
-    color:#9fcaff;
-    font-size:11px;
-}
-
-button{
-    border:0;
-    border-radius:9px;
-    padding:11px 15px;
-    color:white;
-    background:#1677ff;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.secondary{
-    background:#17314f;
-}
-
-.main{
-    max-width:1300px;
-    margin:auto;
-    padding:25px 16px 60px;
-}
-
-.top{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-    margin-bottom:20px;
     gap:15px;
 }
 
-.top p{
-    color:#8fa5bc;
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+
+.logo{
+
+    width:46px;
+    height:46px;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2188ff,
+            #0757c8
+        );
+
+    display:grid;
+
+    place-items:center;
+
+    font-weight:900;
+
+    font-size:16px;
+}
+
+
+.brand h2{
+
+    margin:0;
+
+    font-size:18px;
+}
+
+
+.brand small{
+
+    color:#7890a9;
+
+    font-size:10px;
+}
+
+
+.user-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+
+.user-email{
+
+    color:#9fcaff;
+
+    font-size:11px;
+}
+
+
+button{
+
+    border:0;
+
+    border-radius:9px;
+
+    padding:11px 15px;
+
+    color:#ffffff;
+
+    background:#1677ff;
+
+    font-weight:700;
+
+    cursor:pointer;
+
     font-size:12px;
 }
 
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
+
+button:hover{
+
+    opacity:.9;
+}
+
+
+button.secondary{
+
+    background:#17314f;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:
+        25px 16px 60px;
+}
+
+
+.top{
+
+    display:flex;
+
+    justify-content:
+        space-between;
+
+    align-items:flex-end;
+
+    gap:15px;
+
     margin-bottom:20px;
 }
 
-.stat{
-    padding:18px;
-    border-radius:15px;
-    background:#ffffff06;
-    border:1px solid #ffffff12;
+
+.top h1{
+
+    margin:0;
+
+    font-size:28px;
 }
+
+
+.top p{
+
+    margin:
+        7px 0 0;
+
+    color:#8fa5bc;
+
+    font-size:12px;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+
+    margin-bottom:20px;
+}
+
+
+.stat{
+
+    padding:20px;
+
+    border-radius:15px;
+
+    background:#ffffff06;
+
+    border:
+        1px solid #ffffff12;
+}
+
 
 .stat span{
+
     color:#7890a9;
+
     font-size:10px;
+
+    font-weight:700;
 }
+
 
 .stat strong{
+
     display:block;
-    font-size:30px;
-    margin-top:7px;
+
+    font-size:32px;
+
+    margin-top:8px;
 }
 
+
+.zero-stat strong{
+
+    color:#ff7b7b;
+}
+
+
+.low-stat strong{
+
+    color:#ffc15c;
+}
+
+
+.total-stat strong{
+
+    color:#70aaff;
+}
+
+
+/* =========================
+   PANEL
+========================= */
+
 .panel{
+
     background:#071426dd;
-    border:1px solid #ffffff12;
+
+    border:
+        1px solid #ffffff12;
+
     border-radius:16px;
+
     padding:18px;
 }
 
+
 .toolbar{
+
     display:flex;
+
     gap:10px;
+
     margin-bottom:15px;
+
+    flex-wrap:wrap;
 }
 
-input,select{
+
+input,
+select{
+
     background:#0b2038;
-    color:white;
-    border:1px solid #ffffff18;
+
+    color:#ffffff;
+
+    border:
+        1px solid #ffffff18;
+
     border-radius:9px;
+
     padding:11px;
+
+    outline:none;
+
+    font-size:12px;
 }
+
+
+input::placeholder{
+
+    color:#617990;
+}
+
 
 .search{
+
     flex:1;
+
+    min-width:220px;
 }
+
+
+/* =========================
+   ALERT MESSAGE
+========================= */
+
+.alert-box{
+
+    display:none;
+
+    margin-bottom:15px;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    background:#ef444422;
+
+    color:#ff9b9b;
+
+    font-size:11px;
+
+    border:
+        1px solid #ef444433;
+}
+
+
+/* =========================
+   TABLE
+========================= */
 
 .table-wrap{
+
     overflow:auto;
+
+    width:100%;
 }
+
 
 table{
+
     width:100%;
-    min-width:900px;
-    border-collapse:collapse;
+
+    min-width:950px;
+
+    border-collapse:
+        collapse;
 }
 
-th,td{
+
+th,
+td{
+
     padding:12px 9px;
-    border-bottom:1px solid #ffffff0d;
+
+    border-bottom:
+        1px solid #ffffff0d;
+
     text-align:left;
+
     font-size:11px;
 }
 
+
 th{
+
     color:#86a0ba;
+
     font-size:10px;
+
+    white-space:nowrap;
 }
+
+
+td{
+
+    color:#dce7f2;
+}
+
 
 .badge{
-    padding:5px 9px;
+
+    display:inline-block;
+
+    padding:
+        5px 9px;
+
     border-radius:20px;
+
     font-size:9px;
+
     font-weight:800;
+
+    white-space:nowrap;
 }
 
-.zero{
+
+.badge.zero{
+
     color:#ff8d8d;
+
     background:#ef444422;
 }
 
-.low{
+
+.badge.low{
+
     color:#ffc15c;
+
     background:#f59e0b22;
 }
 
-.empty{
-    text-align:center;
-    padding:40px;
-    color:#7890a9;
+
+.required{
+
+    color:#ff9b9b;
+
+    font-weight:800;
 }
 
-.alert-box{
-    display:none;
-    margin-bottom:15px;
-    padding:12px;
-    border-radius:10px;
-    background:#ef444422;
-    color:#ff9b9b;
-    font-size:11px;
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+
+    text-align:center;
+
+    padding:45px;
+
+    color:#7890a9;
+
+    font-size:12px;
 }
+
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginModal{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:200;
+
+    background:
+        rgba(0,0,0,.88);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+
+.login-box{
+
+    width:
+        min(400px,100%);
+
+    background:#0a1b31;
+
+    border:
+        1px solid #ffffff18;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:
+        0 20px 70px #000;
+}
+
+
+.login-box h2{
+
+    margin:
+        0 0 8px;
+}
+
+
+.login-box p{
+
+    color:#7890a9;
+
+    font-size:11px;
+
+    margin-bottom:20px;
+}
+
+
+.form-group{
+
+    margin-bottom:12px;
+}
+
+
+.form-group label{
+
+    display:block;
+
+    color:#8fa5bc;
+
+    font-size:10px;
+
+    margin-bottom:5px;
+}
+
+
+.form-group input{
+
+    width:100%;
+}
+
+
+.login-button{
+
+    width:100%;
+
+    margin-top:5px;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+
+    text-align:center;
+
+    padding:40px;
+
+    color:#8fa5bc;
+
+    font-size:12px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:700px){
-    .stats{
-        grid-template-columns:1fr;
+
+    header{
+
+        align-items:flex-start;
+
+    }
+
+    .user-email{
+
+        display:none;
     }
 
     .top{
-        flex-direction:column;
-        align-items:flex-start;
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
     }
+
+    .top h1{
+
+        font-size:24px;
+    }
+
+    .stats{
+
+        grid-template-columns:
+            1fr;
+    }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
-<div class="brand">
+    <div class="brand">
 
-<div class="logo">LP</div>
+        <div class="logo">
+            LP
+        </div>
 
-<div>
-<h2>Low Stock Alert</h2>
-<small>LP-FM Material Inventory</small>
-</div>
+        <div>
 
-</div>
+            <h2>
+                LP-FM Inventory
+            </h2>
 
-<div>
-<span id="userEmail" class="user"></span>
+            <small>
+                Low Stock Alert • ST26
+            </small>
 
-<button
-class="secondary"
-onclick="logout()">
-Logout
-</button>
+        </div>
 
-</div>
+    </div>
+
+
+    <div class="user-area">
+
+        <span
+            id="userEmail"
+            class="user-email">
+        </span>
+
+
+        <button
+            class="secondary"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
 
 </header>
 
 
+
+<!-- =========================
+     MAIN
+========================= -->
+
 <main class="main">
 
-<section class="top">
 
-<div>
+    <section class="top">
 
-<h1>⚠️ Stock Alert</h1>
+        <div>
 
-<p>
-Materials requiring replenishment
-</p>
+            <h1>
+                ⚠️ Low Stock Alert
+            </h1>
 
-</div>
+            <p>
+                Materials requiring replenishment
+            </p>
 
-<button
-onclick="loadMaterials()">
-↻ Refresh
-</button>
-
-</section>
+        </div>
 
 
-<section class="stats">
+        <button
+            onclick="loadMaterials()">
 
-<div class="stat">
+            ↻ Refresh
 
-<span>
-ZERO STOCK
-</span>
+        </button>
 
-<strong id="zeroCount">
-0
-</strong>
-
-</div>
+    </section>
 
 
-<div class="stat">
 
-<span>
-LOW STOCK
-</span>
+    <!-- =====================
+         STATISTICS
+    ====================== -->
 
-<strong id="lowCount">
-0
-</strong>
-
-</div>
+    <section class="stats">
 
 
-<div class="stat">
+        <div
+            class="stat zero-stat">
 
-<span>
-TOTAL ALERTS
-</span>
+            <span>
+                ZERO STOCK
+            </span>
 
-<strong id="totalCount">
-0
-</strong>
+            <strong
+                id="zeroCount">
 
-</div>
+                0
 
-</section>
+            </strong>
 
-
-<section class="panel">
-
-<div class="toolbar">
-
-<input
-id="search"
-class="search"
-placeholder="Search material..."
-oninput="render()">
+        </div>
 
 
-<select
-id="filter"
-onchange="render()">
+        <div
+            class="stat low-stat">
 
-<option value="all">
-All Alerts
-</option>
+            <span>
+                LOW STOCK
+            </span>
 
-<option value="zero">
-Zero Stock
-</option>
+            <strong
+                id="lowCount">
 
-<option value="low">
-Low Stock
-</option>
+                0
 
-</select>
+            </strong>
 
-</div>
+        </div>
 
 
-<div
-id="alertBox"
-class="alert-box">
-</div>
+        <div
+            class="stat total-stat">
+
+            <span>
+                TOTAL ALERTS
+            </span>
+
+            <strong
+                id="totalCount">
+
+                0
+
+            </strong>
+
+        </div>
 
 
-<div class="table-wrap">
+    </section>
 
-<table>
 
-<thead>
 
-<tr>
+    <!-- =====================
+         INVENTORY PANEL
+    ====================== -->
 
-<th>Material Code</th>
-<th>Description</th>
-<th>Storage</th>
-<th>Unit</th>
-<th>Current Stock</th>
-<th>Minimum Stock</th>
-<th>Required Qty</th>
-<th>Status</th>
+    <section class="panel">
 
-</tr>
 
-</thead>
+        <div class="toolbar">
 
-<tbody id="rows">
 
-<tr>
-<td colspan="8" class="empty">
-Loading...
-</td>
-</tr>
+            <input
+                id="search"
+                class="search"
+                placeholder="Search material code / description..."
+                oninput="render()">
 
-</tbody>
 
-</table>
+            <select
+                id="filter"
+                onchange="render()">
 
-</div>
+                <option value="all">
+                    All Alerts
+                </option>
 
-</section>
+                <option value="zero">
+                    Zero Stock
+                </option>
+
+                <option value="low">
+                    Low Stock
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+
+        <div
+            id="alertBox"
+            class="alert-box">
+        </div>
+
+
+
+        <div
+            id="loading"
+            class="loading">
+
+            Loading inventory...
+
+        </div>
+
+
+
+        <div
+            class="table-wrap"
+            id="tableWrap"
+            style="display:none;">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            MATERIAL CODE
+                        </th>
+
+                        <th>
+                            DESCRIPTION
+                        </th>
+
+                        <th>
+                            STORAGE
+                        </th>
+
+                        <th>
+                            UNIT
+                        </th>
+
+                        <th>
+                            CURRENT STOCK
+                        </th>
+
+                        <th>
+                            MINIMUM
+                        </th>
+
+                        <th>
+                            REQUIRED
+                        </th>
+
+                        <th>
+                            STATUS
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="rows">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
 
 </main>
 
 
-<!-- LOGIN -->
+
+<!-- =========================
+     LOGIN
+========================= -->
 
 <div
-id="loginModal"
-style="
-position:fixed;
-inset:0;
-background:#000c;
-display:none;
-align-items:center;
-justify-content:center;
-padding:20px;
-">
-
-<div
-style="
-width:min(400px,100%);
-background:#0a1b31;
-padding:25px;
-border-radius:16px;
-">
-
-<h2>LP-FM Login</h2>
-
-<br>
-
-<input
-id="loginEmail"
-type="email"
-placeholder="Email"
-style="width:100%;margin-bottom:10px">
+    id="loginModal">
 
 
-<input
-id="loginPassword"
-type="password"
-placeholder="Password"
-style="width:100%;margin-bottom:10px">
+    <div
+        class="login-box">
 
 
-<button onclick="login()">
-Login
-</button>
+        <h2>
+            LP-FM Login
+        </h2>
+
+
+        <p>
+            Sign in to access material inventory.
+        </p>
+
+
+
+        <div
+            class="form-group">
+
+            <label>
+                Email
+            </label>
+
+            <input
+                id="loginEmail"
+                type="email"
+                autocomplete="email"
+                placeholder="Enter your email">
+
+        </div>
+
+
+
+        <div
+            class="form-group">
+
+            <label>
+                Password
+            </label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter your password">
+
+        </div>
+
+
+
+        <button
+            class="login-button"
+            onclick="login()">
+
+            Login
+
+        </button>
+
+
+    </div>
 
 </div>
 
-</div>
 
+
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script type="module">
 
+
+/* Firebase App */
+
 import {
-initializeApp
+    initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
+
+
+/* Firebase Authentication */
+
 import {
-getAuth,
-onAuthStateChanged,
-signInWithEmailAndPassword,
-signOut
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut
 }
 from
 "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
+
+
+/* Firestore */
+
 import {
-getFirestore,
-collection,
-getDocs
+    getFirestore,
+    collection,
+    getDocs
 }
 from
 "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 
-const firebaseConfig={
 
-apiKey:
-"AIzaSyBDzbv1fTRPxfmj3Nz4svl7ALWWARBuY0o",
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
-authDomain:
-"lp-store-23212.firebaseapp.com",
 
-projectId:
-"lp-store-23212",
+const firebaseConfig = {
 
-storageBucket:
-"lp-store-23212.firebasestorage.app",
+    apiKey:
+        "AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",
 
-messagingSenderId:
-"200245726085",
+    authDomain:
+        "lp-store-23212.firebaseapp.com",
 
-appId:
-"1:200245726085:web:081aa1315c64e5b4bc12ec",
+    projectId:
+        "lp-store-23212",
 
-measurementId:
-"G-21VPLM3N6S"
+    storageBucket:
+        "lp-store-23212.firebasestorage.app",
+
+    messagingSenderId:
+        "200245726085",
+
+    appId:
+        "1:200245726085:web:081aa1315c64e5b4bc12ec",
+
+    measurementId:
+        "G-21VPLM3N6S"
 
 };
 
 
-const app=
-initializeApp(firebaseConfig);
 
-const auth=
-getAuth(app);
-
-const db=
-getFirestore(app);
+/* =========================
+   INITIALIZE FIREBASE
+========================= */
 
 
-let materials=[];
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+
+/* =========================
+   GLOBAL DATA
+========================= */
+
+
+let materials = [];
+
+
+
+/* =========================
+   AUTH STATE
+========================= */
 
 
 onAuthStateChanged(
-auth,
-async user=>{
 
-if(!user){
+    auth,
 
-document
-.getElementById("loginModal")
-.style.display="flex";
-
-return;
-
-}
-
-document
-.getElementById("loginModal")
-.style.display="none";
-
-document
-.getElementById("userEmail")
-.textContent=user.email;
-
-await loadMaterials();
-
-});
+    async user => {
 
 
-window.login=async function(){
+        if(!user){
 
-const email=
-document
-.getElementById("loginEmail")
-.value
-.trim();
+            document
+                .getElementById(
+                    "loginModal"
+                )
+                .style.display =
+                "flex";
 
-const password=
-document
-.getElementById("loginPassword")
-.value;
 
-try{
+            document
+                .getElementById(
+                    "loading"
+                )
+                .style.display =
+                "none";
 
-await signInWithEmailAndPassword(
-auth,
-email,
-password
+
+            return;
+
+        }
+
+
+
+        document
+            .getElementById(
+                "loginModal"
+            )
+            .style.display =
+            "none";
+
+
+
+        document
+            .getElementById(
+                "userEmail"
+            )
+            .textContent =
+            user.email;
+
+
+
+        await loadMaterials();
+
+    }
+
 );
 
-}
-catch(error){
 
-alert(
-"Login failed:\n"+
-error.message
-);
 
-}
+/* =========================
+   LOGIN
+========================= */
+
+
+window.login =
+async function(){
+
+
+    const email =
+        document
+            .getElementById(
+                "loginEmail"
+            )
+            .value
+            .trim();
+
+
+
+    const password =
+        document
+            .getElementById(
+                "loginPassword"
+            )
+            .value;
+
+
+
+    if(!email){
+
+        alert(
+            "Please enter email."
+        );
+
+        return;
+
+    }
+
+
+
+    if(!password){
+
+        alert(
+            "Please enter password."
+        );
+
+        return;
+
+    }
+
+
+
+    try{
+
+
+        await signInWithEmailAndPassword(
+
+            auth,
+
+            email,
+
+            password
+
+        );
+
+
+    }
+    catch(error){
+
+
+        console.error(
+            "Login error:",
+            error
+        );
+
+
+        alert(
+
+            "Login failed:\n\n" +
+
+            error.message
+
+        );
+
+    }
 
 };
 
 
-window.logout=async function(){
 
-await signOut(auth);
+/* =========================
+   LOGOUT
+========================= */
 
-};
 
+window.logout =
+async function(){
 
-window.loadMaterials=async function(){
+    try{
 
-try{
+        await signOut(auth);
 
-const snapshot=
-await getDocs(
-collection(
-db,
-"materials"
-)
-);
+    }
+    catch(error){
 
-materials=
-snapshot.docs
-.map(d=>({
-id:d.id,
-...d.data()
-}))
-.filter(item=>{
+        console.error(error);
 
-const stock=
-Number(item.stock||0);
-
-const minimum=
-Number(item.minimum||0);
-
-return(
-stock<=0 ||
-(
-minimum>0 &&
-stock<=minimum
-)
-);
-
-});
-
-render();
-
-}
-catch(error){
-
-alert(
-"Could not load stock alerts:\n"+
-error.message
-);
-
-}
+    }
 
 };
 
 
-window.render=function(){
 
-const search=
-document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
-
-const filter=
-document
-.getElementById("filter")
-.value;
+/* =========================
+   LOAD MATERIALS
+========================= */
 
 
-const list=
-materials.filter(item=>{
-
-const stock=
-Number(item.stock||0);
-
-const minimum=
-Number(item.minimum||0);
-
-const type=
-stock<=0
-?"zero"
-:"low";
+window.loadMaterials =
+async function(){
 
 
-const text=
-`${item.code||""}
-${item.description||""}
-${item.storage||""}`
-.toLowerCase();
+    document
+        .getElementById(
+            "loading"
+        )
+        .style.display =
+        "block";
 
 
-return(
-(!search||text.includes(search))
-&&
-(
-filter==="all"||
-filter===type
-)
-);
-
-});
+    document
+        .getElementById(
+            "tableWrap"
+        )
+        .style.display =
+        "none";
 
 
-const zero=
-materials.filter(
-x=>Number(x.stock||0)<=0
-).length;
+
+    try{
 
 
-const low=
-materials.filter(
-x=>
-Number(x.stock||0)>0 &&
-Number(x.minimum||0)>0 &&
-Number(x.stock||0)<=Number(x.minimum||0)
-).length;
+        const snapshot =
+            await getDocs(
+
+                collection(
+
+                    db,
+
+                    "materials"
+
+                )
+
+            );
 
 
-document
-.getElementById("zeroCount")
-.textContent=zero;
 
-document
-.getElementById("lowCount")
-.textContent=low;
+        materials =
 
-document
-.getElementById("totalCount")
-.textContent=zero+low;
+            snapshot.docs.map(
+
+                document => ({
+
+                    id:
+                        document.id,
+
+                    ...document.data()
+
+                })
+
+            )
+            .filter(
+
+                item => {
+
+                    const stock =
+                        Number(
+                            item.stock || 0
+                        );
 
 
-const rows=
-document.getElementById("rows");
+                    const minimum =
+                        Number(
+                            item.minimum || 0
+                        );
 
 
-if(!list.length){
+                    return (
 
-rows.innerHTML=`
+                        stock <= 0
 
-<tr>
-<td colspan="8" class="empty">
-🎉 No low-stock materials.
-</td>
-</tr>
+                        ||
 
-`;
+                        (
+                            minimum > 0
 
-return;
+                            &&
+
+                            stock <= minimum
+                        )
+
+                    );
+
+                }
+
+            );
+
+
+
+        document
+            .getElementById(
+                "loading"
+            )
+            .style.display =
+            "none";
+
+
+
+        document
+            .getElementById(
+                "tableWrap"
+            )
+            .style.display =
+            "block";
+
+
+
+        render();
+
+
+
+    }
+    catch(error){
+
+
+        console.error(
+            "Firestore error:",
+            error
+        );
+
+
+        document
+            .getElementById(
+                "loading"
+            )
+            .textContent =
+            "Unable to load inventory.";
+
+
+        showError(
+
+            "Firestore Error: " +
+
+            error.message
+
+        );
+
+    }
+
+};
+
+
+
+/* =========================
+   RENDER
+========================= */
+
+
+window.render =
+function(){
+
+
+    const search =
+
+        document
+            .getElementById(
+                "search"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+
+    const filter =
+
+        document
+            .getElementById(
+                "filter"
+            )
+            .value;
+
+
+
+    const list =
+
+        materials.filter(
+
+            item => {
+
+
+                const stock =
+
+                    Number(
+                        item.stock || 0
+                    );
+
+
+
+                const minimum =
+
+                    Number(
+                        item.minimum || 0
+                    );
+
+
+
+                const type =
+
+                    stock <= 0
+
+                    ?
+
+                    "zero"
+
+                    :
+
+                    "low";
+
+
+
+                const text =
+
+                    (
+
+                        String(
+                            item.code || ""
+                        )
+
+                        +
+
+                        " "
+
+                        +
+
+                        String(
+                            item.description || ""
+                        )
+
+                        +
+
+                        " "
+
+                        +
+
+                        String(
+                            item.storage || ""
+                        )
+
+                    )
+                    .toLowerCase();
+
+
+
+                const searchOK =
+
+                    !search
+
+                    ||
+
+                    text.includes(
+                        search
+                    );
+
+
+
+                const filterOK =
+
+                    filter === "all"
+
+                    ||
+
+                    filter === type;
+
+
+
+                return (
+
+                    searchOK
+
+                    &&
+
+                    filterOK
+
+                );
+
+            }
+
+        );
+
+
+
+    updateStats();
+
+
+
+    const rows =
+
+        document
+            .getElementById(
+                "rows"
+            );
+
+
+
+    if(!list.length){
+
+
+        rows.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty">
+
+                    🎉 No low-stock materials found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+    rows.innerHTML =
+
+        list.map(
+
+            item => {
+
+
+                const stock =
+
+                    Number(
+                        item.stock || 0
+                    );
+
+
+
+                const minimum =
+
+                    Number(
+                        item.minimum || 0
+                    );
+
+
+
+                const isZero =
+
+                    stock <= 0;
+
+
+
+                const required =
+
+                    Math.max(
+
+                        minimum - stock,
+
+                        0
+
+                    );
+
+
+
+                return `
+
+                    <tr>
+
+
+                        <td>
+
+                            <strong>
+
+                                ${safe(
+                                    item.code
+                                )}
+
+                            </strong>
+
+                        </td>
+
+
+
+                        <td>
+
+                            ${safe(
+                                item.description
+                            )}
+
+                        </td>
+
+
+
+                        <td>
+
+                            ${safe(
+                                item.storage
+                            )}
+
+                        </td>
+
+
+
+                        <td>
+
+                            ${safe(
+                                item.unit
+                            )}
+
+                        </td>
+
+
+
+                        <td>
+
+                            <strong>
+
+                                ${formatNumber(
+                                    stock
+                                )}
+
+                            </strong>
+
+                        </td>
+
+
+
+                        <td>
+
+                            ${formatNumber(
+                                minimum
+                            )}
+
+                        </td>
+
+
+
+                        <td>
+
+                            <span
+                                class="required">
+
+                                ${formatNumber(
+                                    required
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+
+                        <td>
+
+                            <span
+                                class="badge
+                                ${isZero
+                                    ? "zero"
+                                    : "low"}">
+
+                                ${isZero
+                                    ? "ZERO STOCK"
+                                    : "LOW STOCK"}
+
+                            </span>
+
+                        </td>
+
+
+                    </tr>
+
+                `;
+
+            }
+
+        ).join("");
+
+};
+
+
+
+/* =========================
+   UPDATE STATISTICS
+========================= */
+
+
+function updateStats(){
+
+
+    const zero =
+
+        materials.filter(
+
+            item =>
+
+                Number(
+                    item.stock || 0
+                ) <= 0
+
+        ).length;
+
+
+
+    const low =
+
+        materials.filter(
+
+            item => {
+
+
+                const stock =
+
+                    Number(
+                        item.stock || 0
+                    );
+
+
+                const minimum =
+
+                    Number(
+                        item.minimum || 0
+                    );
+
+
+                return (
+
+                    stock > 0
+
+                    &&
+
+                    minimum > 0
+
+                    &&
+
+                    stock <= minimum
+
+                );
+
+            }
+
+        ).length;
+
+
+
+    document
+        .getElementById(
+            "zeroCount"
+        )
+        .textContent =
+        zero;
+
+
+
+    document
+        .getElementById(
+            "lowCount"
+        )
+        .textContent =
+        low;
+
+
+
+    document
+        .getElementById(
+            "totalCount"
+        )
+        .textContent =
+        zero + low;
 
 }
 
 
-rows.innerHTML=
-list.map(item=>{
 
-const stock=
-Number(item.stock||0);
-
-const minimum=
-Number(item.minimum||0);
-
-const isZero=
-stock<=0;
-
-const required=
-Math.max(
-minimum-stock,
-0
-);
+/* =========================
+   ERROR MESSAGE
+========================= */
 
 
-return`
+function showError(message){
 
-<tr>
 
-<td>
-<strong>
-${safe(item.code)}
-</strong>
-</td>
+    const box =
 
-<td>
-${safe(item.description)}
-</td>
+        document
+            .getElementById(
+                "alertBox"
+            );
 
-<td>
-${safe(item.storage)}
-</td>
 
-<td>
-${safe(item.unit)}
-</td>
+    box.textContent =
+        message;
 
-<td>
-<strong>
-${stock}
-</strong>
-</td>
 
-<td>
-${minimum}
-</td>
+    box.style.display =
+        "block";
 
-<td>
-<strong>
-${required}
-</strong>
-</td>
+}
 
-<td>
 
-<span
-class="badge ${isZero?"zero":"low"}">
 
-${isZero
-?"ZERO STOCK"
-:"LOW STOCK"}
-
-</span>
-
-</td>
-
-</tr>
-
-`;
-
-}).join("");
-
-};
+/* =========================
+   SAFE TEXT
+========================= */
 
 
 function safe(value){
 
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
+
+
+
+/* =========================
+   NUMBER FORMAT
+========================= */
+
+
+function formatNumber(value){
+
+
+    const number =
+        Number(value || 0);
+
+
+    return number.toLocaleString(
+        "en-US",
+        {
+            maximumFractionDigits:2
+        }
+    );
+
+}
+
 
 </script>
 
