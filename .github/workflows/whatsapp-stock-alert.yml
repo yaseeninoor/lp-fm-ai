@@ -1,0 +1,32 @@
+name: LP-FM WhatsApp Stock Alert
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every day at 08:00 UAE time
+    - cron: "0 4 * * *"
+
+jobs:
+  stock-alert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send WhatsApp Stock Alert
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          WHATSAPP_ACCESS_TOKEN: ${{ secrets.WHATSAPP_ACCESS_TOKEN }}
+          FIRESTORE_COLLECTION: ${{ vars.FIRESTORE_COLLECTION }}
+          WHATSAPP_PHONE_NUMBER_ID: ${{ vars.WHATSAPP_PHONE_NUMBER_ID }}
+          WHATSAPP_TO: ${{ vars.WHATSAPP_TO }}
+        run: node scripts/whatsapp-stock-alert.js
