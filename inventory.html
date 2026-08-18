@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#061322">
+
+<title>LP-FM | Material Inventory</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(22,119,255,.20),transparent 30%),
+        linear-gradient(135deg,#04101f,#0a1b31 50%,#061322);
+    color:#fff;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    min-height:70px;
+    padding:12px 22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:rgba(5,18,34,.96);
+    border-bottom:1px solid rgba(255,255,255,.10);
+    backdrop-filter:blur(18px);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:46px;
+    height:46px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:linear-gradient(135deg,#2188ff,#0757c8);
+
+    font-weight:900;
+    font-size:16px;
+}
+
+.brand-title{
+    font-size:19px;
+    font-weight:800;
+}
+
+.brand-sub{
+    color:#7890a9;
+    font-size:10px;
+    margin-top:2px;
+}
+
+.back{
+    color:#8fc4ff;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:700;
+}
+
+/* MAIN */
+
+.main{
+    max-width:1250px;
+    margin:auto;
+    padding:30px 18px 60px;
+}
+
+.title-area{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+
+    margin-bottom:25px;
+}
+
+.title-area h1{
+    font-size:30px;
+    margin-bottom:6px;
+}
+
+.title-area p{
+    color:#8fa5bc;
+    font-size:12px;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:11px 15px;
+
+    background:#1677ff;
+    color:white;
+
+    font-size:12px;
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+.btn:hover{
+    opacity:.9;
+}
+
+.btn.secondary{
+    background:#17314f;
+}
+
+.btn.green{
+    background:#15803d;
+}
+
+/* STAT CARDS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+
+    margin-bottom:20px;
+}
+
+.stat{
+    padding:20px;
+
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+}
+
+.stat-label{
+    color:#7890a9;
+    font-size:10px;
+    font-weight:700;
+}
+
+.stat-number{
+    display:block;
+
+    font-size:28px;
+    font-weight:800;
+
+    margin-top:9px;
+}
+
+/* PANEL */
+
+.panel{
+    padding:18px;
+
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:17px;
+
+    background:rgba(7,20,38,.85);
+}
+
+.toolbar{
+    display:flex;
+    gap:10px;
+
+    margin-bottom:18px;
+
+    flex-wrap:wrap;
+}
+
+.input,
+.select{
+    background:#0b2038;
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:9px;
+
+    padding:11px 12px;
+
+    outline:none;
+}
+
+.input:focus,
+.select:focus{
+    border-color:#1677ff;
+}
+
+.search{
+    flex:1;
+    min-width:220px;
+}
+
+/* TABLE */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1050px;
+
+    border-collapse:collapse;
+}
+
+th{
+    padding:12px 10px;
+
+    text-align:left;
+
+    color:#86a0ba;
+
+    font-size:10px;
+
+    border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+td{
+    padding:13px 10px;
+
+    color:#d9e4ef;
+
+    font-size:11px;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+tr:hover{
+    background:rgba(22,119,255,.05);
+}
+
+/* STATUS */
+
+.status{
+    display:inline-block;
+
+    padding:5px 9px;
+
+    border-radius:20px;
+
+    font-size:9px;
+
+    font-weight:800;
+}
+
+.available{
+    background:rgba(34,197,94,.14);
+    color:#70e491;
+}
+
+.low{
+    background:rgba(239,68,68,.14);
+    color:#ff8d8d;
+}
+
+.out{
+    background:rgba(245,158,11,.14);
+    color:#ffc15c;
+}
+
+/* ACTION */
+
+.action-btn{
+    border:0;
+
+    padding:6px 9px;
+
+    border-radius:7px;
+
+    background:#17314f;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:10px;
+
+    margin-right:4px;
+}
+
+.delete-btn{
+    background:#6f1d2a;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+
+    background:rgba(0,0,0,.70);
+
+    z-index:1000;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    width:min(650px,100%);
+
+    max-height:90vh;
+    overflow:auto;
+
+    padding:22px;
+
+    border-radius:17px;
+
+    background:#0a1b31;
+
+    border:1px solid rgba(255,255,255,.12);
+}
+
+.modal-box h2{
+    margin-bottom:18px;
+}
+
+.form{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group label{
+    display:block;
+
+    color:#8fa5bc;
+
+    font-size:10px;
+
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.modal-buttons{
+    margin-top:10px;
+
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+
+    padding:40px;
+
+    color:#7890a9;
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+
+    color:#536b84;
+
+    font-size:9px;
+
+    margin-top:25px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .title-area{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+@media(max-width:600px){
+
+    .header{
+        padding:10px 14px;
+    }
+
+    .brand-title{
+        font-size:16px;
+    }
+
+    .main{
+        padding:24px 12px 50px;
+    }
+
+    .title-area h1{
+        font-size:25px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat-number{
+        font-size:23px;
+    }
+
+    .form{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            LP
+        </div>
+
+        <div>
+            <div class="brand-title">
+                Material Inventory
+            </div>
+
+            <div class="brand-sub">
+                LP-FM • Stock Control
+            </div>
+        </div>
+
+    </div>
+
+    <a href="dashboard.html" class="back">
+        ← Dashboard
+    </a>
+
+</header>
+
+
+<main class="main">
+
+    <section class="title-area">
+
+        <div>
+
+            <h1>
+                Inventory Dashboard
+            </h1>
+
+            <p>
+                Material stock monitoring and replenishment control
+            </p>
+
+        </div>
+
+        <div class="buttons">
+
+            <button
+                class="btn secondary"
+                onclick="exportCSV()">
+                📥 Export CSV
+            </button>
+
+            <button
+                class="btn"
+                onclick="openAddModal()">
+                + Add Material
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                TOTAL MATERIALS
+            </div>
+
+            <span
+                class="stat-number"
+                id="totalMaterials">
+                0
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                AVAILABLE
+            </div>
+
+            <span
+                class="stat-number"
+                id="availableMaterials">
+                0
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                LOW STOCK
+            </div>
+
+            <span
+                class="stat-number"
+                id="lowStockMaterials">
+                0
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                OUT OF STOCK
+            </div>
+
+            <span
+                class="stat-number"
+                id="outStockMaterials">
+                0
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- INVENTORY -->
+
+    <section class="panel">
+
+        <div class="toolbar">
+
+            <input
+                type="text"
+                id="searchBox"
+                class="input search"
+                placeholder="Search material code or description..."
+                oninput="renderInventory()">
+
+
+            <select
+                id="statusFilter"
+                class="select"
+                onchange="renderInventory()">
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="available">
+                    Available
+                </option>
+
+                <option value="low">
+                    Low Stock
+                </option>
+
+                <option value="out">
+                    Out of Stock
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Material Code
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Material Group
+                        </th>
+
+                        <th>
+                            Storage
+                        </th>
+
+                        <th>
+                            Unit
+                        </th>
+
+                        <th>
+                            Current Stock
+                        </th>
+
+                        <th>
+                            Minimum Stock
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="inventoryTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+
+        LP-FM Inventory System • Version 1.0
+
+    </div>
+
+</main>
+
+
+<!-- ADD / EDIT MODAL -->
+
+<div
+    id="materialModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <h2 id="modalTitle">
+            Add Material
+        </h2>
+
+
+        <form
+            id="materialForm"
+            class="form">
+
+            <input
+                type="hidden"
+                id="materialId">
+
+
+            <div class="form-group">
+
+                <label>
+                    Material Code *
+                </label>
+
+                <input
+                    id="materialCode"
+                    class="input"
+                    required
+                    placeholder="Example: ST26">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Material Description *
+                </label>
+
+                <input
+                    id="materialDescription"
+                    class="input"
+                    required
+                    placeholder="Example: LIFEPHARMA STAMP">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Material Group
+                </label>
+
+                <input
+                    id="materialGroup"
+                    class="input"
+                    value="ZCON">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Storage Location
+                </label>
+
+                <input
+                    id="storageLocation"
+                    class="input"
+                    value="STR">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Base Unit
+                </label>
+
+                <input
+                    id="baseUnit"
+                    class="input"
+                    value="NOS">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Current Stock
+                </label>
+
+                <input
+                    id="currentStock"
+                    type="number"
+                    min="0"
+                    step="any"
+                    class="input"
+                    value="0">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Minimum Stock
+                </label>
+
+                <input
+                    id="minimumStock"
+                    type="number"
+                    min="0"
+                    step="any"
+                    class="input"
+                    value="10">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Note
+                </label>
+
+                <input
+                    id="materialNote"
+                    class="input"
+                    placeholder="Optional">
+
+            </div>
+
+
+            <div class="full modal-buttons">
+
+                <button
+                    type="button"
+                    class="btn secondary"
+                    onclick="closeModal()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="btn">
+
+                    Save Material
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   INVENTORY STORAGE
+===================================================== */
+
+const STORAGE_KEY =
+    "LP_FM_MATERIAL_INVENTORY";
+
+
+let inventory =
+    JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+    ) || [
+
+        {
+            id: generateId(),
+
+            code: "ST26",
+
+            description:
+                "LIFEPHARMA STAMP",
+
+            group:
+                "ZCON",
+
+            storage:
+                "STR",
+
+            unit:
+                "NOS",
+
+            stock:
+                0,
+
+            minimum:
+                10,
+
+            note:
+                "Miscellaneous"
+        }
+
+    ];
+
+
+/* =====================================================
+   ID
+===================================================== */
+
+function generateId(){
+
+    return Date.now().toString(36)
+        + Math.random()
+            .toString(36)
+            .substring(2);
+
+}
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function saveInventory(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(inventory)
+    );
+
+    renderInventory();
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function getStatus(item){
+
+    const stock =
+        Number(item.stock);
+
+    const minimum =
+        Number(item.minimum);
+
+
+    if(stock <= 0){
+
+        return {
+            type:"out",
+            text:"OUT OF STOCK"
+        };
+
+    }
+
+
+    if(stock <= minimum){
+
+        return {
+            type:"low",
+            text:"LOW STOCK"
+        };
+
+    }
+
+
+    return {
+        type:"available",
+        text:"AVAILABLE"
+    };
+
+}
+
+
+/* =====================================================
+   HTML SECURITY
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderInventory(){
+
+    const search =
+        document
+        .getElementById("searchBox")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const filter =
+        document
+        .getElementById("statusFilter")
+        .value;
+
+
+    const filtered =
+        inventory.filter(item => {
+
+            const status =
+                getStatus(item);
+
+
+            const matchesSearch =
+                !search ||
+
+                item.code
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                item.description
+                    .toLowerCase()
+                    .includes(search);
+
+
+            const matchesFilter =
+                filter === "all"
+                ||
+                status.type === filter;
+
+
+            return (
+                matchesSearch
+                &&
+                matchesFilter
+            );
+
+        });
+
+
+    updateStatistics();
+
+
+    const table =
+        document.getElementById(
+            "inventoryTable"
+        );
+
+
+    if(filtered.length === 0){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="9"
+                    class="empty">
+
+                    No materials found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        filtered.map(item => {
+
+            const status =
+                getStatus(item);
+
+
+            return `
+
+                <tr>
+
+                    <td>
+                        <strong>
+                            ${escapeHTML(item.code)}
+                        </strong>
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.description)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.group)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.storage)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(item.unit)}
+                    </td>
+
+
+                    <td>
+                        ${Number(item.stock)}
+                    </td>
+
+
+                    <td>
+                        ${Number(item.minimum)}
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="status ${status.type}">
+
+                            ${status.text}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="action-btn"
+                            onclick="editMaterial('${item.id}')">
+
+                            Edit
+
+                        </button>
+
+
+                        <button
+                            class="action-btn delete-btn"
+                            onclick="deleteMaterial('${item.id}')">
+
+                            Delete
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+function updateStatistics(){
+
+    const total =
+        inventory.length;
+
+
+    const available =
+        inventory.filter(
+            item =>
+                getStatus(item).type
+                === "available"
+        ).length;
+
+
+    const low =
+        inventory.filter(
+            item =>
+                getStatus(item).type
+                === "low"
+        ).length;
+
+
+    const out =
+        inventory.filter(
+            item =>
+                getStatus(item).type
+                === "out"
+        ).length;
+
+
+    document.getElementById(
+        "totalMaterials"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "availableMaterials"
+    ).textContent = available;
+
+
+    document.getElementById(
+        "lowStockMaterials"
+    ).textContent = low;
+
+
+    document.getElementById(
+        "outStockMaterials"
+    ).textContent = out;
+
+}
+
+
+/* =====================================================
+   OPEN ADD
+===================================================== */
+
+function openAddModal(){
+
+    document
+        .getElementById("materialForm")
+        .reset();
+
+
+    document
+        .getElementById("materialId")
+        .value = "";
+
+
+    document
+        .getElementById("materialGroup")
+        .value = "ZCON";
+
+
+    document
+        .getElementById("storageLocation")
+        .value = "STR";
+
+
+    document
+        .getElementById("baseUnit")
+        .value = "NOS";
+
+
+    document
+        .getElementById("currentStock")
+        .value = 0;
+
+
+    document
+        .getElementById("minimumStock")
+        .value = 10;
+
+
+    document
+        .getElementById("modalTitle")
+        .textContent =
+        "Add Material";
+
+
+    document
+        .getElementById("materialModal")
+        .classList.add("active");
+
+}
+
+
+/* =====================================================
+   CLOSE
+===================================================== */
+
+function closeModal(){
+
+    document
+        .getElementById("materialModal")
+        .classList.remove("active");
+
+}
+
+
+/* =====================================================
+   EDIT
+===================================================== */
+
+function editMaterial(id){
+
+    const item =
+        inventory.find(
+            x => x.id === id
+        );
+
+
+    if(!item) return;
+
+
+    document.getElementById(
+        "materialId"
+    ).value = item.id;
+
+
+    document.getElementById(
+        "materialCode"
+    ).value = item.code;
+
+
+    document.getElementById(
+        "materialDescription"
+    ).value = item.description;
+
+
+    document.getElementById(
+        "materialGroup"
+    ).value = item.group;
+
+
+    document.getElementById(
+        "storageLocation"
+    ).value = item.storage;
+
+
+    document.getElementById(
+        "baseUnit"
+    ).value = item.unit;
+
+
+    document.getElementById(
+        "currentStock"
+    ).value = item.stock;
+
+
+    document.getElementById(
+        "minimumStock"
+    ).value = item.minimum;
+
+
+    document.getElementById(
+        "materialNote"
+    ).value = item.note || "";
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Edit Material";
+
+
+    document
+        .getElementById("materialModal")
+        .classList.add("active");
+
+}
+
+
+/* =====================================================
+   SAVE FORM
+===================================================== */
+
+document
+    .getElementById("materialForm")
+    .addEventListener(
+        "submit",
+        function(event){
+
+            event.preventDefault();
+
+
+            const id =
+                document
+                .getElementById("materialId")
+                .value;
+
+
+            const material = {
+
+                id:
+                    id || generateId(),
+
+                code:
+                    document
+                    .getElementById("materialCode")
+                    .value
+                    .trim(),
+
+                description:
+                    document
+                    .getElementById("materialDescription")
+                    .value
+                    .trim(),
+
+                group:
+                    document
+                    .getElementById("materialGroup")
+                    .value
+                    .trim(),
+
+                storage:
+                    document
+                    .getElementById("storageLocation")
+                    .value
+                    .trim(),
+
+                unit:
+                    document
+                    .getElementById("baseUnit")
+                    .value
+                    .trim(),
+
+                stock:
+                    Number(
+                        document
+                        .getElementById("currentStock")
+                        .value
+                    ) || 0,
+
+                minimum:
+                    Number(
+                        document
+                        .getElementById("minimumStock")
+                        .value
+                    ) || 0,
+
+                note:
+                    document
+                    .getElementById("materialNote")
+                    .value
+                    .trim()
+
+            };
+
+
+            const existingIndex =
+                inventory.findIndex(
+                    x => x.id === material.id
+                );
+
+
+            if(existingIndex >= 0){
+
+                inventory[
+                    existingIndex
+                ] = material;
+
+            }
+            else{
+
+                inventory.push(
+                    material
+                );
+
+            }
+
+
+            saveInventory();
+
+            closeModal();
+
+        }
+    );
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+function deleteMaterial(id){
+
+    const item =
+        inventory.find(
+            x => x.id === id
+        );
+
+
+    if(!item) return;
+
+
+    const confirmed =
+        confirm(
+            "Delete " +
+            item.description +
+            "?"
+        );
+
+
+    if(!confirmed) return;
+
+
+    inventory =
+        inventory.filter(
+            x => x.id !== id
+        );
+
+
+    saveInventory();
+
+}
+
+
+/* =====================================================
+   EXPORT CSV
+===================================================== */
+
+function exportCSV(){
+
+    const headers = [
+
+        "Material Code",
+
+        "Description",
+
+        "Material Group",
+
+        "Storage Location",
+
+        "Unit",
+
+        "Current Stock",
+
+        "Minimum Stock",
+
+        "Status",
+
+        "Note"
+
+    ];
+
+
+    const rows =
+        inventory.map(item => [
+
+            item.code,
+
+            item.description,
+
+            item.group,
+
+            item.storage,
+
+            item.unit,
+
+            item.stock,
+
+            item.minimum,
+
+            getStatus(item).text,
+
+            item.note || ""
+
+        ]);
+
+
+    const csv =
+        [headers,...rows]
+
+        .map(row =>
+
+            row.map(value =>
+
+                '"' +
+                String(value ?? "")
+                .replace(/"/g,'""') +
+                '"'
+
+            ).join(",")
+
+        )
+
+        .join("\n");
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:"text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        "LP-FM-Material-Inventory.csv";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+renderInventory();
+
+</script>
+
+</body>
+</html>
