@@ -1,7 +1,10 @@
 {
-  "name": "lp-fm-ai",
+  "name": "lp-fm-whatsapp-stock-alert",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LP-FM material inventory WhatsApp stock alert",
   "dependencies": {
-    "firebase-admin": "^13.4.0",
-    "something": "^1.0.0"
+    "google-auth-library": "^9.15.1",
+    "firebase-admin": "^13.4.0"
   }
 }
