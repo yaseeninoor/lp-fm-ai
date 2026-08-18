@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>LP-FM Low Stock Alert</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:linear-gradient(135deg,#04101f,#0a1b31,#061322);
+    color:#fff;
+}
+
+header{
+    padding:15px 20px;
+    background:#061322;
+    border-bottom:1px solid #ffffff15;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    background:#1677ff;
+    display:grid;
+    place-items:center;
+    font-weight:900;
+}
+
+h2,h1{margin:0}
+
+small{
+    color:#7890a9;
+}
+
+.user{
+    color:#9fcaff;
+    font-size:11px;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:11px 15px;
+    color:white;
+    background:#1677ff;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.secondary{
+    background:#17314f;
+}
+
+.main{
+    max-width:1300px;
+    margin:auto;
+    padding:25px 16px 60px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:20px;
+    gap:15px;
+}
+
+.top p{
+    color:#8fa5bc;
+    font-size:12px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    padding:18px;
+    border-radius:15px;
+    background:#ffffff06;
+    border:1px solid #ffffff12;
+}
+
+.stat span{
+    color:#7890a9;
+    font-size:10px;
+}
+
+.stat strong{
+    display:block;
+    font-size:30px;
+    margin-top:7px;
+}
+
+.panel{
+    background:#071426dd;
+    border:1px solid #ffffff12;
+    border-radius:16px;
+    padding:18px;
+}
+
+.toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+input,select{
+    background:#0b2038;
+    color:white;
+    border:1px solid #ffffff18;
+    border-radius:9px;
+    padding:11px;
+}
+
+.search{
+    flex:1;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    min-width:900px;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:12px 9px;
+    border-bottom:1px solid #ffffff0d;
+    text-align:left;
+    font-size:11px;
+}
+
+th{
+    color:#86a0ba;
+    font-size:10px;
+}
+
+.badge{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:9px;
+    font-weight:800;
+}
+
+.zero{
+    color:#ff8d8d;
+    background:#ef444422;
+}
+
+.low{
+    color:#ffc15c;
+    background:#f59e0b22;
+}
+
+.empty{
+    text-align:center;
+    padding:40px;
+    color:#7890a9;
+}
+
+.alert-box{
+    display:none;
+    margin-bottom:15px;
+    padding:12px;
+    border-radius:10px;
+    background:#ef444422;
+    color:#ff9b9b;
+    font-size:11px;
+}
+
+@media(max-width:700px){
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .top{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="brand">
+
+<div class="logo">LP</div>
+
+<div>
+<h2>Low Stock Alert</h2>
+<small>LP-FM Material Inventory</small>
+</div>
+
+</div>
+
+<div>
+<span id="userEmail" class="user"></span>
+
+<button
+class="secondary"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</header>
+
+
+<main class="main">
+
+<section class="top">
+
+<div>
+
+<h1>⚠️ Stock Alert</h1>
+
+<p>
+Materials requiring replenishment
+</p>
+
+</div>
+
+<button
+onclick="loadMaterials()">
+↻ Refresh
+</button>
+
+</section>
+
+
+<section class="stats">
+
+<div class="stat">
+
+<span>
+ZERO STOCK
+</span>
+
+<strong id="zeroCount">
+0
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<span>
+LOW STOCK
+</span>
+
+<strong id="lowCount">
+0
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<span>
+TOTAL ALERTS
+</span>
+
+<strong id="totalCount">
+0
+</strong>
+
+</div>
+
+</section>
+
+
+<section class="panel">
+
+<div class="toolbar">
+
+<input
+id="search"
+class="search"
+placeholder="Search material..."
+oninput="render()">
+
+
+<select
+id="filter"
+onchange="render()">
+
+<option value="all">
+All Alerts
+</option>
+
+<option value="zero">
+Zero Stock
+</option>
+
+<option value="low">
+Low Stock
+</option>
+
+</select>
+
+</div>
+
+
+<div
+id="alertBox"
+class="alert-box">
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Material Code</th>
+<th>Description</th>
+<th>Storage</th>
+<th>Unit</th>
+<th>Current Stock</th>
+<th>Minimum Stock</th>
+<th>Required Qty</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="rows">
+
+<tr>
+<td colspan="8" class="empty">
+Loading...
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- LOGIN -->
+
+<div
+id="loginModal"
+style="
+position:fixed;
+inset:0;
+background:#000c;
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+">
+
+<div
+style="
+width:min(400px,100%);
+background:#0a1b31;
+padding:25px;
+border-radius:16px;
+">
+
+<h2>LP-FM Login</h2>
+
+<br>
+
+<input
+id="loginEmail"
+type="email"
+placeholder="Email"
+style="width:100%;margin-bottom:10px">
+
+
+<input
+id="loginPassword"
+type="password"
+placeholder="Password"
+style="width:100%;margin-bottom:10px">
+
+
+<button onclick="login()">
+Login
+</button>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+signInWithEmailAndPassword,
+signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+
+const firebaseConfig={
+
+apiKey:
+"AIzaSyBDzbv1fTRPxfmj3Nz4svl7ALWWARBuY0o",
+
+authDomain:
+"lp-store-23212.firebaseapp.com",
+
+projectId:
+"lp-store-23212",
+
+storageBucket:
+"lp-store-23212.firebasestorage.app",
+
+messagingSenderId:
+"200245726085",
+
+appId:
+"1:200245726085:web:081aa1315c64e5b4bc12ec",
+
+measurementId:
+"G-21VPLM3N6S"
+
+};
+
+
+const app=
+initializeApp(firebaseConfig);
+
+const auth=
+getAuth(app);
+
+const db=
+getFirestore(app);
+
+
+let materials=[];
+
+
+onAuthStateChanged(
+auth,
+async user=>{
+
+if(!user){
+
+document
+.getElementById("loginModal")
+.style.display="flex";
+
+return;
+
+}
+
+document
+.getElementById("loginModal")
+.style.display="none";
+
+document
+.getElementById("userEmail")
+.textContent=user.email;
+
+await loadMaterials();
+
+});
+
+
+window.login=async function(){
+
+const email=
+document
+.getElementById("loginEmail")
+.value
+.trim();
+
+const password=
+document
+.getElementById("loginPassword")
+.value;
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+}
+catch(error){
+
+alert(
+"Login failed:\n"+
+error.message
+);
+
+}
+
+};
+
+
+window.logout=async function(){
+
+await signOut(auth);
+
+};
+
+
+window.loadMaterials=async function(){
+
+try{
+
+const snapshot=
+await getDocs(
+collection(
+db,
+"materials"
+)
+);
+
+materials=
+snapshot.docs
+.map(d=>({
+id:d.id,
+...d.data()
+}))
+.filter(item=>{
+
+const stock=
+Number(item.stock||0);
+
+const minimum=
+Number(item.minimum||0);
+
+return(
+stock<=0 ||
+(
+minimum>0 &&
+stock<=minimum
+)
+);
+
+});
+
+render();
+
+}
+catch(error){
+
+alert(
+"Could not load stock alerts:\n"+
+error.message
+);
+
+}
+
+};
+
+
+window.render=function(){
+
+const search=
+document
+.getElementById("search")
+.value
+.toLowerCase()
+.trim();
+
+const filter=
+document
+.getElementById("filter")
+.value;
+
+
+const list=
+materials.filter(item=>{
+
+const stock=
+Number(item.stock||0);
+
+const minimum=
+Number(item.minimum||0);
+
+const type=
+stock<=0
+?"zero"
+:"low";
+
+
+const text=
+`${item.code||""}
+${item.description||""}
+${item.storage||""}`
+.toLowerCase();
+
+
+return(
+(!search||text.includes(search))
+&&
+(
+filter==="all"||
+filter===type
+)
+);
+
+});
+
+
+const zero=
+materials.filter(
+x=>Number(x.stock||0)<=0
+).length;
+
+
+const low=
+materials.filter(
+x=>
+Number(x.stock||0)>0 &&
+Number(x.minimum||0)>0 &&
+Number(x.stock||0)<=Number(x.minimum||0)
+).length;
+
+
+document
+.getElementById("zeroCount")
+.textContent=zero;
+
+document
+.getElementById("lowCount")
+.textContent=low;
+
+document
+.getElementById("totalCount")
+.textContent=zero+low;
+
+
+const rows=
+document.getElementById("rows");
+
+
+if(!list.length){
+
+rows.innerHTML=`
+
+<tr>
+<td colspan="8" class="empty">
+🎉 No low-stock materials.
+</td>
+</tr>
+
+`;
+
+return;
+
+}
+
+
+rows.innerHTML=
+list.map(item=>{
+
+const stock=
+Number(item.stock||0);
+
+const minimum=
+Number(item.minimum||0);
+
+const isZero=
+stock<=0;
+
+const required=
+Math.max(
+minimum-stock,
+0
+);
+
+
+return`
+
+<tr>
+
+<td>
+<strong>
+${safe(item.code)}
+</strong>
+</td>
+
+<td>
+${safe(item.description)}
+</td>
+
+<td>
+${safe(item.storage)}
+</td>
+
+<td>
+${safe(item.unit)}
+</td>
+
+<td>
+<strong>
+${stock}
+</strong>
+</td>
+
+<td>
+${minimum}
+</td>
+
+<td>
+<strong>
+${required}
+</strong>
+</td>
+
+<td>
+
+<span
+class="badge ${isZero?"zero":"low"}">
+
+${isZero
+?"ZERO STOCK"
+:"LOW STOCK"}
+
+</span>
+
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+};
+
+
+function safe(value){
+
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
