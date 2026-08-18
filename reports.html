@@ -138,4 +138,2498 @@ button.secondary{
         space-between;
 
     align-items:
-       
+        flex-end;
+
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+.top h1{
+
+    margin:0;
+
+    font-size:28px;
+}
+
+.top p{
+
+    margin:7px 0 0;
+
+    color:#8fa5bc;
+
+    font-size:12px;
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(6,1fr);
+
+    gap:10px;
+
+    margin-bottom:20px;
+}
+
+.stat{
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:#ffffff06;
+
+    border:
+        1px solid #ffffff12;
+}
+
+.stat span{
+
+    color:#7890a9;
+
+    font-size:9px;
+
+    font-weight:700;
+}
+
+.stat strong{
+
+    display:block;
+
+    font-size:25px;
+
+    margin-top:7px;
+}
+
+.zero strong{
+    color:#ff7b7b;
+}
+
+.low strong{
+    color:#ffc15c;
+}
+
+.normal strong{
+    color:#65e6a0;
+}
+
+.in strong{
+    color:#65e6a0;
+}
+
+.out strong{
+    color:#ff8d8d;
+}
+
+.total strong{
+    color:#70aaff;
+}
+
+
+/* =========================
+   PANEL
+========================= */
+
+.panel{
+
+    background:#071426dd;
+
+    border:
+        1px solid #ffffff12;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    margin-bottom:20px;
+}
+
+.panel h2{
+
+    margin:
+        0 0 15px;
+
+    font-size:18px;
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+.filters{
+
+    display:grid;
+
+    grid-template-columns:
+        2fr 1fr 1fr 1fr;
+
+    gap:10px;
+
+    margin-bottom:18px;
+}
+
+input,
+select{
+
+    width:100%;
+
+    background:#0b2038;
+
+    color:white;
+
+    border:
+        1px solid #ffffff18;
+
+    border-radius:9px;
+
+    padding:11px;
+
+    outline:none;
+
+    font-size:11px;
+}
+
+input::placeholder{
+    color:#617990;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+
+    overflow:auto;
+}
+
+table{
+
+    width:100%;
+
+    min-width:1000px;
+
+    border-collapse:
+        collapse;
+}
+
+th,
+td{
+
+    padding:11px 9px;
+
+    border-bottom:
+        1px solid #ffffff0d;
+
+    text-align:left;
+
+    font-size:10px;
+}
+
+th{
+
+    color:#86a0ba;
+
+    font-size:9px;
+
+    white-space:nowrap;
+}
+
+td{
+    color:#dce7f2;
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:
+        5px 8px;
+
+    border-radius:20px;
+
+    font-size:8px;
+
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+.badge.zero{
+
+    color:#ff8d8d;
+
+    background:#ef444422;
+}
+
+.badge.low{
+
+    color:#ffc15c;
+
+    background:#f59e0b22;
+}
+
+.badge.normal{
+
+    color:#65e6a0;
+
+    background:#16a76522;
+}
+
+
+/* =========================
+   MOVEMENTS
+========================= */
+
+.movement-in{
+    color:#65e6a0;
+    font-weight:800;
+}
+
+.movement-out{
+    color:#ff8d8d;
+    font-weight:800;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.actions{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:15px;
+}
+
+.btn{
+
+    border:0;
+
+    border-radius:9px;
+
+    padding:
+        10px 14px;
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    font-size:10px;
+}
+
+.btn-blue{
+    background:#1677ff;
+}
+
+.btn-green{
+    background:#15803d;
+}
+
+.btn-dark{
+    background:#17314f;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+
+    display:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:15px;
+
+    font-size:10px;
+}
+
+.success{
+
+    display:block;
+
+    background:#16a76522;
+
+    color:#65e6a0;
+}
+
+.error{
+
+    display:block;
+
+    background:#ef444422;
+
+    color:#ff9b9b;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+
+    text-align:center;
+
+    padding:40px;
+
+    color:#7890a9;
+}
+
+.loading{
+
+    text-align:center;
+
+    padding:40px;
+
+    color:#8fa5bc;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+#loginModal{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:200;
+
+    background:#000d;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+}
+
+.login-box{
+
+    width:
+        min(400px,100%);
+
+    background:#0a1b31;
+
+    border:
+        1px solid #ffffff18;
+
+    border-radius:18px;
+
+    padding:25px;
+}
+
+.login-box h2{
+    margin:0 0 8px;
+}
+
+.login-box p{
+
+    color:#7890a9;
+
+    font-size:11px;
+}
+
+.login-box label{
+
+    display:block;
+
+    color:#8fa5bc;
+
+    font-size:10px;
+
+    margin:
+        15px 0 5px;
+}
+
+.login-box input{
+    width:100%;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1000px){
+
+    .stats{
+
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .user-email{
+        display:none;
+    }
+
+    .top{
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+    .stats{
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .filters{
+
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="brand">
+
+<div class="logo">
+LP
+</div>
+
+<div>
+
+<h2>
+LP-FM Reports
+</h2>
+
+<small>
+Material Inventory Intelligence
+</small>
+
+</div>
+
+</div>
+
+
+<div class="user-area">
+
+<span
+id="userEmail"
+class="user-email">
+</span>
+
+<button
+class="secondary"
+onclick="logout()">
+
+Logout
+
+</button>
+
+</div>
+
+</header>
+
+
+
+<main class="main">
+
+
+<section class="top">
+
+<div>
+
+<h1>
+📊 Inventory Reports
+</h1>
+
+<p>
+Real-time material stock and movement analysis
+</p>
+
+</div>
+
+
+<button
+onclick="loadAll()">
+
+↻ Refresh
+
+</button>
+
+</section>
+
+
+
+<!-- =====================
+     STATISTICS
+====================== -->
+
+<section class="stats">
+
+
+<div class="stat total">
+
+<span>
+TOTAL MATERIALS
+</span>
+
+<strong id="totalMaterials">
+0
+</strong>
+
+</div>
+
+
+<div class="stat zero">
+
+<span>
+ZERO STOCK
+</span>
+
+<strong id="zeroStock">
+0
+</strong>
+
+</div>
+
+
+<div class="stat low">
+
+<span>
+LOW STOCK
+</span>
+
+<strong id="lowStock">
+0
+</strong>
+
+</div>
+
+
+<div class="stat normal">
+
+<span>
+NORMAL
+</span>
+
+<strong id="normalStock">
+0
+</strong>
+
+</div>
+
+
+<div class="stat in">
+
+<span>
+TOTAL IN
+</span>
+
+<strong id="totalIn">
+0
+</strong>
+
+</div>
+
+
+<div class="stat out">
+
+<span>
+TOTAL OUT
+</span>
+
+<strong id="totalOut">
+0
+</strong>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================
+     MATERIAL REPORT
+====================== -->
+
+<section class="panel">
+
+<h2>
+📦 Material Stock Report
+</h2>
+
+
+<div class="filters">
+
+
+<input
+id="materialSearch"
+placeholder="Search material code / description..."
+oninput="renderMaterials()">
+
+
+<select
+id="statusFilter"
+onchange="renderMaterials()">
+
+<option value="all">
+All Status
+</option>
+
+<option value="zero">
+Zero Stock
+</option>
+
+<option value="low">
+Low Stock
+</option>
+
+<option value="normal">
+Normal
+</option>
+
+</select>
+
+
+<select
+id="storageFilter"
+onchange="renderMaterials()">
+
+<option value="all">
+All Storage
+</option>
+
+</select>
+
+
+<button
+class="btn btn-green"
+onclick="exportMaterials()">
+
+⬇ Export CSV
+
+</button>
+
+</div>
+
+
+
+<div
+id="materialLoading"
+class="loading">
+
+Loading materials...
+
+</div>
+
+
+<div
+id="materialTable"
+class="table-wrap"
+style="display:none;">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+CODE
+</th>
+
+<th>
+DESCRIPTION
+</th>
+
+<th>
+GROUP
+</th>
+
+<th>
+STORAGE
+</th>
+
+<th>
+UNIT
+</th>
+
+<th>
+CURRENT
+</th>
+
+<th>
+MINIMUM
+</th>
+
+<th>
+REQUIRED
+</th>
+
+<th>
+STATUS
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="materialRows">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================
+     MOVEMENT REPORT
+====================== -->
+
+<section class="panel">
+
+<h2>
+🔄 Stock Movement Report
+</h2>
+
+
+<div class="filters">
+
+
+<input
+id="movementSearch"
+placeholder="Search material / reference..."
+oninput="renderMovements()">
+
+
+<input
+id="fromDate"
+type="date"
+onchange="renderMovements()">
+
+
+<input
+id="toDate"
+type="date"
+onchange="renderMovements()">
+
+
+<button
+class="btn btn-blue"
+onclick="exportMovements()">
+
+⬇ Export CSV
+
+</button>
+
+</div>
+
+
+
+<div
+id="movementLoading"
+class="loading">
+
+Loading movement history...
+
+</div>
+
+
+<div
+id="movementTable"
+class="table-wrap"
+style="display:none;">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+DATE
+</th>
+
+<th>
+MATERIAL
+</th>
+
+<th>
+TYPE
+</th>
+
+<th>
+QUANTITY
+</th>
+
+<th>
+BALANCE
+</th>
+
+<th>
+REFERENCE
+</th>
+
+<th>
+REASON
+</th>
+
+<th>
+USER
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="movementRows">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<div
+id="message"
+class="message">
+</div>
+
+
+</main>
+
+
+
+<!-- =====================
+     LOGIN
+====================== -->
+
+<div id="loginModal">
+
+
+<div class="login-box">
+
+
+<h2>
+LP-FM Login
+</h2>
+
+
+<p>
+Sign in to view inventory reports.
+</p>
+
+
+<label>
+Email
+</label>
+
+<input
+id="loginEmail"
+type="email"
+placeholder="Email">
+
+
+<label>
+Password
+</label>
+
+<input
+id="loginPassword"
+type="password"
+placeholder="Password">
+
+
+<br><br>
+
+<button
+onclick="login()">
+
+Login
+
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<script type="module">
+
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+
+import {
+getAuth,
+onAuthStateChanged,
+signInWithEmailAndPassword,
+signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from
+"https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",
+
+authDomain:
+"lp-store-23212.firebaseapp.com",
+
+projectId:
+"lp-store-23212",
+
+storageBucket:
+"lp-store-23212.firebasestorage.app",
+
+messagingSenderId:
+"200245726085",
+
+appId:
+"1:200245726085:web:081aa1315c64e5b4bc12ec",
+
+measurementId:
+"G-21VPLM3N6S"
+
+};
+
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+const auth =
+getAuth(app);
+
+
+const db =
+getFirestore(app);
+
+
+
+/* =========================
+   DATA
+========================= */
+
+let materials = [];
+
+let movements = [];
+
+
+
+/* =========================
+   AUTH
+========================= */
+
+onAuthStateChanged(
+auth,
+async user => {
+
+if(!user){
+
+document
+.getElementById("loginModal")
+.style.display =
+"flex";
+
+return;
+
+}
+
+
+document
+.getElementById("loginModal")
+.style.display =
+"none";
+
+
+document
+.getElementById("userEmail")
+.textContent =
+user.email;
+
+
+await loadAll();
+
+});
+
+
+
+/* =========================
+   LOGIN
+========================= */
+
+window.login =
+async function(){
+
+const email =
+document
+.getElementById("loginEmail")
+.value
+.trim();
+
+
+const password =
+document
+.getElementById("loginPassword")
+.value;
+
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+}
+catch(error){
+
+showError(
+"Login failed: " +
+error.message
+);
+
+}
+
+};
+
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+window.logout =
+async function(){
+
+await signOut(auth);
+
+};
+
+
+
+/* =========================
+   LOAD ALL
+========================= */
+
+window.loadAll =
+async function(){
+
+try{
+
+document
+.getElementById("materialLoading")
+.style.display =
+"block";
+
+
+document
+.getElementById("movementLoading")
+.style.display =
+"block";
+
+
+/* Materials */
+
+const materialSnapshot =
+await getDocs(
+collection(
+db,
+"materials"
+)
+);
+
+
+materials =
+materialSnapshot.docs.map(
+doc => ({
+
+id:doc.id,
+
+...doc.data()
+
+})
+);
+
+
+
+/* Movements */
+
+const movementSnapshot =
+await getDocs(
+collection(
+db,
+"stockMovements"
+)
+);
+
+
+movements =
+movementSnapshot.docs.map(
+doc => ({
+
+id:doc.id,
+
+...doc.data()
+
+})
+);
+
+
+/* Sort newest first */
+
+movements.sort(
+(a,b) => {
+
+const aTime =
+getTime(a);
+
+const bTime =
+getTime(b);
+
+return bTime - aTime;
+
+}
+);
+
+
+/* Update */
+
+updateStats();
+
+buildStorageFilter();
+
+renderMaterials();
+
+renderMovements();
+
+
+document
+.getElementById("materialLoading")
+.style.display =
+"none";
+
+
+document
+.getElementById("movementLoading")
+.style.display =
+"none";
+
+
+document
+.getElementById("materialTable")
+.style.display =
+"block";
+
+
+document
+.getElementById("movementTable")
+.style.display =
+"block";
+
+
+}
+catch(error){
+
+console.error(error);
+
+
+document
+.getElementById("materialLoading")
+.textContent =
+"Unable to load report.";
+
+
+document
+.getElementById("movementLoading")
+.textContent =
+"Unable to load movement history.";
+
+
+showError(
+"Firestore Error: " +
+error.message
+);
+
+}
+
+};
+
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+function updateStats(){
+
+
+let zero = 0;
+
+let low = 0;
+
+let normal = 0;
+
+
+materials.forEach(
+item => {
+
+const stock =
+Number(
+item.stock || 0
+);
+
+const minimum =
+Number(
+item.minimum || 0
+);
+
+
+if(stock <= 0){
+
+zero++;
+
+}
+else if(
+minimum > 0 &&
+stock <= minimum
+){
+
+low++;
+
+}
+else{
+
+normal++;
+
+}
+
+});
+
+
+let totalIn = 0;
+
+let totalOut = 0;
+
+
+movements.forEach(
+item => {
+
+const qty =
+Number(
+item.quantity ||
+item.qty ||
+0
+);
+
+
+const type =
+String(
+item.type ||
+item.movementType ||
+""
+).toUpperCase();
+
+
+if(type === "IN"){
+
+totalIn += qty;
+
+}
+
+if(type === "OUT"){
+
+totalOut += qty;
+
+}
+
+});
+
+
+document
+.getElementById(
+"totalMaterials"
+)
+.textContent =
+materials.length;
+
+
+document
+.getElementById(
+"zeroStock"
+)
+.textContent =
+zero;
+
+
+document
+.getElementById(
+"lowStock"
+)
+.textContent =
+low;
+
+
+document
+.getElementById(
+"normalStock"
+)
+.textContent =
+normal;
+
+
+document
+.getElementById(
+"totalIn"
+)
+.textContent =
+formatNumber(totalIn);
+
+
+document
+.getElementById(
+"totalOut"
+)
+.textContent =
+formatNumber(totalOut);
+
+}
+
+
+
+/* =========================
+   STORAGE FILTER
+========================= */
+
+function buildStorageFilter(){
+
+const select =
+document
+.getElementById(
+"storageFilter"
+);
+
+
+const values = [
+...new Set(
+
+materials
+.map(
+item =>
+String(
+item.storage || ""
+).trim()
+)
+.filter(Boolean)
+
+)
+].sort();
+
+
+select.innerHTML =
+'<option value="all">All Storage</option>';
+
+
+values.forEach(
+value => {
+
+const option =
+document.createElement(
+"option"
+);
+
+option.value =
+value;
+
+option.textContent =
+value;
+
+select.appendChild(
+option
+);
+
+});
+
+}
+
+
+
+/* =========================
+   MATERIAL REPORT
+========================= */
+
+window.renderMaterials =
+function(){
+
+
+const search =
+document
+.getElementById(
+"materialSearch"
+)
+.value
+.toLowerCase()
+.trim();
+
+
+const status =
+document
+.getElementById(
+"statusFilter"
+)
+.value;
+
+
+const storage =
+document
+.getElementById(
+"storageFilter"
+)
+.value;
+
+
+const list =
+materials.filter(
+item => {
+
+
+const stock =
+Number(
+item.stock || 0
+);
+
+
+const minimum =
+Number(
+item.minimum || 0
+);
+
+
+let currentStatus;
+
+
+if(stock <= 0){
+
+currentStatus =
+"zero";
+
+}
+else if(
+minimum > 0 &&
+stock <= minimum
+){
+
+currentStatus =
+"low";
+
+}
+else{
+
+currentStatus =
+"normal";
+
+}
+
+
+const text =
+(
+String(item.code || "") +
+" " +
+String(item.description || "") +
+" " +
+String(item.group || "")
+)
+.toLowerCase();
+
+
+return (
+
+(
+!search ||
+text.includes(search)
+)
+
+&&
+
+(
+status === "all" ||
+status === currentStatus
+)
+
+&&
+
+(
+storage === "all" ||
+String(
+item.storage || ""
+) === storage
+)
+
+);
+
+});
+
+
+const rows =
+document
+.getElementById(
+"materialRows"
+);
+
+
+if(!list.length){
+
+rows.innerHTML = `
+
+<tr>
+
+<td
+colspan="9"
+class="empty">
+
+No materials found.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+rows.innerHTML =
+list.map(
+item => {
+
+
+const stock =
+Number(
+item.stock || 0
+);
+
+
+const minimum =
+Number(
+item.minimum || 0
+);
+
+
+const required =
+Math.max(
+minimum - stock,
+0
+);
+
+
+let status;
+
+
+if(stock <= 0){
+
+status = "zero";
+
+}
+else if(
+minimum > 0 &&
+stock <= minimum
+){
+
+status = "low";
+
+}
+else{
+
+status = "normal";
+
+}
+
+
+return `
+
+<tr>
+
+<td>
+<strong>
+${safe(item.code)}
+</strong>
+</td>
+
+<td>
+${safe(item.description)}
+</td>
+
+<td>
+${safe(item.group)}
+</td>
+
+<td>
+${safe(item.storage)}
+</td>
+
+<td>
+${safe(item.unit)}
+</td>
+
+<td>
+<strong>
+${formatNumber(stock)}
+</strong>
+</td>
+
+<td>
+${formatNumber(minimum)}
+</td>
+
+<td>
+${formatNumber(required)}
+</td>
+
+<td>
+
+<span
+class="badge ${status}">
+
+${
+status === "zero"
+?
+"ZERO STOCK"
+:
+status === "low"
+?
+"LOW STOCK"
+:
+"NORMAL"
+}
+
+</span>
+
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+};
+
+
+
+/* =========================
+   MOVEMENT REPORT
+========================= */
+
+window.renderMovements =
+function(){
+
+
+const search =
+document
+.getElementById(
+"movementSearch"
+)
+.value
+.toLowerCase()
+.trim();
+
+
+const from =
+document
+.getElementById(
+"fromDate"
+)
+.value;
+
+
+const to =
+document
+.getElementById(
+"toDate"
+)
+.value;
+
+
+const list =
+movements.filter(
+item => {
+
+
+const date =
+getMovementDate(
+item
+);
+
+
+const dateOnly =
+date
+?
+date.substring(0,10)
+:
+"";
+
+
+const text =
+(
+String(
+item.materialCode ||
+item.code ||
+item.material ||
+""
+)
+
++
+
+" "
+
++
+
+String(
+item.materialDescription ||
+item.description ||
+""
+)
+
++
+
+" "
+
++
+
+String(
+item.reference ||
+""
+)
+
++
+
+" "
+
++
+
+String(
+item.reason ||
+""
+)
+)
+.toLowerCase();
+
+
+const searchOK =
+!search ||
+text.includes(search);
+
+
+const fromOK =
+!from ||
+dateOnly >= from;
+
+
+const toOK =
+!to ||
+dateOnly <= to;
+
+
+return(
+searchOK &&
+fromOK &&
+toOK
+);
+
+});
+
+
+const rows =
+document
+.getElementById(
+"movementRows"
+);
+
+
+if(!list.length){
+
+rows.innerHTML = `
+
+<tr>
+
+<td
+colspan="8"
+class="empty">
+
+No movement history found.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+rows.innerHTML =
+list.map(
+item => {
+
+
+const type =
+String(
+item.type ||
+item.movementType ||
+""
+).toUpperCase();
+
+
+const qty =
+Number(
+item.quantity ||
+item.qty ||
+0
+);
+
+
+const balance =
+Number(
+item.balance ??
+item.newBalance ??
+0
+);
+
+
+const date =
+getMovementDate(
+item
+);
+
+
+return `
+
+<tr>
+
+<td>
+${safe(formatDate(date))}
+</td>
+
+<td>
+
+<strong>
+
+${safe(
+item.materialCode ||
+item.code ||
+item.material ||
+""
+)}
+
+</strong>
+
+<br>
+
+${safe(
+item.materialDescription ||
+item.description ||
+""
+)}
+
+</td>
+
+<td>
+
+<span
+class="${
+type === "IN"
+?
+"movement-in"
+:
+"movement-out"
+}">
+
+${type}
+
+</span>
+
+</td>
+
+<td>
+
+${formatNumber(qty)}
+
+</td>
+
+<td>
+
+${formatNumber(balance)}
+
+</td>
+
+<td>
+
+${safe(
+item.reference || "-"
+)}
+
+</td>
+
+<td>
+
+${safe(
+item.reason || "-"
+)}
+
+</td>
+
+<td>
+
+${safe(
+item.userEmail ||
+item.user ||
+"-"
+)}
+
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+};
+
+
+
+/* =========================
+   DATE
+========================= */
+
+function getTime(item){
+
+if(
+item.createdAt &&
+typeof item.createdAt.toMillis === "function"
+){
+
+return item.createdAt.toMillis();
+
+}
+
+
+if(
+item.createdAt &&
+item.createdAt.seconds
+){
+
+return (
+Number(
+item.createdAt.seconds
+) * 1000
+);
+
+}
+
+
+return new Date(
+item.date ||
+item.createdDate ||
+0
+).getTime();
+
+}
+
+
+function getMovementDate(item){
+
+if(
+item.createdAt &&
+typeof item.createdAt.toDate === "function"
+){
+
+return item.createdAt
+.toDate()
+.toISOString();
+
+}
+
+
+if(
+item.createdAt &&
+item.createdAt.seconds
+){
+
+return new Date(
+Number(
+item.createdAt.seconds
+) * 1000
+).toISOString();
+
+}
+
+
+return String(
+item.date ||
+item.createdDate ||
+""
+);
+
+}
+
+
+function formatDate(value){
+
+if(!value){
+return "-";
+}
+
+
+const d =
+new Date(value);
+
+
+if(
+Number.isNaN(
+d.getTime()
+)
+){
+
+return value;
+
+}
+
+
+return d.toLocaleString(
+"en-GB",
+{
+dateStyle:"medium",
+timeStyle:"short"
+}
+);
+
+}
+
+
+
+/* =========================
+   EXPORT MATERIALS
+========================= */
+
+window.exportMaterials =
+function(){
+
+
+const rows = [
+
+[
+"Code",
+"Description",
+"Group",
+"Storage",
+"Unit",
+"Current Stock",
+"Minimum Stock",
+"Required",
+"Status"
+]
+
+];
+
+
+materials.forEach(
+item => {
+
+
+const stock =
+Number(
+item.stock || 0
+);
+
+
+const minimum =
+Number(
+item.minimum || 0
+);
+
+
+const required =
+Math.max(
+minimum - stock,
+0
+);
+
+
+let status;
+
+
+if(stock <= 0){
+
+status =
+"ZERO STOCK";
+
+}
+else if(
+minimum > 0 &&
+stock <= minimum
+){
+
+status =
+"LOW STOCK";
+
+}
+else{
+
+status =
+"NORMAL";
+
+}
+
+
+rows.push([
+
+item.code || "",
+
+item.description || "",
+
+item.group || "",
+
+item.storage || "",
+
+item.unit || "",
+
+stock,
+
+minimum,
+
+required,
+
+status
+
+]);
+
+});
+
+
+downloadCSV(
+rows,
+"LP-FM-Material-Report.csv"
+);
+
+};
+
+
+
+/* =========================
+   EXPORT MOVEMENTS
+========================= */
+
+window.exportMovements =
+function(){
+
+
+const rows = [
+
+[
+"Date",
+"Material Code",
+"Description",
+"Type",
+"Quantity",
+"Balance",
+"Reference",
+"Reason",
+"User"
+]
+
+];
+
+
+movements.forEach(
+item => {
+
+
+const type =
+String(
+item.type ||
+item.movementType ||
+""
+).toUpperCase();
+
+
+rows.push([
+
+formatDate(
+getMovementDate(item)
+),
+
+item.materialCode ||
+item.code ||
+item.material ||
+"",
+
+item.materialDescription ||
+item.description ||
+"",
+
+type,
+
+Number(
+item.quantity ||
+item.qty ||
+0
+),
+
+Number(
+item.balance ??
+item.newBalance ??
+0
+),
+
+item.reference || "",
+
+item.reason || "",
+
+item.userEmail ||
+item.user ||
+""
+
+]);
+
+});
+
+
+downloadCSV(
+rows,
+"LP-FM-Stock-Movement-Report.csv"
+);
+
+};
+
+
+
+/* =========================
+   CSV DOWNLOAD
+========================= */
+
+function downloadCSV(
+rows,
+filename
+){
+
+
+const csv =
+rows
+.map(
+row =>
+row.map(
+cell =>
+csvEscape(cell)
+)
+.join(",")
+)
+.join("\n");
+
+
+const blob =
+new Blob(
+[
+"\uFEFF" +
+csv
+],
+{
+type:
+"text/csv;charset=utf-8;"
+}
+);
+
+
+const url =
+URL.createObjectURL(
+blob
+);
+
+
+const a =
+document.createElement(
+"a"
+);
+
+
+a.href =
+url;
+
+a.download =
+filename;
+
+a.click();
+
+
+URL.revokeObjectURL(
+url
+);
+
+}
+
+
+function csvEscape(value){
+
+return '"' +
+String(
+value ?? ""
+)
+.replace(
+/"/g,
+'""'
+)
++
+'"';
+
+}
+
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function formatNumber(value){
+
+return Number(
+value || 0
+).toLocaleString(
+"en-US",
+{
+maximumFractionDigits:2
+}
+);
+
+
+}
+
+
+function safe(value){
+
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+
+function showError(message){
+
+const box =
+document.getElementById(
+"message"
+);
+
+box.className =
+"message error";
+
+box.textContent =
+"⚠️ " + message;
+
+}
+
+
+</script>
+
+</body>
+</html>
