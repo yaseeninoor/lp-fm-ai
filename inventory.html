@@ -2,461 +2,266 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#061322">
 
-<title>LP-FM | Material Inventory</title>
+<title>LP-FM Material Inventory</title>
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
+*{box-sizing:border-box}
 body{
+    margin:0;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    background:
-        radial-gradient(circle at 10% 10%,rgba(22,119,255,.20),transparent 30%),
-        linear-gradient(135deg,#04101f,#0a1b31 50%,#061322);
-    color:#fff;
-    min-height:100vh;
+    background:linear-gradient(135deg,#04101f,#0a1b31,#061322);
+    color:white;
 }
-
-/* HEADER */
-
-.header{
+header{
     position:sticky;
     top:0;
-    z-index:100;
-    min-height:70px;
-    padding:12px 22px;
-
+    z-index:10;
+    padding:14px 20px;
+    background:#061322f5;
+    border-bottom:1px solid #ffffff18;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-
-    background:rgba(5,18,34,.96);
-    border-bottom:1px solid rgba(255,255,255,.10);
-    backdrop-filter:blur(18px);
+    align-items:center;
 }
-
 .brand{
     display:flex;
     align-items:center;
     gap:12px;
 }
-
 .logo{
-    width:46px;
-    height:46px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:13px;
-
+    width:45px;
+    height:45px;
+    border-radius:12px;
     background:linear-gradient(135deg,#2188ff,#0757c8);
-
+    display:grid;
+    place-items:center;
     font-weight:900;
-    font-size:16px;
 }
-
-.brand-title{
-    font-size:19px;
-    font-weight:800;
+.brand h2{
+    margin:0;
+    font-size:18px;
 }
-
-.brand-sub{
+.brand small{
     color:#7890a9;
-    font-size:10px;
-    margin-top:2px;
 }
-
 .back{
-    color:#8fc4ff;
+    color:#9fcaff;
     text-decoration:none;
-    font-size:12px;
-    font-weight:700;
 }
-
-/* MAIN */
-
 .main{
     max-width:1250px;
     margin:auto;
-    padding:30px 18px 60px;
+    padding:25px 16px 60px;
 }
-
-.title-area{
+.top{
     display:flex;
-    align-items:flex-end;
     justify-content:space-between;
+    align-items:end;
     gap:15px;
-
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
-
-.title-area h1{
-    font-size:30px;
-    margin-bottom:6px;
+.top h1{
+    margin:0;
+    font-size:28px;
 }
-
-.title-area p{
+.top p{
     color:#8fa5bc;
     font-size:12px;
 }
-
-/* BUTTONS */
-
 .buttons{
     display:flex;
     gap:8px;
     flex-wrap:wrap;
 }
-
-.btn{
+button{
     border:0;
-    border-radius:10px;
-    padding:11px 15px;
-
+    border-radius:9px;
+    padding:11px 14px;
     background:#1677ff;
     color:white;
-
-    font-size:12px;
     font-weight:700;
-
     cursor:pointer;
 }
-
-.btn:hover{
-    opacity:.9;
-}
-
-.btn.secondary{
+button.secondary{
     background:#17314f;
 }
-
-.btn.green{
-    background:#15803d;
+button.danger{
+    background:#8b2635;
 }
-
-/* STAT CARDS */
-
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:12px;
-
     margin-bottom:20px;
 }
-
 .stat{
-    padding:20px;
-
-    border:1px solid rgba(255,255,255,.10);
+    padding:18px;
+    border:1px solid #ffffff12;
     border-radius:15px;
-
-    background:rgba(255,255,255,.035);
+    background:#ffffff06;
 }
-
-.stat-label{
+.stat span{
     color:#7890a9;
     font-size:10px;
-    font-weight:700;
 }
-
-.stat-number{
+.stat strong{
     display:block;
-
-    font-size:28px;
-    font-weight:800;
-
-    margin-top:9px;
+    font-size:27px;
+    margin-top:8px;
 }
-
-/* PANEL */
-
 .panel{
+    background:#071426dd;
+    border:1px solid #ffffff12;
+    border-radius:16px;
     padding:18px;
-
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:17px;
-
-    background:rgba(7,20,38,.85);
 }
-
 .toolbar{
     display:flex;
     gap:10px;
-
-    margin-bottom:18px;
-
     flex-wrap:wrap;
+    margin-bottom:15px;
 }
-
-.input,
-.select{
+input,select{
     background:#0b2038;
-
     color:white;
-
-    border:1px solid rgba(255,255,255,.12);
-
+    border:1px solid #ffffff18;
     border-radius:9px;
-
-    padding:11px 12px;
-
+    padding:11px;
     outline:none;
 }
-
-.input:focus,
-.select:focus{
-    border-color:#1677ff;
-}
-
 .search{
     flex:1;
     min-width:220px;
 }
-
-/* TABLE */
-
-.table-wrapper{
-    overflow-x:auto;
+.file{
+    display:none;
 }
-
+.upload{
+    background:#15803d;
+}
+.table-wrap{
+    overflow:auto;
+}
 table{
     width:100%;
     min-width:1050px;
-
     border-collapse:collapse;
 }
-
-th{
-    padding:12px 10px;
-
+th,td{
+    padding:12px 9px;
+    border-bottom:1px solid #ffffff0d;
     text-align:left;
-
-    color:#86a0ba;
-
-    font-size:10px;
-
-    border-bottom:1px solid rgba(255,255,255,.10);
-}
-
-td{
-    padding:13px 10px;
-
-    color:#d9e4ef;
-
     font-size:11px;
-
-    border-bottom:1px solid rgba(255,255,255,.06);
 }
-
-tr:hover{
-    background:rgba(22,119,255,.05);
+th{
+    color:#86a0ba;
+    font-size:10px;
 }
-
-/* STATUS */
-
 .status{
-    display:inline-block;
-
-    padding:5px 9px;
-
+    padding:5px 8px;
     border-radius:20px;
-
     font-size:9px;
-
     font-weight:800;
 }
-
 .available{
-    background:rgba(34,197,94,.14);
     color:#70e491;
+    background:#22c55e20;
 }
-
 .low{
-    background:rgba(239,68,68,.14);
     color:#ff8d8d;
+    background:#ef444422;
 }
-
 .out{
-    background:rgba(245,158,11,.14);
     color:#ffc15c;
+    background:#f59e0b22;
 }
-
-/* ACTION */
-
-.action-btn{
-    border:0;
-
-    padding:6px 9px;
-
-    border-radius:7px;
-
-    background:#17314f;
-
-    color:white;
-
-    cursor:pointer;
-
+.small-btn{
+    padding:6px 8px;
     font-size:10px;
-
-    margin-right:4px;
+    margin-right:3px;
+    background:#17314f;
 }
-
-.delete-btn{
-    background:#6f1d2a;
+.empty{
+    text-align:center;
+    padding:35px;
+    color:#7890a9;
 }
-
-/* MODAL */
-
+.user{
+    color:#9fcaff;
+    font-size:11px;
+}
 .modal{
     position:fixed;
     inset:0;
-
+    background:#000b;
     display:none;
     align-items:center;
     justify-content:center;
-
+    z-index:100;
     padding:15px;
-
-    background:rgba(0,0,0,.70);
-
-    z-index:1000;
 }
-
-.modal.active{
+.modal.show{
     display:flex;
 }
-
 .modal-box{
-    width:min(650px,100%);
-
-    max-height:90vh;
-    overflow:auto;
-
-    padding:22px;
-
-    border-radius:17px;
-
+    width:min(500px,100%);
     background:#0a1b31;
-
-    border:1px solid rgba(255,255,255,.12);
+    border:1px solid #ffffff18;
+    border-radius:16px;
+    padding:22px;
 }
-
 .modal-box h2{
-    margin-bottom:18px;
+    margin-top:0;
 }
-
 .form{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:12px;
+    gap:10px;
 }
-
 .form-group label{
     display:block;
-
     color:#8fa5bc;
-
     font-size:10px;
-
-    margin-bottom:6px;
+    margin-bottom:5px;
 }
-
-.form-group input,
-.form-group select{
+.form-group input{
     width:100%;
 }
-
 .full{
     grid-column:1/-1;
 }
-
-.modal-buttons{
-    margin-top:10px;
-
-    display:flex;
-    justify-content:flex-end;
-    gap:8px;
+.message{
+    margin:10px 0;
+    padding:10px;
+    border-radius:8px;
+    background:#ffffff08;
+    color:#9fcaff;
+    font-size:11px;
 }
-
-/* EMPTY */
-
-.empty{
-    text-align:center;
-
-    padding:40px;
-
-    color:#7890a9;
-}
-
-/* FOOTER */
-
 .footer{
     text-align:center;
-
     color:#536b84;
-
     font-size:9px;
-
     margin-top:25px;
 }
-
-/* MOBILE */
-
-@media(max-width:900px){
-
+@media(max-width:800px){
     .stats{
         grid-template-columns:repeat(2,1fr);
     }
-
-    .title-area{
-        align-items:flex-start;
+    .top{
         flex-direction:column;
+        align-items:flex-start;
     }
 }
-
-@media(max-width:600px){
-
-    .header{
-        padding:10px 14px;
-    }
-
-    .brand-title{
-        font-size:16px;
-    }
-
-    .main{
-        padding:24px 12px 50px;
-    }
-
-    .title-area h1{
-        font-size:25px;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-        gap:9px;
-    }
-
-    .stat{
-        padding:15px;
-    }
-
-    .stat-number{
-        font-size:23px;
-    }
-
+@media(max-width:550px){
     .form{
         grid-template-columns:1fr;
     }
-
     .full{
         grid-column:auto;
     }
@@ -466,244 +271,240 @@ tr:hover{
 
 <body>
 
-<header class="header">
+<header>
 
     <div class="brand">
-
-        <div class="logo">
-            LP
-        </div>
+        <div class="logo">LP</div>
 
         <div>
-            <div class="brand-title">
-                Material Inventory
-            </div>
-
-            <div class="brand-sub">
-                LP-FM • Stock Control
-            </div>
+            <h2>Material Inventory</h2>
+            <small>LP-FM • Stock Control</small>
         </div>
-
     </div>
 
-    <a href="dashboard.html" class="back">
-        ← Dashboard
-    </a>
+    <div>
+        <span class="user" id="userEmail"></span>
+        &nbsp;
+        <button
+            class="secondary"
+            onclick="logout()">
+            Logout
+        </button>
+    </div>
 
 </header>
 
 
 <main class="main">
 
-    <section class="title-area">
+<section class="top">
 
-        <div>
+    <div>
+        <h1>Inventory Dashboard</h1>
+        <p>
+            Firebase Cloud Inventory Management
+        </p>
+    </div>
 
-            <h1>
-                Inventory Dashboard
-            </h1>
+    <div class="buttons">
 
-            <p>
-                Material stock monitoring and replenishment control
-            </p>
-
-        </div>
-
-        <div class="buttons">
-
-            <button
-                class="btn secondary"
-                onclick="exportCSV()">
-                📥 Export CSV
-            </button>
-
-            <button
-                class="btn"
-                onclick="openAddModal()">
-                + Add Material
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- STATISTICS -->
-
-    <section class="stats">
-
-        <div class="stat">
-
-            <div class="stat-label">
-                TOTAL MATERIALS
-            </div>
-
-            <span
-                class="stat-number"
-                id="totalMaterials">
-                0
-            </span>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                AVAILABLE
-            </div>
-
-            <span
-                class="stat-number"
-                id="availableMaterials">
-                0
-            </span>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                LOW STOCK
-            </div>
-
-            <span
-                class="stat-number"
-                id="lowStockMaterials">
-                0
-            </span>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-label">
-                OUT OF STOCK
-            </div>
-
-            <span
-                class="stat-number"
-                id="outStockMaterials">
-                0
-            </span>
-
-        </div>
-
-    </section>
-
-
-    <!-- INVENTORY -->
-
-    <section class="panel">
-
-        <div class="toolbar">
+        <label class="upload">
 
             <input
-                type="text"
-                id="searchBox"
-                class="input search"
-                placeholder="Search material code or description..."
-                oninput="renderInventory()">
+                id="excelFile"
+                class="file"
+                type="file"
+                accept=".xlsx,.xls"
+                onchange="importExcel(event)">
+
+            <button
+                type="button"
+                class="upload"
+                onclick="document.getElementById('excelFile').click()">
+
+                📊 Upload Excel
+
+            </button>
+
+        </label>
 
 
-            <select
-                id="statusFilter"
-                class="select"
-                onchange="renderInventory()">
+        <button
+            class="secondary"
+            onclick="downloadTemplate()">
 
-                <option value="all">
-                    All Status
-                </option>
+            📥 Excel Template
 
-                <option value="available">
-                    Available
-                </option>
-
-                <option value="low">
-                    Low Stock
-                </option>
-
-                <option value="out">
-                    Out of Stock
-                </option>
-
-            </select>
-
-        </div>
+        </button>
 
 
-        <div class="table-wrapper">
+        <button onclick="openAdd()">
 
-            <table>
+            + Add Material
 
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Material Code
-                        </th>
-
-                        <th>
-                            Description
-                        </th>
-
-                        <th>
-                            Material Group
-                        </th>
-
-                        <th>
-                            Storage
-                        </th>
-
-                        <th>
-                            Unit
-                        </th>
-
-                        <th>
-                            Current Stock
-                        </th>
-
-                        <th>
-                            Minimum Stock
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
-                        <th>
-                            Actions
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="inventoryTable">
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-
-    <div class="footer">
-
-        LP-FM Inventory System • Version 1.0
+        </button>
 
     </div>
+
+</section>
+
+
+<section class="stats">
+
+    <div class="stat">
+        <span>TOTAL MATERIALS</span>
+        <strong id="total">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>AVAILABLE</span>
+        <strong id="available">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>LOW STOCK</span>
+        <strong id="low">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>OUT OF STOCK</span>
+        <strong id="out">0</strong>
+    </div>
+
+</section>
+
+
+<section class="panel">
+
+    <div class="toolbar">
+
+        <input
+            class="search"
+            id="search"
+            placeholder="Search material..."
+            oninput="render()">
+
+
+        <select
+            id="filter"
+            onchange="render()">
+
+            <option value="all">All Status</option>
+            <option value="available">Available</option>
+            <option value="low">Low Stock</option>
+            <option value="out">Out of Stock</option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="message"
+        class="message"
+        style="display:none">
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Material Code</th>
+                    <th>Description</th>
+                    <th>Material Group</th>
+                    <th>Storage</th>
+                    <th>Unit</th>
+                    <th>Current</th>
+                    <th>Minimum</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="rows"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+    LP-FM Inventory • Firebase Firestore
+</div>
 
 </main>
 
 
-<!-- ADD / EDIT MODAL -->
+<!-- LOGIN -->
+
+<div
+    id="loginModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <h2>LP-FM Login</h2>
+
+        <p style="color:#8fa5bc;font-size:11px">
+            Sign in to access material inventory.
+        </p>
+
+        <br>
+
+        <div class="form">
+
+            <div class="form-group full">
+
+                <label>Email</label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="Email">
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>Password</label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Password">
+
+            </div>
+
+
+            <div class="full">
+
+                <button
+                    onclick="login()">
+
+                    Login
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MATERIAL MODAL -->
 
 <div
     id="materialModal"
@@ -722,48 +523,37 @@ tr:hover{
 
             <input
                 type="hidden"
-                id="materialId">
+                id="editId">
 
 
             <div class="form-group">
 
-                <label>
-                    Material Code *
-                </label>
+                <label>Material Code *</label>
 
                 <input
-                    id="materialCode"
-                    class="input"
-                    required
-                    placeholder="Example: ST26">
+                    id="code"
+                    required>
 
             </div>
 
 
             <div class="form-group">
 
-                <label>
-                    Material Description *
-                </label>
+                <label>Description *</label>
 
                 <input
-                    id="materialDescription"
-                    class="input"
-                    required
-                    placeholder="Example: LIFEPHARMA STAMP">
+                    id="description"
+                    required>
 
             </div>
 
 
             <div class="form-group">
 
-                <label>
-                    Material Group
-                </label>
+                <label>Material Group</label>
 
                 <input
-                    id="materialGroup"
-                    class="input"
+                    id="group"
                     value="ZCON">
 
             </div>
@@ -771,13 +561,10 @@ tr:hover{
 
             <div class="form-group">
 
-                <label>
-                    Storage Location
-                </label>
+                <label>Storage Location</label>
 
                 <input
-                    id="storageLocation"
-                    class="input"
+                    id="storage"
                     value="STR">
 
             </div>
@@ -785,13 +572,10 @@ tr:hover{
 
             <div class="form-group">
 
-                <label>
-                    Base Unit
-                </label>
+                <label>Unit</label>
 
                 <input
-                    id="baseUnit"
-                    class="input"
+                    id="unit"
                     value="NOS">
 
             </div>
@@ -799,16 +583,12 @@ tr:hover{
 
             <div class="form-group">
 
-                <label>
-                    Current Stock
-                </label>
+                <label>Current Stock</label>
 
                 <input
-                    id="currentStock"
+                    id="stock"
                     type="number"
                     min="0"
-                    step="any"
-                    class="input"
                     value="0">
 
             </div>
@@ -816,16 +596,12 @@ tr:hover{
 
             <div class="form-group">
 
-                <label>
-                    Minimum Stock
-                </label>
+                <label>Minimum Stock</label>
 
                 <input
-                    id="minimumStock"
+                    id="minimum"
                     type="number"
                     min="0"
-                    step="any"
-                    class="input"
                     value="10">
 
             </div>
@@ -833,35 +609,28 @@ tr:hover{
 
             <div class="form-group">
 
-                <label>
-                    Note
-                </label>
+                <label>Note</label>
 
-                <input
-                    id="materialNote"
-                    class="input"
-                    placeholder="Optional">
+                <input id="note">
 
             </div>
 
 
-            <div class="full modal-buttons">
+            <div class="full buttons">
 
                 <button
                     type="button"
-                    class="btn secondary"
-                    onclick="closeModal()">
+                    class="secondary"
+                    onclick="closeMaterial()">
 
                     Cancel
 
                 </button>
 
-
                 <button
-                    type="submit"
-                    class="btn">
+                    type="submit">
 
-                    Save Material
+                    Save
 
                 </button>
 
@@ -874,92 +643,205 @@ tr:hover{
 </div>
 
 
-<script>
+<script type="module">
 
-/* =====================================================
-   INVENTORY STORAGE
-===================================================== */
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
-const STORAGE_KEY =
-    "LP_FM_MATERIAL_INVENTORY";
+import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc,
+    writeBatch,
+    query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 
-let inventory =
-    JSON.parse(
-        localStorage.getItem(STORAGE_KEY)
-    ) || [
+/* FIREBASE */
 
-        {
-            id: generateId(),
+const firebaseConfig = {
 
-            code: "ST26",
+    apiKey:
+        "AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",
 
-            description:
-                "LIFEPHARMA STAMP",
+    authDomain:
+        "lp-store-23212.firebaseapp.com",
 
-            group:
-                "ZCON",
+    projectId:
+        "lp-store-23212",
 
-            storage:
-                "STR",
+    storageBucket:
+        "lp-store-23212.firebasestorage.app",
 
-            unit:
-                "NOS",
+    messagingSenderId:
+        "200245726085",
 
-            stock:
-                0,
+    appId:
+        "1:200245726085:web:081aa1315c64e5b4bc12ec",
 
-            minimum:
-                10,
+    measurementId:
+        "G-21VPLM3N6S"
 
-            note:
-                "Miscellaneous"
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+let inventory = [];
+
+
+/* AUTH */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            document
+                .getElementById("loginModal")
+                .classList.add("show");
+
+            return;
+
         }
 
-    ];
+
+        document
+            .getElementById("loginModal")
+            .classList.remove("show");
 
 
-/* =====================================================
-   ID
-===================================================== */
+        document
+            .getElementById("userEmail")
+            .textContent =
+            user.email;
 
-function generateId(){
 
-    return Date.now().toString(36)
-        + Math.random()
-            .toString(36)
-            .substring(2);
+        await loadInventory();
+
+    }
+);
+
+
+/* LOGIN */
+
+window.login = async function(){
+
+    const email =
+        document
+        .getElementById("loginEmail")
+        .value
+        .trim();
+
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value;
+
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+    }
+    catch(error){
+
+        alert(
+            "Login failed: " +
+            error.message
+        );
+
+    }
+
+};
+
+
+/* LOGOUT */
+
+window.logout = async function(){
+
+    await signOut(auth);
+
+};
+
+
+/* LOAD */
+
+async function loadInventory(){
+
+    try{
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "materials"
+                )
+            );
+
+
+        inventory =
+            snapshot.docs.map(
+                d => ({
+                    id:d.id,
+                    ...d.data()
+                })
+            );
+
+
+        render();
+
+    }
+    catch(error){
+
+        showMessage(
+            "Could not load inventory: " +
+            error.message
+        );
+
+    }
 
 }
 
 
-/* =====================================================
-   SAVE
-===================================================== */
-
-function saveInventory(){
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(inventory)
-    );
-
-    renderInventory();
-
-}
-
-
-/* =====================================================
-   STATUS
-===================================================== */
+/* STATUS */
 
 function getStatus(item){
 
     const stock =
-        Number(item.stock);
+        Number(item.stock || 0);
 
     const minimum =
-        Number(item.minimum);
+        Number(item.minimum || 0);
 
 
     if(stock <= 0){
@@ -990,43 +872,24 @@ function getStatus(item){
 }
 
 
-/* =====================================================
-   HTML SECURITY
-===================================================== */
+/* RENDER */
 
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-function renderInventory(){
+window.render = function(){
 
     const search =
         document
-        .getElementById("searchBox")
+        .getElementById("search")
         .value
-        .toLowerCase()
-        .trim();
+        .toLowerCase();
 
 
     const filter =
         document
-        .getElementById("statusFilter")
+        .getElementById("filter")
         .value;
 
 
-    const filtered =
+    const list =
         inventory.filter(item => {
 
             const status =
@@ -1036,44 +899,38 @@ function renderInventory(){
             const matchesSearch =
                 !search ||
 
-                item.code
+                String(item.code || "")
                     .toLowerCase()
                     .includes(search)
 
                 ||
 
-                item.description
+                String(item.description || "")
                     .toLowerCase()
                     .includes(search);
 
 
-            const matchesFilter =
-                filter === "all"
-                ||
-                status.type === filter;
-
-
             return (
-                matchesSearch
-                &&
-                matchesFilter
+                matchesSearch &&
+                (
+                    filter === "all" ||
+                    filter === status.type
+                )
             );
 
         });
 
 
-    updateStatistics();
+    updateStats();
 
 
-    const table =
-        document.getElementById(
-            "inventoryTable"
-        );
+    const rows =
+        document.getElementById("rows");
 
 
-    if(filtered.length === 0){
+    if(!list.length){
 
-        table.innerHTML = `
+        rows.innerHTML = `
 
             <tr>
 
@@ -1094,8 +951,8 @@ function renderInventory(){
     }
 
 
-    table.innerHTML =
-        filtered.map(item => {
+    rows.innerHTML =
+        list.map(item => {
 
             const status =
                 getStatus(item);
@@ -1107,40 +964,33 @@ function renderInventory(){
 
                     <td>
                         <strong>
-                            ${escapeHTML(item.code)}
+                            ${safe(item.code)}
                         </strong>
                     </td>
 
-
                     <td>
-                        ${escapeHTML(item.description)}
+                        ${safe(item.description)}
                     </td>
 
-
                     <td>
-                        ${escapeHTML(item.group)}
+                        ${safe(item.group)}
                     </td>
 
-
                     <td>
-                        ${escapeHTML(item.storage)}
+                        ${safe(item.storage)}
                     </td>
 
-
                     <td>
-                        ${escapeHTML(item.unit)}
+                        ${safe(item.unit)}
                     </td>
 
-
                     <td>
-                        ${Number(item.stock)}
+                        ${Number(item.stock || 0)}
                     </td>
 
-
                     <td>
-                        ${Number(item.minimum)}
+                        ${Number(item.minimum || 0)}
                     </td>
-
 
                     <td>
 
@@ -1153,11 +1003,10 @@ function renderInventory(){
 
                     </td>
 
-
                     <td>
 
                         <button
-                            class="action-btn"
+                            class="small-btn"
                             onclick="editMaterial('${item.id}')">
 
                             Edit
@@ -1166,7 +1015,7 @@ function renderInventory(){
 
 
                         <button
-                            class="action-btn delete-btn"
+                            class="small-btn danger"
                             onclick="deleteMaterial('${item.id}')">
 
                             Delete
@@ -1181,70 +1030,64 @@ function renderInventory(){
 
         }).join("");
 
+};
+
+
+/* SAFE HTML */
+
+function safe(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
 }
 
 
-/* =====================================================
-   STATISTICS
-===================================================== */
+/* STATS */
 
-function updateStatistics(){
+function updateStats(){
 
-    const total =
+    document.getElementById("total")
+        .textContent =
         inventory.length;
 
 
-    const available =
+    document.getElementById("available")
+        .textContent =
         inventory.filter(
-            item =>
-                getStatus(item).type
+            x =>
+                getStatus(x).type
                 === "available"
         ).length;
 
 
-    const low =
+    document.getElementById("low")
+        .textContent =
         inventory.filter(
-            item =>
-                getStatus(item).type
+            x =>
+                getStatus(x).type
                 === "low"
         ).length;
 
 
-    const out =
+    document.getElementById("out")
+        .textContent =
         inventory.filter(
-            item =>
-                getStatus(item).type
+            x =>
+                getStatus(x).type
                 === "out"
         ).length;
-
-
-    document.getElementById(
-        "totalMaterials"
-    ).textContent = total;
-
-
-    document.getElementById(
-        "availableMaterials"
-    ).textContent = available;
-
-
-    document.getElementById(
-        "lowStockMaterials"
-    ).textContent = low;
-
-
-    document.getElementById(
-        "outStockMaterials"
-    ).textContent = out;
 
 }
 
 
-/* =====================================================
-   OPEN ADD
-===================================================== */
+/* ADD */
 
-function openAddModal(){
+window.openAdd = function(){
 
     document
         .getElementById("materialForm")
@@ -1252,33 +1095,23 @@ function openAddModal(){
 
 
     document
-        .getElementById("materialId")
+        .getElementById("editId")
         .value = "";
 
 
     document
-        .getElementById("materialGroup")
+        .getElementById("group")
         .value = "ZCON";
 
 
     document
-        .getElementById("storageLocation")
+        .getElementById("storage")
         .value = "STR";
 
 
     document
-        .getElementById("baseUnit")
+        .getElementById("unit")
         .value = "NOS";
-
-
-    document
-        .getElementById("currentStock")
-        .value = 0;
-
-
-    document
-        .getElementById("minimumStock")
-        .value = 10;
 
 
     document
@@ -1289,209 +1122,149 @@ function openAddModal(){
 
     document
         .getElementById("materialModal")
-        .classList.add("active");
+        .classList.add("show");
 
-}
+};
 
 
-/* =====================================================
-   CLOSE
-===================================================== */
+/* CLOSE */
 
-function closeModal(){
+window.closeMaterial = function(){
 
     document
         .getElementById("materialModal")
-        .classList.remove("active");
+        .classList.remove("show");
 
-}
-
-
-/* =====================================================
-   EDIT
-===================================================== */
-
-function editMaterial(id){
-
-    const item =
-        inventory.find(
-            x => x.id === id
-        );
+};
 
 
-    if(!item) return;
-
-
-    document.getElementById(
-        "materialId"
-    ).value = item.id;
-
-
-    document.getElementById(
-        "materialCode"
-    ).value = item.code;
-
-
-    document.getElementById(
-        "materialDescription"
-    ).value = item.description;
-
-
-    document.getElementById(
-        "materialGroup"
-    ).value = item.group;
-
-
-    document.getElementById(
-        "storageLocation"
-    ).value = item.storage;
-
-
-    document.getElementById(
-        "baseUnit"
-    ).value = item.unit;
-
-
-    document.getElementById(
-        "currentStock"
-    ).value = item.stock;
-
-
-    document.getElementById(
-        "minimumStock"
-    ).value = item.minimum;
-
-
-    document.getElementById(
-        "materialNote"
-    ).value = item.note || "";
-
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "Edit Material";
-
-
-    document
-        .getElementById("materialModal")
-        .classList.add("active");
-
-}
-
-
-/* =====================================================
-   SAVE FORM
-===================================================== */
+/* SAVE */
 
 document
     .getElementById("materialForm")
     .addEventListener(
         "submit",
-        function(event){
+        async event => {
 
             event.preventDefault();
 
 
             const id =
                 document
-                .getElementById("materialId")
+                .getElementById("editId")
                 .value;
 
 
-            const material = {
-
-                id:
-                    id || generateId(),
+            const data = {
 
                 code:
                     document
-                    .getElementById("materialCode")
+                    .getElementById("code")
                     .value
                     .trim(),
 
                 description:
                     document
-                    .getElementById("materialDescription")
+                    .getElementById("description")
                     .value
                     .trim(),
 
                 group:
                     document
-                    .getElementById("materialGroup")
+                    .getElementById("group")
                     .value
                     .trim(),
 
                 storage:
                     document
-                    .getElementById("storageLocation")
+                    .getElementById("storage")
                     .value
                     .trim(),
 
                 unit:
                     document
-                    .getElementById("baseUnit")
+                    .getElementById("unit")
                     .value
                     .trim(),
 
                 stock:
                     Number(
                         document
-                        .getElementById("currentStock")
+                        .getElementById("stock")
                         .value
                     ) || 0,
 
                 minimum:
                     Number(
                         document
-                        .getElementById("minimumStock")
+                        .getElementById("minimum")
                         .value
                     ) || 0,
 
                 note:
                     document
-                    .getElementById("materialNote")
+                    .getElementById("note")
                     .value
-                    .trim()
+                    .trim(),
+
+                updatedAt:
+                    new Date().toISOString()
 
             };
 
 
-            const existingIndex =
-                inventory.findIndex(
-                    x => x.id === material.id
+            try{
+
+                if(id){
+
+                    await updateDoc(
+                        doc(
+                            db,
+                            "materials",
+                            id
+                        ),
+                        data
+                    );
+
+                }
+                else{
+
+                    await addDoc(
+                        collection(
+                            db,
+                            "materials"
+                        ),
+                        data
+                    );
+
+                }
+
+
+                closeMaterial();
+
+                await loadInventory();
+
+                showMessage(
+                    "Material saved successfully."
                 );
 
-
-            if(existingIndex >= 0){
-
-                inventory[
-                    existingIndex
-                ] = material;
-
             }
-            else{
+            catch(error){
 
-                inventory.push(
-                    material
+                alert(
+                    "Save failed: " +
+                    error.message
                 );
 
             }
-
-
-            saveInventory();
-
-            closeModal();
 
         }
     );
 
 
-/* =====================================================
-   DELETE
-===================================================== */
+/* EDIT */
 
-function deleteMaterial(id){
+window.editMaterial = function(id){
 
     const item =
         inventory.find(
@@ -1502,139 +1275,560 @@ function deleteMaterial(id){
     if(!item) return;
 
 
-    const confirmed =
-        confirm(
-            "Delete " +
-            item.description +
-            "?"
-        );
+    document
+        .getElementById("editId")
+        .value = id;
 
 
-    if(!confirmed) return;
+    document
+        .getElementById("code")
+        .value =
+        item.code || "";
 
 
-    inventory =
-        inventory.filter(
-            x => x.id !== id
-        );
+    document
+        .getElementById("description")
+        .value =
+        item.description || "";
 
 
-    saveInventory();
+    document
+        .getElementById("group")
+        .value =
+        item.group || "";
 
-}
+
+    document
+        .getElementById("storage")
+        .value =
+        item.storage || "";
+
+
+    document
+        .getElementById("unit")
+        .value =
+        item.unit || "";
+
+
+    document
+        .getElementById("stock")
+        .value =
+        item.stock || 0;
+
+
+    document
+        .getElementById("minimum")
+        .value =
+        item.minimum || 0;
+
+
+    document
+        .getElementById("note")
+        .value =
+        item.note || "";
+
+
+    document
+        .getElementById("modalTitle")
+        .textContent =
+        "Edit Material";
+
+
+    document
+        .getElementById("materialModal")
+        .classList.add("show");
+
+};
+
+
+/* DELETE */
+
+window.deleteMaterial =
+    async function(id){
+
+        const item =
+            inventory.find(
+                x => x.id === id
+            );
+
+
+        if(!item) return;
+
+
+        if(
+            !confirm(
+                "Delete " +
+                item.description +
+                "?"
+            )
+        ){
+
+            return;
+
+        }
+
+
+        try{
+
+            await deleteDoc(
+                doc(
+                    db,
+                    "materials",
+                    id
+                )
+            );
+
+
+            await loadInventory();
+
+        }
+        catch(error){
+
+            alert(
+                "Delete failed: " +
+                error.message
+            );
+
+        }
+
+    };
 
 
 /* =====================================================
-   EXPORT CSV
+   EXCEL IMPORT
 ===================================================== */
 
-function exportCSV(){
+window.importExcel =
+    async function(event){
 
-    const headers = [
-
-        "Material Code",
-
-        "Description",
-
-        "Material Group",
-
-        "Storage Location",
-
-        "Unit",
-
-        "Current Stock",
-
-        "Minimum Stock",
-
-        "Status",
-
-        "Note"
-
-    ];
+        const file =
+            event.target.files[0];
 
 
-    const rows =
-        inventory.map(item => [
-
-            item.code,
-
-            item.description,
-
-            item.group,
-
-            item.storage,
-
-            item.unit,
-
-            item.stock,
-
-            item.minimum,
-
-            getStatus(item).text,
-
-            item.note || ""
-
-        ]);
+        if(!file) return;
 
 
-    const csv =
-        [headers,...rows]
+        if(
+            !file.name
+                .toLowerCase()
+                .endsWith(".xlsx")
+            &&
+            !file.name
+                .toLowerCase()
+                .endsWith(".xls")
+        ){
 
-        .map(row =>
+            alert(
+                "Please select an Excel .xlsx or .xls file."
+            );
 
-            row.map(value =>
+            return;
 
-                '"' +
-                String(value ?? "")
-                .replace(/"/g,'""') +
-                '"'
-
-            ).join(",")
-
-        )
-
-        .join("\n");
+        }
 
 
-    const blob =
-        new Blob(
-            [csv],
-            {
-                type:"text/csv;charset=utf-8;"
+        try{
+
+            showMessage(
+                "Reading Excel file..."
+            );
+
+
+            const arrayBuffer =
+                await file.arrayBuffer();
+
+
+            const workbook =
+                XLSX.read(
+                    arrayBuffer,
+                    {
+                        type:"array"
+                    }
+                );
+
+
+            const sheetName =
+                workbook.SheetNames[0];
+
+
+            const sheet =
+                workbook.Sheets[
+                    sheetName
+                ];
+
+
+            const rows =
+                XLSX.utils.sheet_to_json(
+                    sheet,
+                    {
+                        defval:""
+                    }
+                );
+
+
+            if(!rows.length){
+
+                alert(
+                    "Excel file is empty."
+                );
+
+                return;
+
             }
-        );
 
 
-    const url =
-        URL.createObjectURL(blob);
+            /*
+             * Convert Excel headings
+             * to lower-case normalized names.
+             */
+
+            const normalize =
+                value =>
+                    String(value || "")
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]/g,"");
 
 
-    const link =
-        document.createElement("a");
+            const findValue =
+                (row, names) => {
+
+                    const keys =
+                        Object.keys(row);
 
 
-    link.href = url;
+                    for(
+                        const name
+                        of names
+                    ){
 
-    link.download =
-        "LP-FM-Material-Inventory.csv";
+                        const target =
+                            normalize(name);
 
 
-    document.body.appendChild(link);
+                        const key =
+                            keys.find(
+                                k =>
+                                    normalize(k)
+                                    === target
+                            );
 
-    link.click();
 
-    link.remove();
+                        if(
+                            key !== undefined
+                        ){
 
-    URL.revokeObjectURL(url);
+                            return row[key];
 
-}
+                        }
+
+                    }
+
+
+                    return "";
+
+                };
+
+
+            const imported =
+                rows.map(row => {
+
+                    return {
+
+                        code:
+                            String(
+                                findValue(
+                                    row,
+                                    [
+                                        "Material Code",
+                                        "MaterialCode",
+                                        "Code",
+                                        "Matkl"
+                                    ]
+                                )
+                            ).trim(),
+
+                        description:
+                            String(
+                                findValue(
+                                    row,
+                                    [
+                                        "Description",
+                                        "Material Description",
+                                        "MaterialDescription"
+                                    ]
+                                )
+                            ).trim(),
+
+                        group:
+                            String(
+                                findValue(
+                                    row,
+                                    [
+                                        "Material Group",
+                                        "MaterialGroup",
+                                        "Group"
+                                    ]
+                                )
+                            ).trim(),
+
+                        storage:
+                            String(
+                                findValue(
+                                    row,
+                                    [
+                                        "Storage Location",
+                                        "StorageLocation",
+                                        "Storage"
+                                    ]
+                                )
+                            ).trim(),
+
+                        unit:
+                            String(
+                                findValue(
+                                    row,
+                                    [
+                                        "Unit",
+                                        "Base Unit",
+                                        "BaseUnit"
+                                    ]
+                                )
+                            ).trim(),
+
+                        stock:
+                            Number(
+                                findValue(
+                                    row,
+                                    [
+                                        "Current Stock",
+                                        "CurrentStock",
+                                        "Stock",
+                                        "Quantity"
+                                    ]
+                                )
+                            ) || 0,
+
+                        minimum:
+                            Number(
+                                findValue(
+                                    row,
+                                    [
+                                        "Minimum Stock",
+                                        "MinimumStock",
+                                        "Minimum",
+                                        "Min Stock"
+                                    ]
+                                )
+                            ) || 0,
+
+                        note:
+                            String(
+                                findValue(
+                                    row,
+                                    [
+                                        "Note",
+                                        "Remarks"
+                                    ]
+                                )
+                            ).trim(),
+
+                        importedAt:
+                            new Date().toISOString()
+
+                    };
+
+                })
+                .filter(
+                    x =>
+                        x.code ||
+                        x.description
+                );
+
+
+            if(!imported.length){
+
+                alert(
+                    "No valid material rows found."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Firestore batch maximum is 500 writes.
+             * Split large Excel files into chunks.
+             */
+
+            let count = 0;
+
+
+            for(
+                let start = 0;
+                start < imported.length;
+                start += 450
+            ){
+
+                const chunk =
+                    imported.slice(
+                        start,
+                        start + 450
+                    );
+
+
+                const batch =
+                    writeBatch(db);
+
+
+                chunk.forEach(
+                    item => {
+
+                        const ref =
+                            doc(
+                                collection(
+                                    db,
+                                    "materials"
+                                )
+                            );
+
+
+                        batch.set(
+                            ref,
+                            item
+                        );
+
+                    }
+                );
+
+
+                await batch.commit();
+
+
+                count += chunk.length;
+
+            }
+
+
+            await loadInventory();
+
+
+            showMessage(
+                count +
+                " materials imported successfully."
+            );
+
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            alert(
+                "Excel import failed:\n" +
+                error.message
+            );
+
+        }
+
+
+        event.target.value = "";
+
+    };
 
 
 /* =====================================================
-   START
+   EXCEL TEMPLATE
 ===================================================== */
 
-renderInventory();
+window.downloadTemplate =
+    function(){
+
+        const data = [
+
+            {
+
+                "Material Code":
+                    "ST26",
+
+                "Description":
+                    "LIFEPHARMA STAMP",
+
+                "Material Group":
+                    "ZCON",
+
+                "Storage Location":
+                    "STR",
+
+                "Unit":
+                    "NOS",
+
+                "Current Stock":
+                    100,
+
+                "Minimum Stock":
+                    20,
+
+                "Note":
+                    "Miscellaneous"
+
+            }
+
+        ];
+
+
+        const worksheet =
+            XLSX.utils.json_to_sheet(
+                data
+            );
+
+
+        const workbook =
+            XLSX.utils.book_new();
+
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            "Materials"
+        );
+
+
+        XLSX.writeFile(
+            workbook,
+            "LP-FM-Material-Template.xlsx"
+        );
+
+    };
+
+
+/* MESSAGE */
+
+function showMessage(text){
+
+    const box =
+        document.getElementById(
+            "message"
+        );
+
+
+    box.textContent = text;
+
+    box.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            box.style.display =
+                "none";
+
+        },
+        5000
+    );
+
+}
 
 </script>
 
