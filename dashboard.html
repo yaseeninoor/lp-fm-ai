@@ -11,7 +11,7 @@
 <meta name="theme-color"
       content="#061322">
 
-<title>LP-Store | Dashboard</title>
+<title>Noor Portal | Yaseenis</title>
 
 <style>
 
@@ -1745,6 +1745,11 @@ auth.onAuthStateChanged(
 
         }
 
+
+        // The old LP-Store dashboard is retired from the user flow.
+        // After Firebase login, send authenticated users to the new Noor Portal.
+        window.location.replace("index.html");
+        return;
 
         const email =
             user.email ||
