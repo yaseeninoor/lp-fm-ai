@@ -19,7 +19,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.yaseenis.noorportal",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "extra": {
       "eas": {
