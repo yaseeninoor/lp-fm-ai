@@ -20,6 +20,11 @@
     "ios": {
       "bundleIdentifier": "com.yaseenis.noorportal",
       "supportsTablet": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "eef79fdf-d4da-456d-bc21-9c6713c54558"
+      }
     }
   }
 }
