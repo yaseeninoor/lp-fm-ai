@@ -20,6 +20,9 @@
     "ios": {
       "bundleIdentifier": "com.yaseenis.noorportal",
       "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      },
       "config": {
         "usesNonExemptEncryption": false
       }
