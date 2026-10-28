@@ -9,7 +9,7 @@ on:
         type: choice
         options:
           - android
-          - ios
+          - ios-simulator
           - all
         default: android
   push:
@@ -66,8 +66,8 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Build iOS
-        if: github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all'
-        run: eas build --platform ios --profile production --non-interactive
+      - name: Build iOS Simulator app (no Apple Developer membership required)
+        if: github.event.inputs.platform == 'ios-simulator' || github.event.inputs.platform == 'all'
+        run: eas build --platform ios --profile ios-simulator --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
