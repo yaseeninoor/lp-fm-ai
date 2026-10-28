@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, View, ActivityIndicator, Text, BackHandler, Platform } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet, View, ActivityIndicator, Text, BackHandler, Platform, ImageBackground } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 
