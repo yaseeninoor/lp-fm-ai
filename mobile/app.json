@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "NOOR PORTAL",
+    "slug": "noor-portal-yaseenis",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "icon": "./assets/icon.png",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#073B32"
+    },
+    "android": {
+      "package": "com.yaseenis.noorportal",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#073B32"
+      },
+      "permissions": [
+        "INTERNET"
+      ]
+    },
+    "ios": {
+      "bundleIdentifier": "com.yaseenis.noorportal",
+      "supportsTablet": true
+    },
+    "plugins": [
+      "react-native-webview"
+    ]
+  }
+}
