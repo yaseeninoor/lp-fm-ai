@@ -15,17 +15,11 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#073B32"
-      },
-      "permissions": [
-        "INTERNET"
-      ]
+      }
     },
     "ios": {
       "bundleIdentifier": "com.yaseenis.noorportal",
       "supportsTablet": true
-    },
-    "plugins": [
-      "react-native-webview"
-    ]
+    }
   }
 }
