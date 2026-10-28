@@ -1,17 +1,18 @@
-# NOOR PORTAL — Expo Android App
+# NOOR PORTAL — Expo mobile app
 
-This Expo project opens the live Yaseenis portal at https://noor.yaseenis.com/ inside a native WebView. Portal login, public content and admin pages remain hosted by the website/Firebase; this app does not independently implement authentication or media storage.
+This Expo project wraps the live portal at https://noor.yaseenis.com/ in a native WebView. Website pages, Firebase login, admin content and media storage remain hosted by the website; this mobile shell does not replace or bypass website security.
 
-## Expo EAS Build
+## Build an Android APK with Expo.dev
 
-In Expo.dev, connect repository `yaseeninoor/lp-fm-ai` and set **Base directory** to `/mobile` (or `mobile`, if the UI asks for a relative path). Select **Android**.
-
-- For an installable test APK, choose the **preview** build profile. The `eas.json` profile is configured with `android.buildType: apk`.
-- EAS may ask you to sign in to Expo and configure Android credentials.
-- For a Play Store release, use the production profile and follow EAS signing/submission setup.
+1. Open the Expo EAS Build page and connect GitHub repository `yaseeninoor/lp-fm-ai`.
+2. Set **Base directory** to `mobile` (relative path; do not use the repository root).
+3. Choose **Android**.
+4. Use the **preview** build profile. `eas.json` sets this profile to create an installable APK.
+5. Confirm the build. Sign in to Expo and follow any Android credential setup prompts.
+6. When the build finishes, download the APK from the EAS build page and test it on an Android phone.
 
 ## Notes
 
-- The site must be reachable over HTTPS.
-- Uploading audio/video and Firebase login work only to the extent those features are implemented and allowed on the website itself.
-- Test authentication, file selection, audio/video playback and navigation on a real Android device before release.
+- The public website must be reachable over HTTPS.
+- Firebase login, audio/video playback, and media uploads work only to the extent the live website supports them inside a mobile WebView.
+- Test admin sign-in and media upload on a real Android device before distributing the app.
