@@ -1,0 +1,73 @@
+name: NOOR PORTAL Mobile Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Platform to build
+        required: true
+        type: choice
+        options:
+          - android
+          - ios
+          - all
+        default: android
+  push:
+    paths:
+      - "mobile/**"
+      - ".github/workflows/noor-portal-mobile.yml"
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build NOOR PORTAL
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Validate Expo configuration
+        run: npx expo config --type public
+
+      - name: Check Expo token
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::error::Add EXPO_TOKEN in GitHub repository Settings > Secrets and variables > Actions. Use an Expo access token for the YASEENIS account."
+            exit 1
+          fi
+
+      - name: Install EAS CLI
+        run: npm install --global eas-cli
+
+      - name: Verify existing EAS project link
+        run: eas project:info --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build Android APK
+        if: github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all' || github.event_name == 'push'
+        run: eas build --platform android --profile preview --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build iOS
+        if: github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all'
+        run: eas build --platform ios --profile production --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
