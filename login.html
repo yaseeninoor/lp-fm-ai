@@ -757,13 +757,17 @@ input:focus{
                 </h1>
 
                 <p>
-                    Sign in once to open your Admin Studio
+                    Sign in to your Yaseenis account
                 </p>
 
             </div>
 
 
-            <!-- LOGIN FORM -->
+            <div style="display:flex;gap:10px;margin-top:24px">
+<button type="button" id="userMode" class="login-button" style="margin:0;background:linear-gradient(135deg,#0d8067,#075545)">👤 User Login</button>
+<button type="button" id="adminMode" class="login-button" style="margin:0">🛡️ Admin Login</button>
+</div>
+<!-- LOGIN FORM -->
 
             <form
                 class="form"
@@ -846,10 +850,11 @@ input:focus{
                     class="login-button"
                     id="loginButton">
 
-                    Sign In to Noor Portal
+                    Sign In
 
                 </button>
-
+<button type="button" id="createAccount" class="login-button" style="margin-top:10px;background:rgba(255,255,255,.08);box-shadow:none;border:1px solid rgba(255,255,255,.16)">Create Free User Account</button>
+<button type="button" id="resetPassword" style="display:block;margin:14px auto 0;background:none;border:0;color:#e6c978;font-size:12px;cursor:pointer">Forgot password?</button>
             </form>
 
 
@@ -971,6 +976,41 @@ const message =
 
 const showPassword =
     document.getElementById("showPassword");
+const userMode = document.getElementById("userMode");
+const adminMode = document.getElementById("adminMode");
+const createAccountButton = document.getElementById("createAccount");
+const resetPasswordButton = document.getElementById("resetPassword");
+let loginMode = "user";
+function setLoginMode(mode) {
+  loginMode = mode;
+  const isAdmin = mode === "admin";
+  document.querySelector(".title p").textContent = isAdmin ? "Authorized administrators only" : "Sign in to your Yaseenis account";
+  button.textContent = isAdmin ? "Secure Admin Sign In" : "Sign In";
+  createAccountButton.style.display = isAdmin ? "none" : "block";
+  userMode.style.opacity = isAdmin ? ".65" : "1";
+  adminMode.style.opacity = isAdmin ? "1" : ".65";
+  hideMessage();
+}
+userMode.addEventListener("click", () => setLoginMode("user"));
+adminMode.addEventListener("click", () => setLoginMode("admin"));
+createAccountButton.addEventListener("click", async () => {
+  const userEmail = email.value.trim();
+  const userPassword = password.value;
+  if (!userEmail || userPassword.length < 6) { showError("Enter your email and a password with at least 6 characters."); return; }
+  try {
+    await auth.createUserWithEmailAndPassword(userEmail, userPassword);
+    window.location.href = "index.html";
+  } catch (error) {
+    showError(error.code === "auth/operation-not-allowed" ? "Enable Email/Password in Firebase Authentication > Sign-in method." : (error.message || "Could not create account."));
+  }
+});
+resetPasswordButton.addEventListener("click", async () => {
+  const userEmail = email.value.trim();
+  if (!userEmail) { showError("Enter your email address first."); return; }
+  try { await auth.sendPasswordResetEmail(userEmail); showSuccess("Password reset email requested. Check your inbox."); }
+  catch (error) { showError(error.message || "Could not send reset email."); }
+});
+
 
 
 /* =========================================================
@@ -1007,10 +1047,12 @@ auth.onAuthStateChanged(
     function(user){
 
         if(user){
-
-            window.location.href =
-                "admin/index.html";
-
+          if (loginMode === "admin") {
+            user.getIdTokenResult(true).then(token => {
+              if (token.claims.admin === true) window.location.href = "admin/index.html";
+              else { auth.signOut(); showError("This account is not approved as an administrator. Contact the portal owner."); }
+            });
+          } else { window.location.href = "index.html"; }
         }
 
     }
@@ -1055,26 +1097,19 @@ form.addEventListener(
 
         try{
 
-            await auth.signInWithEmailAndPassword(
-                userEmail,
-                userPassword
-            );
-
-
-            showSuccess(
-                "Login successful. Opening Noor Portal..."
-            );
-
-
-            setTimeout(
-                function(){
-
-                    window.location.href =
-                        "admin/index.html";
-
-                },
-                700
-            );
+            const credential = await auth.signInWithEmailAndPassword(userEmail, userPassword);
+            if (loginMode === "admin") {
+              const token = await credential.user.getIdTokenResult(true);
+              if (token.claims.admin !== true) {
+                await auth.signOut();
+                throw { code: "auth/not-admin", message: "This account is not approved as an administrator." };
+              }
+              showSuccess("Admin login successful. Opening Admin Studio...");
+              setTimeout(() => { window.location.href = "admin/index.html"; }, 700);
+            } else {
+              showSuccess("Login successful. Opening Noor Portal...");
+              setTimeout(() => { window.location.href = "index.html"; }, 700);
+            }
 
 
         }catch(error){
@@ -1090,6 +1125,8 @@ form.addEventListener(
 
 
             switch(error.code){
+
+                case "auth/not-admin": text = error.message; break;
 
                 case "auth/invalid-credential":
 
