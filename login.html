@@ -1043,20 +1043,12 @@ showPassword.addEventListener(
    AUTH STATE
 ========================================================= */
 
-auth.onAuthStateChanged(
-    function(user){
-
-        if(user){
-          if (loginMode === "admin") {
-            user.getIdTokenResult(true).then(token => {
-              if (token.claims.admin === true) window.location.href = "admin/index.html";
-              else { auth.signOut(); showError("This account is not approved as an administrator. Contact the portal owner."); }
-            });
-          } else { window.location.href = "index.html"; }
-        }
-
-    }
-);
+// Do not redirect from onAuthStateChanged here. Redirecting immediately can
+// race with the sign-in handler and cause confusing page/app exits on mobile.
+// Navigation is handled only after an explicit successful sign-in below.
+auth.onAuthStateChanged(function(user) {
+    if (!user) return;
+});
 
 
 /* =========================================================
@@ -1105,10 +1097,10 @@ form.addEventListener(
                 throw { code: "auth/not-admin", message: "This account is not approved as an administrator." };
               }
               showSuccess("Admin login successful. Opening Admin Studio...");
-              setTimeout(() => { window.location.href = "admin/index.html"; }, 700);
+              setTimeout(() => { window.location.assign(new URL("admin/index.html", window.location.href).href); }, 700);
             } else {
               showSuccess("Login successful. Opening Noor Portal...");
-              setTimeout(() => { window.location.href = "index.html"; }, 700);
+              setTimeout(() => { window.location.assign(new URL("index.html", window.location.href).href); }, 700);
             }
 
 
@@ -1214,8 +1206,7 @@ form.addEventListener(
 
             button.disabled = false;
 
-            button.textContent =
-                "Sign In to Noor Portal";
+            button.textContent = loginMode === "admin" ? "Secure Admin Sign In" : "Sign In";
 
         }
 
