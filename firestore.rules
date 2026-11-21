@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function role() { return signedIn() && request.auth.token.role is string ? request.auth.token.role : (signedIn() && request.auth.token.superadmin == true ? 'superadmin' : (signedIn() && request.auth.token.admin == true ? 'admin' : 'user')); }
+    function isAdmin() { return role() in ['admin', 'superadmin']; }
+    function isSuperAdmin() { return role() == 'superadmin'; }
+
+    match /users/{uid} {
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.uid == uid
+        && request.resource.data.role == 'user'
+        && request.resource.data.keys().hasOnly(['uid','fullName','phone','email','role','createdAt','updatedAt'])
+        && request.resource.data.fullName is string
+        && request.resource.data.fullName.size() >= 2
+        && request.resource.data.phone is string
+        && request.resource.data.email == request.auth.token.email;
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fullName','phone','updatedAt'])
+        && request.resource.data.fullName is string
+        && request.resource.data.fullName.size() >= 2
+        && request.resource.data.phone is string;
+      allow update, delete: if isSuperAdmin();
+    }
+
+    match /noorPosts/{postId} {
+      allow read: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isAdmin()
+        && request.resource.data.createdBy == request.auth.uid;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
