@@ -61,7 +61,8 @@ service cloud.firestore {
         && request.resource.data.participants is list
         && request.resource.data.participants.size() == 2
         && request.auth.uid in request.resource.data.participants;
-      allow read, update: if isParticipant();
+      allow read: if isParticipant();
+      allow update: if isParticipant() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt']);
       allow delete: if false;
       match /messages/{messageId} {
         function parentParticipants() { return get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants; }
