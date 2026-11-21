@@ -59,6 +59,6 @@ $("authForm").addEventListener("submit",async e=>{e.preventDefault();if(busy)ret
   location.assign(role==="admin"||role==="superadmin"?"admin/index.html":"account.html");
  }
  }catch(e){msg(e.code==="role-denied"?e.message:friendly(e))}finally{busy=false;submit.disabled=false}});
-auth.onAuthStateChanged(async user=>{if(!user)return;try{const role=await roleOf(user);if(role==="admin"||role==="superadmin")location.replace("admin/index.html");else location.replace("account.html")}catch(e){}});
+// Navigation is performed explicitly after successful registration or sign-in.
 setMode("user");renderForm();
 </script></body></html>
