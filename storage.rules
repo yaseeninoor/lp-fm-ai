@@ -14,7 +14,7 @@ service firebase.storage {
       allow read: if signedIn();
       allow write: if signedIn() && request.auth.uid == uid
         && request.resource.size < 50 * 1024 * 1024
-        && request.resource.contentType.matches('(image|video|audio)/.*|application/pdf|text/plain');
+        && request.resource.contentType.matches('(image|video|audio)/.*|application/pdf|application/(msword|vnd.openxmlformats-officedocument.*|vnd.ms-.*)|text/plain|text/vcard|text/x-vcard|application/octet-stream');
     }
     match /{allPaths=**} { allow read, write: if false; }
   }
