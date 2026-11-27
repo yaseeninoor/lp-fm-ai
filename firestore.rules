@@ -102,9 +102,12 @@ service cloud.firestore {
       allow update: if (isAdmin() && request.resource.data.createdBy == resource.data.createdBy)
         || (signedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes'])
           && request.resource.data.likes is list
-          && request.resource.data.likes.size() <= resource.data.likes.size() + 1
-          && request.auth.uid in request.resource.data.likes
-          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes']));
+          && ((request.resource.data.likes.size() == resource.data.likes.size() + 1
+                && request.auth.uid in request.resource.data.likes
+                && !(request.auth.uid in resource.data.likes))
+            || (request.resource.data.likes.size() == resource.data.likes.size() - 1
+                && !(request.auth.uid in request.resource.data.likes)
+                && request.auth.uid in resource.data.likes)));
       allow delete: if isAdmin();
     }
     match /noorPosts/{postId} {
