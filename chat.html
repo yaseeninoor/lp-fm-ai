@@ -123,10 +123,11 @@ function renderPost(doc){
 function loadCommunityPosts(){
  if(postUnsubscribe)postUnsubscribe();
  const zone=$("communityPosts");zone.innerHTML='<div class="postheading">📢 COMMUNITY POSTS & ANNOUNCEMENTS</div>';
- postUnsubscribe=db.collection("channelPosts").orderBy("createdAt","desc").limit(100).onSnapshot(s=>{
+ postUnsubscribe=db.collection("channelPosts").where("published","==",true).limit(100).onSnapshot(s=>{
   zone.innerHTML='<div class="postheading">📢 COMMUNITY POSTS & ANNOUNCEMENTS</div>';
-  if(s.docs.filter(d=>d.data().published===true).length===0){const empty=document.createElement("div");empty.className="empty";empty.style.height="70px";empty.textContent="No admin posts yet.";zone.appendChild(empty)}
-  s.docs.filter(d=>d.data().published===true).slice(0,50).forEach(d=>zone.appendChild(renderPost(d)));
+  const publishedDocs=s.docs.slice().sort((a,b)=>{const at=a.data().createdAt&&a.data().createdAt.toMillis?a.data().createdAt.toMillis():0;const bt=b.data().createdAt&&b.data().createdAt.toMillis?b.data().createdAt.toMillis():0;return bt-at});
+  if(publishedDocs.length===0){const empty=document.createElement("div");empty.className="empty";empty.style.height="70px";empty.textContent="No admin posts yet.";zone.appendChild(empty)}
+  publishedDocs.slice(0,50).forEach(d=>zone.appendChild(renderPost(d)));
  },e=>{zone.innerHTML='<div class="blocked">Could not load community posts: '+safe(e.message)+'</div>'});
 }
 async function togglePostLike(id,liked){
@@ -219,7 +220,7 @@ async function toggleBlock(uid,name){
  try{const ref=db.collection("chatBlocks").doc(uid),s=await ref.get();if(s.exists){await ref.delete();status(name+" unblocked.")}else{if(!confirm(name+"-ஐ Chat-ல் Block செய்யவா?"))return;await ref.set({uid,name,blockedBy:me.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});status(name+" blocked.")}}catch(e){status("Block action failed: "+e.message)}
 }
 $("sendForm").onsubmit=async e=>{
- e.preventDefault();const message=$("messageInput").value.trim(),file=$("fileInput").files[0];if(!message&&!file)return;
+ e.preventDefault();const message=$("messageInput").value.trim(),file=$("fileInput").files[0];if(!message&&!file&&!selectedContact)return;
  try{
   const blocked=await db.collection("chatBlocks").doc(me.uid).get();
   if(blocked.exists&&!["admin","superadmin"].includes(profile.role)){status("Your chat access is paused. Please contact an administrator.");return}
