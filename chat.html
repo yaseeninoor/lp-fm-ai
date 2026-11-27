@@ -304,8 +304,8 @@ auth.onAuthStateChanged(async u=>{
   profile={name:p.fullName||u.displayName||"Member",role:p.role||"user"};const admin=["admin","superadmin"].includes(profile.role);$("adminPostComposer").classList.toggle("hidden",!admin);$("adminMenuLink").classList.toggle("hidden",!admin);$("adminStudioLink").classList.toggle("hidden",!admin);
   $("myName").innerHTML=safe(profile.name)+(["admin","superadmin"].includes(profile.role)?'<span class="verified" title="Verified admin">✓</span>':"");$("myAvatar").textContent=initials(profile.name);
   const myChat=await db.collection("chatProfiles").doc(u.uid).get();
-  if(myChat.exists){const cp=myChat.data();profile.username=cp.username||"";profile.avatarUrl=cp.avatarUrl||"";if(profile.avatarUrl)$("myAvatar").innerHTML='<img src="'+safe(profile.avatarUrl)+'" alt="">';$("myHandle").textContent=(profile.username?"@"+profile.username+" · ":"")+(admin?"Verified admin":"Member");if(admin)db.collection("chatProfiles").doc(u.uid).set({verifiedAdmin:true},{merge:true}).catch(e=>console.warn("Admin badge sync",e.message));if(!profile.username)$("usernameModal").classList.remove("hidden");}
-  else{await db.collection("chatProfiles").doc(u.uid).set({name:profile.name,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});$("usernameModal").classList.remove("hidden");}
+  if(myChat.exists){const cp=myChat.data();profile.username=cp.username||"";profile.avatarUrl=cp.avatarUrl||"";if(profile.avatarUrl)$("myAvatar").innerHTML='<img src="'+safe(profile.avatarUrl)+'" alt="">';$("myHandle").textContent=(profile.username?"@"+profile.username+" · ":"")+(admin?"Verified admin":"Member");if(!profile.username)$("usernameModal").classList.remove("hidden");}
+  await db.collection("chatProfiles").doc(u.uid).set({name:profile.name,verifiedAdmin:admin,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
   await loadUsers();watchUnreadConversations();loadStatuses();watchIncomingCalls();listenCommunity();
  }catch(e){$("chatList").innerHTML='<div class="blocked">Chat setup could not load. Check Firestore Rules deployment and your account permissions.<br>'+safe(e.message)+'</div>'}
 });
