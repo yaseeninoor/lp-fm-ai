@@ -10,6 +10,12 @@ service firebase.storage {
         && request.resource.size < 200 * 1024 * 1024
         && request.resource.contentType.matches('(audio|video|image)/.*|application/pdf|application/(msword|vnd.openxmlformats-officedocument.*)|text/plain');
     }
+    match /noor-chat-media/{uid}/{allPaths=**} {
+      allow read: if signedIn();
+      allow write: if signedIn() && request.auth.uid == uid
+        && request.resource.size < 50 * 1024 * 1024
+        && request.resource.contentType.matches('(image|video|audio)/.*|application/pdf|text/plain');
+    }
     match /{allPaths=**} { allow read, write: if false; }
   }
 }
