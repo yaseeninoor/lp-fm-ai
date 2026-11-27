@@ -27,7 +27,8 @@ service cloud.firestore {
     }
     match /communityMessages/{messageId} {
       allow read: if signedIn();
-      allow create: if notBlocked() && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']) && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000
+      allow create: if notBlocked() && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']) && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() <= 2000
+        && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data))
         && (!('attachmentUrl' in request.resource.data) || (request.resource.data.attachmentUrl is string && request.resource.data.attachmentName is string && request.resource.data.attachmentType is string));
       allow delete: if isAdmin();
       allow update: if false;
@@ -41,7 +42,7 @@ service cloud.firestore {
       match /messages/{messageId} {
         function parentParticipants() { return get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants; }
         allow read: if (signedIn() && request.auth.uid in parentParticipants()) || isAdmin();
-        allow create: if notBlocked() && signedIn() && request.auth.uid in parentParticipants() && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000 && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']);
+        allow create: if notBlocked() && signedIn() && request.auth.uid in parentParticipants() && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() <= 2000 && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data)) && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']);
         allow delete: if isAdmin();
         allow update: if false;
       }
