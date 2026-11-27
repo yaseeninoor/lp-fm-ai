@@ -48,9 +48,22 @@ function drawMessages(docs){
  if(!docs.length){box.innerHTML='<div class="empty">இன்னும் செய்திகள் இல்லை.<br>முதல் செய்தியை அனுப்புங்கள் 👋</div>';return}
  const day=document.createElement("div");day.className="daylabel";day.textContent="Messages";box.appendChild(day);
  docs.forEach(doc=>{
-  const m=doc.data(),mine=m.uid===me.uid,el=document.createElement("div");el.className="bubble"+(mine?" mine":"");
-  const tm=m.createdAt&&m.createdAt.toDate?m.createdAt.toDate().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"Sending…";const readBy=Array.isArray(m.readBy)?m.readBy:[];const receipt=mine?(readBy.some(x=>x!==me.uid)?" · ✓✓":" · ✓"):"";
-  el.innerHTML=(mode==="community"&&!mine?'<div class="meta">'+safe(m.name||"Member")+'</div>':"")+(m.text?'<div>'+safe(m.text)+'</div>':"")+(m.attachmentUrl?((m.attachmentType||"").startsWith("image/")?'<a href="'+safe(m.attachmentUrl)+'" target="_blank" rel="noopener"><img src="'+safe(m.attachmentUrl)+'" alt="'+safe(m.attachmentName||"Photo")+'" style="display:block;max-width:min(100%,320px);max-height:300px;object-fit:contain;border-radius:9px;margin-top:7px"></a>':(m.attachmentType||"").startsWith("video/")?'<video controls playsinline preload="metadata" src="'+safe(m.attachmentUrl)+'" style="display:block;max-width:min(100%,320px);max-height:300px;margin-top:7px;border-radius:9px"></video>':(m.attachmentType||"").startsWith("audio/")?'<audio controls preload="metadata" src="'+safe(m.attachmentUrl)+'" style="display:block;max-width:min(100%,300px);margin-top:7px"></audio>':'<div style="margin-top:7px;padding:9px;background:#f0f5f1;border-radius:8px"><a href="'+safe(m.attachmentUrl)+'" target="_blank" rel="noopener" download="'+safe(m.attachmentName||"download") +'" style="color:#075e54;font-weight:700">📎 '+safe(m.attachmentName||"Open / Download file")+'</a></div>')):"")+(m.contact?'<div style="margin-top:7px;padding:10px;background:#f0f5f1;border-radius:9px"><b>👤 '+safe(m.contact.name)+'</b><br><a href="tel:'+safe(m.contact.phone)+'">'+safe(m.contact.phone)+'</a></div>':"")+'<span class="time">'+safe(tm)+receipt+'</span>';
+  const m=doc.data(),mine=m.uid===me.uid,el=document.createElement("div");
+  el.className="bubble"+(mine?" mine":"");
+  const tm=m.createdAt&&m.createdAt.toDate?m.createdAt.toDate().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"Sending…";
+  const readBy=Array.isArray(m.readBy)?m.readBy:[];
+  const receipt=mine?(readBy.some(x=>x!==me.uid)?" · ✓✓":" · ✓"):"";
+  if(mode==="community"&&!mine){const author=document.createElement("div");author.className="meta";author.textContent=m.name||"Member";el.appendChild(author)}
+  if(m.text){const body=document.createElement("div");body.textContent=m.text;el.appendChild(body)}
+  if(m.attachmentUrl){
+   const type=m.attachmentType||"",url=m.attachmentUrl;
+   if(type.startsWith("image/")){const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener";const img=document.createElement("img");img.src=url;img.alt=m.attachmentName||"Photo";img.style.cssText="display:block;max-width:min(100%,320px);max-height:300px;object-fit:contain;border-radius:9px;margin-top:7px";a.appendChild(img);el.appendChild(a)}
+   else if(type.startsWith("video/")){const v=document.createElement("video");v.controls=true;v.playsInline=true;v.preload="metadata";v.src=url;v.style.cssText="display:block;max-width:min(100%,320px);max-height:300px;margin-top:7px;border-radius:9px";el.appendChild(v)}
+   else if(type.startsWith("audio/")){const au=document.createElement("audio");au.controls=true;au.preload="metadata";au.src=url;au.style.cssText="display:block;max-width:min(100%,300px);margin-top:7px";el.appendChild(au)}
+   else{const a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener";a.download=m.attachmentName||"download";a.textContent="📎 "+(m.attachmentName||"Open / Download file");a.style.cssText="display:block;margin-top:7px;color:#075e54;font-weight:700";el.appendChild(a)}
+  }
+  if(m.contact){const card=document.createElement("div");card.style.cssText="margin-top:7px;padding:10px;background:#f0f5f1;border-radius:9px";const name=document.createElement("b");name.textContent="👤 "+(m.contact.name||"Contact");const br=document.createElement("br");const phone=document.createElement("a");phone.href="tel:"+String(m.contact.phone||"").replace(/[^+0-9]/g,"");phone.textContent=m.contact.phone||"";card.append(name,br,phone);el.appendChild(card)}
+  const time=document.createElement("span");time.className="time";time.textContent=tm+receipt;el.appendChild(time);
   if(profile&&["admin","superadmin"].includes(profile.role)){
    const actions=document.createElement("div");actions.className="moderation";
    const del=document.createElement("button");del.className="mini";del.textContent="Delete";del.onclick=()=>deleteMessage(doc.id);
@@ -58,8 +71,10 @@ function drawMessages(docs){
    actions.append(del,block);el.appendChild(actions);
   }
   box.appendChild(el);
- });box.scrollTop=box.scrollHeight;
+ });
+ box.scrollTop=box.scrollHeight;
 }
+
 function renderList(){
  const q=$("searchInput").value.trim().toLowerCase(),list=$("chatList");list.innerHTML="";
  const community=document.createElement("button");community.className="chatitem"+(mode==="community"?" active":"");community.dataset.kind="community";
