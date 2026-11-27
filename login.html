@@ -68,13 +68,13 @@ $("authForm").addEventListener("submit",async e=>{e.preventDefault();if(busy)ret
   try { await cred.user.sendEmailVerification(); }
   catch(verifyError) { console.warn("Email verification send failed:",verifyError.code,verifyError.message); verifyNote=" Email சரிபார்ப்பு மின்னஞ்சலை இப்போது அனுப்ப முடியவில்லை; கணக்கிலிருந்து மீண்டும் அனுப்பலாம்."; }
   msg((wasExisting?"ஏற்கனவே உருவாக்கப்பட்ட உங்கள் கணக்கு மீட்டமைக்கப்பட்டது.":"கணக்கு வெற்றிகரமாக உருவாக்கப்பட்டது.")+verifyNote,"ok");
-  setTimeout(()=>location.assign("account.html"),1200);
+  setTimeout(()=>location.assign("chat.html"),900);
  }else{
   const cred=await auth.signInWithEmailAndPassword(email,password),role=await roleOf(cred.user);
   if(mode==="admin"&&!["admin","superadmin"].includes(role)){await auth.signOut();throw Object.assign(new Error("இந்தக் கணக்கிற்கு Admin அனுமதி வழங்கப்படவில்லை."),{code:"role-denied"})}
   if(mode==="superadmin"&&role!=="superadmin"){await auth.signOut();throw Object.assign(new Error("இந்தக் கணக்கிற்கு Super Admin அனுமதி வழங்கப்படவில்லை."),{code:"role-denied"})}
   msg("வெற்றிகரமாக உள்நுழைந்தீர்கள். திறக்கப்படுகிறது…","ok");
-  location.assign(role==="admin"||role==="superadmin"?"admin/index.html":"account.html");
+  location.assign(role==="admin"||role==="superadmin"?"admin/index.html":"chat.html");
  }
  }catch(e){msg(e.code==="role-denied"?e.message:friendly(e))}finally{busy=false;submit.disabled=false}});
 // Navigation is performed explicitly after successful registration or sign-in.
