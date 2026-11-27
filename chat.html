@@ -300,8 +300,8 @@ auth.onAuthStateChanged(async u=>{
  if(!u){location.replace("login.html");return}
  me=u;
  try{
-  const snap=await db.collection("users").doc(u.uid).get(),p=snap.exists?snap.data():{};
-  profile={name:p.fullName||u.displayName||"Member",role:p.role||"user"};const admin=["admin","superadmin"].includes(profile.role);$("adminPostComposer").classList.toggle("hidden",!admin);$("adminMenuLink").classList.toggle("hidden",!admin);$("adminStudioLink").classList.toggle("hidden",!admin);
+  const snap=await db.collection("users").doc(u.uid).get(),p=snap.exists?snap.data():{},claims=(await u.getIdTokenResult()).claims,claimRole=claims.role||(claims.superadmin===true?"superadmin":claims.admin===true?"admin":"user");
+  profile={name:p.fullName||u.displayName||"Member",role:p.role||claimRole};const admin=["admin","superadmin"].includes(profile.role);$("adminPostComposer").classList.toggle("hidden",!admin);$("adminMenuLink").classList.toggle("hidden",!admin);$("adminStudioLink").classList.toggle("hidden",!admin);
   $("myName").innerHTML=safe(profile.name)+(["admin","superadmin"].includes(profile.role)?'<span class="verified" title="Verified admin">✓</span>':"");$("myAvatar").textContent=initials(profile.name);
   const myChat=await db.collection("chatProfiles").doc(u.uid).get();
   if(myChat.exists){const cp=myChat.data();profile.username=cp.username||"";profile.avatarUrl=cp.avatarUrl||"";if(profile.avatarUrl)$("myAvatar").innerHTML='<img src="'+safe(profile.avatarUrl)+'" alt="">';$("myHandle").textContent=(profile.username?"@"+profile.username+" · ":"")+(admin?"Verified admin":"Member");if(!profile.username)$("usernameModal").classList.remove("hidden");}
