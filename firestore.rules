@@ -2,80 +2,39 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
-    function role() { return signedIn() && request.auth.token.role is string ? request.auth.token.role : (signedIn() && request.auth.token.superadmin == true ? 'superadmin' : (signedIn() && request.auth.token.admin == true ? 'admin' : 'user')); }
+    function role() {
+      return signedIn() && request.auth.token.role is string ? request.auth.token.role :
+        (signedIn() && request.auth.token.superadmin == true ? 'superadmin' :
+        (signedIn() && request.auth.token.admin == true ? 'admin' : 'user'));
+    }
     function isAdmin() { return role() in ['admin', 'superadmin']; }
     function isSuperAdmin() { return role() == 'superadmin'; }
     function notBlocked() { return signedIn() && !exists(/databases/$(database)/documents/chatBlocks/$(request.auth.uid)); }
+
     match /users/{uid} {
-      allow create: if signedIn() && request.auth.uid == uid && request.resource.data.uid == uid && request.resource.data.role == 'user' && request.resource.data.keys().hasOnly(['uid','fullName','phone','email','role','createdAt','updatedAt']) && request.resource.data.fullName is string && request.resource.data.fullName.size() >= 2 && request.resource.data.phone is string && request.resource.data.email == request.auth.token.email;
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.uid == uid && request.resource.data.role == 'user'
+        && request.resource.data.keys().hasOnly(['uid','fullName','phone','email','role','createdAt','updatedAt'])
+        && request.resource.data.fullName is string && request.resource.data.fullName.size() >= 2
+        && request.resource.data.phone is string && request.resource.data.email == request.auth.token.email;
       allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
-      allow update: if signedIn() && request.auth.uid == uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fullName','phone','updatedAt']) && request.resource.data.fullName is string && request.resource.data.fullName.size() >= 2 && request.resource.data.phone is string;
+      allow update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fullName','phone','updatedAt'])
+        && request.resource.data.fullName is string && request.resource.data.fullName.size() >= 2
+        && request.resource.data.phone is string;
       allow update, delete: if isSuperAdmin();
     }
+
     match /chatProfiles/{uid} {
       allow read: if signedIn();
       allow create, update: if signedIn() && request.auth.uid == uid
         && request.resource.data.keys().hasOnly(['name','username','updatedAt'])
         && request.resource.data.name is string && request.resource.data.name.size() >= 2
-        && (!('username' in request.resource.data) || (request.resource.data.username is string
-          && request.resource.data.username.matches('^[a-z0-9_]{3,20}
-    match /chatBlocks/{uid} {
-      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
-      allow create: if isAdmin() && request.resource.data.uid == uid && request.resource.data.blockedBy == request.auth.uid;
-      allow delete: if isAdmin();
-      allow update: if false;
-    }
-    match /communityMessages/{messageId} {
-      allow read: if signedIn();
-      allow create: if notBlocked() && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']) && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() <= 2000
-        && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data))
-        && (!('attachmentUrl' in request.resource.data) || (request.resource.data.attachmentUrl is string && request.resource.data.attachmentName is string && request.resource.data.attachmentType is string));
-      allow delete: if isAdmin();
-      allow update: if false;
-    }
-    match /conversations/{conversationId} {
-      function isParticipant() { return signedIn() && request.auth.uid in resource.data.participants; }
-      allow create: if notBlocked() && request.resource.data.participants is list && request.resource.data.participants.size() == 2 && request.auth.uid in request.resource.data.participants;
-      allow read: if isParticipant() || isAdmin();
-      allow update: if isParticipant() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt']);
-      allow delete: if false;
-      match /messages/{messageId} {
-        function parentParticipants() { return get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants; }
-        allow read: if (signedIn() && request.auth.uid in parentParticipants()) || isAdmin();
-        allow create: if notBlocked() && signedIn() && request.auth.uid in parentParticipants() && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() <= 2000 && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data)) && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']);
-        allow delete: if isAdmin();
-        allow update: if false;
-      }
-    }
-    match /channelPosts/{postId} {
-      allow read: if resource.data.published == true;
-      allow create: if isAdmin() && request.resource.data.createdBy == request.auth.uid && request.resource.data.published == true && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 160 && request.resource.data.body is string && request.resource.data.body.size() <= 10000;
-      allow update: if isAdmin() && request.resource.data.createdBy == resource.data.createdBy;
-      allow delete: if isAdmin();
-    }
-    match /noorPosts/{postId} {
-      allow read: if resource.data.published == true || isAdmin();
-      allow create, update: if isAdmin() && request.resource.data.createdBy == request.auth.uid;
-      allow delete: if isAdmin();
-    }
-    match /noorContent/{contentId} {
-      allow read: if resource.data.published == true || isAdmin();
-      allow create: if isAdmin()
-        && request.resource.data.createdBy == request.auth.uid
-        && request.resource.data.published == true
-        && request.resource.data.title is string
-        && request.resource.data.title.size() > 0
-        && request.resource.data.title.size() <= 180
-        && request.resource.data.type in ['pdf', 'text', 'image', 'youtube'];
-      allow update: if isAdmin() && request.resource.data.createdBy == resource.data.createdBy;
-      allow delete: if isAdmin();
-    }
-    match /{document=**} { allow read, write: if false; }
-  }
-})
-          && get(/databases/$(database)/documents/usernames/$(request.resource.data.username)).data.uid == uid));
+        && (!('username' in request.resource.data) ||
+          (request.resource.data.username is string && request.resource.data.username.matches('^[a-z0-9_]{3,20}$')));
       allow delete: if isSuperAdmin();
     }
+
     match /usernames/{handle} {
       allow get: if signedIn();
       allow list: if false;
@@ -83,91 +42,60 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['uid','username','createdAt'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.username == handle
-        && handle.matches('^[a-z0-9_]{3,20}
-    match /chatBlocks/{uid} {
-      allow read: if isAdmin();
-      allow create: if isAdmin() && request.resource.data.uid == uid && request.resource.data.blockedBy == request.auth.uid;
-      allow delete: if isAdmin();
-      allow update: if false;
-    }
-    match /communityMessages/{messageId} {
-      allow read: if signedIn();
-      allow create: if notBlocked() && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']) && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000
-        && (!('attachmentUrl' in request.resource.data) || (request.resource.data.attachmentUrl is string && request.resource.data.attachmentName is string && request.resource.data.attachmentType is string));
-      allow delete: if isAdmin();
-      allow update: if false;
-    }
-    match /conversations/{conversationId} {
-      function isParticipant() { return signedIn() && request.auth.uid in resource.data.participants; }
-      allow create: if notBlocked() && request.resource.data.participants is list && request.resource.data.participants.size() == 2 && request.auth.uid in request.resource.data.participants;
-      allow read: if isParticipant();
-      allow update: if isParticipant() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt']);
-      allow delete: if false;
-      match /messages/{messageId} {
-        function parentParticipants() { return get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants; }
-        allow read: if signedIn() && request.auth.uid in parentParticipants();
-        allow create: if notBlocked() && signedIn() && request.auth.uid in parentParticipants() && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000 && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']);
-        allow delete, update: if false;
-      }
-    }
-    match /channelPosts/{postId} {
-      allow read: if resource.data.published == true;
-      allow create: if isAdmin() && request.resource.data.createdBy == request.auth.uid && request.resource.data.published == true && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 160 && request.resource.data.body is string && request.resource.data.body.size() <= 10000;
-      allow update: if isAdmin() && request.resource.data.createdBy == resource.data.createdBy;
-      allow delete: if isAdmin();
-    }
-    match /noorPosts/{postId} {
-      allow read: if resource.data.published == true || isAdmin();
-      allow create, update: if isAdmin() && request.resource.data.createdBy == request.auth.uid;
-      allow delete: if isAdmin();
-    }
-    match /noorContent/{contentId} {
-      allow read: if resource.data.published == true || isAdmin();
-      allow create: if isAdmin()
-        && request.resource.data.createdBy == request.auth.uid
-        && request.resource.data.published == true
-        && request.resource.data.title is string
-        && request.resource.data.title.size() > 0
-        && request.resource.data.title.size() <= 180
-        && request.resource.data.type in ['pdf', 'text', 'image', 'youtube'];
-      allow update: if isAdmin() && request.resource.data.createdBy == resource.data.createdBy;
-      allow delete: if isAdmin();
-    }
-    match /{document=**} { allow read, write: if false; }
-  }
-});
+        && handle.matches('^[a-z0-9_]{3,20}$');
       allow delete: if signedIn() && resource.data.uid == request.auth.uid;
       allow update: if false;
     }
+
     match /chatBlocks/{uid} {
-      allow read: if isAdmin();
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
       allow create: if isAdmin() && request.resource.data.uid == uid && request.resource.data.blockedBy == request.auth.uid;
       allow delete: if isAdmin();
       allow update: if false;
     }
+
     match /communityMessages/{messageId} {
       allow read: if signedIn();
-      allow create: if notBlocked() && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']) && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000
-        && (!('attachmentUrl' in request.resource.data) || (request.resource.data.attachmentUrl is string && request.resource.data.attachmentName is string && request.resource.data.attachmentType is string));
+      allow create: if notBlocked()
+        && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name is string && request.resource.data.text is string
+        && request.resource.data.text.size() <= 2000
+        && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data))
+        && (!('attachmentUrl' in request.resource.data) ||
+          (request.resource.data.attachmentUrl is string && request.resource.data.attachmentName is string && request.resource.data.attachmentType is string));
       allow delete: if isAdmin();
       allow update: if false;
     }
+
     match /conversations/{conversationId} {
       function isParticipant() { return signedIn() && request.auth.uid in resource.data.participants; }
-      allow create: if notBlocked() && request.resource.data.participants is list && request.resource.data.participants.size() == 2 && request.auth.uid in request.resource.data.participants;
-      allow read: if isParticipant();
+      allow create: if notBlocked() && request.resource.data.participants is list
+        && request.resource.data.participants.size() == 2 && request.auth.uid in request.resource.data.participants;
+      allow read: if isParticipant() || isAdmin();
       allow update: if isParticipant() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt']);
-      allow delete: if false;
+      allow delete: if isAdmin();
       match /messages/{messageId} {
-        function parentParticipants() { return get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants; }
-        allow read: if signedIn() && request.auth.uid in parentParticipants();
-        allow create: if notBlocked() && signedIn() && request.auth.uid in parentParticipants() && request.resource.data.uid == request.auth.uid && request.resource.data.name is string && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000 && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']);
-        allow delete, update: if false;
+        function parentParticipants() {
+          return get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants;
+        }
+        allow read: if (signedIn() && request.auth.uid in parentParticipants()) || isAdmin();
+        allow create: if notBlocked() && signedIn() && request.auth.uid in parentParticipants()
+          && request.resource.data.uid == request.auth.uid && request.resource.data.name is string
+          && request.resource.data.text is string && request.resource.data.text.size() <= 2000
+          && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data))
+          && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType']);
+        allow delete: if isAdmin();
+        allow update: if false;
       }
     }
+
     match /channelPosts/{postId} {
       allow read: if resource.data.published == true;
-      allow create: if isAdmin() && request.resource.data.createdBy == request.auth.uid && request.resource.data.published == true && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 160 && request.resource.data.body is string && request.resource.data.body.size() <= 10000;
+      allow create: if isAdmin() && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.published == true && request.resource.data.title is string
+        && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 160
+        && request.resource.data.body is string && request.resource.data.body.size() <= 10000;
       allow update: if isAdmin() && request.resource.data.createdBy == resource.data.createdBy;
       allow delete: if isAdmin();
     }
@@ -178,12 +106,9 @@ service cloud.firestore {
     }
     match /noorContent/{contentId} {
       allow read: if resource.data.published == true || isAdmin();
-      allow create: if isAdmin()
-        && request.resource.data.createdBy == request.auth.uid
-        && request.resource.data.published == true
-        && request.resource.data.title is string
-        && request.resource.data.title.size() > 0
-        && request.resource.data.title.size() <= 180
+      allow create: if isAdmin() && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.published == true && request.resource.data.title is string
+        && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 180
         && request.resource.data.type in ['pdf', 'text', 'image', 'youtube'];
       allow update: if isAdmin() && request.resource.data.createdBy == resource.data.createdBy;
       allow delete: if isAdmin();
