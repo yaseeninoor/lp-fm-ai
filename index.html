@@ -52,4 +52,7 @@ footer{border-top:1px solid var(--line);padding:23px 0;color:#91ada0;font-size:1
 <script>
 (function(){var splash=document.getElementById('splash');var hide=function(){if(splash)splash.classList.add('hide')};if(sessionStorage.getItem('noorSplashShown'))hide();else{setTimeout(hide,1900);sessionStorage.setItem('noorSplashShown','1')}window.addEventListener('pageshow',function(){setTimeout(hide,2100)})})();
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script><script>
+(function(){const cfg={apiKey:"AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",authDomain:"lp-store-23212.firebaseapp.com",projectId:"lp-store-23212",storageBucket:"lp-store-23212.firebasestorage.app",messagingSenderId:"200245726085",appId:"1:200245726085:web:846b39a873c06a1ebc12ec"};if(!firebase.apps.length)firebase.initializeApp(cfg);firebase.auth().onAuthStateChanged(async user=>{if(!user)return;try{const t=await user.getIdTokenResult(true),c=t.claims||{},role=c.role||(c.superadmin?"superadmin":c.admin?"admin":"user");location.replace(["admin","superadmin"].includes(role)?"admin/index.html":"chat.html")}catch(e){location.replace("chat.html")}})})();
+</script>
 </body></html>
