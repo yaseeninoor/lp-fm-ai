@@ -35,7 +35,7 @@
 const cfg={apiKey:"AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",authDomain:"lp-store-23212.firebaseapp.com",projectId:"lp-store-23212",storageBucket:"lp-store-23212.firebasestorage.app",messagingSenderId:"200245726085",appId:"1:200245726085:web:846b39a873c06a1ebc12ec"};
 if(!firebase.apps.length)firebase.initializeApp(cfg);
 const auth=firebase.auth(),db=firebase.firestore(),storage=firebase.storage(),$=id=>document.getElementById(id);
-let me=null,profile=null,mode="community",activeUid=null,activeConv=null,unsubscribe=null,postUnsubscribe=null,usersCache=[],filter="all",usernameBusy=false;
+let me=null,profile=null,mode="community",activeUid=null,activeConv=null,unsubscribe=null,postUnsubscribe=null,conversationUnsubscribe=null,usersCache=[],filter="all",usernameBusy=false,unreadCounts={},statusCache=[];
 function status(t){$("status").textContent=t||""}
 function stopListen(){if(unsubscribe){unsubscribe();unsubscribe=null}if(postUnsubscribe){postUnsubscribe();postUnsubscribe=null}}
 function safe(t){return String(t||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -49,8 +49,8 @@ function drawMessages(docs){
  const day=document.createElement("div");day.className="daylabel";day.textContent="Messages";box.appendChild(day);
  docs.forEach(doc=>{
   const m=doc.data(),mine=m.uid===me.uid,el=document.createElement("div");el.className="bubble"+(mine?" mine":"");
-  const tm=m.createdAt&&m.createdAt.toDate?m.createdAt.toDate().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"Sending…";
-  el.innerHTML=(mode==="community"&&!mine?'<div class="meta">'+safe(m.name||"Member")+'</div>':"")+(m.text?'<div>'+safe(m.text)+'</div>':"")+(m.attachmentUrl?'<div style="margin-top:6px"><a href="'+safe(m.attachmentUrl)+'" target="_blank" rel="noopener" style="color:#075e54;font-weight:700">📎 '+safe(m.attachmentName||"Open attachment")+'</a></div>':"")+'<span class="time">'+safe(tm)+(mine?" · ✓":"")+'</span>';
+  const tm=m.createdAt&&m.createdAt.toDate?m.createdAt.toDate().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"Sending…";const readBy=Array.isArray(m.readBy)?m.readBy:[];const receipt=mine?(readBy.some(x=>x!==me.uid)?" · ✓✓":" · ✓"):"";
+  el.innerHTML=(mode==="community"&&!mine?'<div class="meta">'+safe(m.name||"Member")+'</div>':"")+(m.text?'<div>'+safe(m.text)+'</div>':"")+(m.attachmentUrl?'<div style="margin-top:6px"><a href="'+safe(m.attachmentUrl)+'" target="_blank" rel="noopener" style="color:#075e54;font-weight:700">📎 '+safe(m.attachmentName||"Open attachment")+'</a></div>':"")+'<span class="time">'+safe(tm)+receipt+'</span>';
   if(profile&&["admin","superadmin"].includes(profile.role)){
    const actions=document.createElement("div");actions.className="moderation";
    const del=document.createElement("button");del.className="mini";del.textContent="Delete";del.onclick=()=>deleteMessage(doc.id);
@@ -83,7 +83,7 @@ async function openPersonal(uid){
  try{
   const ref=db.collection("conversations").doc(activeConv),snap=await ref.get();
   if(!snap.exists)await ref.set({participants:[me.uid,uid],createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  unsubscribe=ref.collection("messages").orderBy("createdAt","asc").limitToLast(150).onSnapshot(s=>drawMessages(s.docs),e=>status("Personal chat error: "+e.message));
+  unsubscribe=ref.collection("messages").orderBy("createdAt","asc").limitToLast(150).onSnapshot(async s=>{drawMessages(s.docs);await markMessagesRead(ref,s.docs)},e=>status("Personal chat error: "+e.message));
  }catch(e){status("Could not open chat: "+e.message)}
 }
 
@@ -141,6 +141,21 @@ $("publishPost").onclick=async()=>{
  finally{btn.disabled=false}
 };
 
+
+async function markMessagesRead(ref,docs){
+ const batch=db.batch();let changed=0;
+ docs.forEach(d=>{const m=d.data(),readBy=Array.isArray(m.readBy)?m.readBy:[];if(m.uid!==me.uid&&!readBy.includes(me.uid)){batch.update(d.ref,{readBy:firebase.firestore.FieldValue.arrayUnion(me.uid)});changed++}});
+ if(changed)try{await batch.commit()}catch(e){console.warn("Read receipt update failed",e)}
+}
+function watchUnreadConversations(){
+ if(conversationUnsubscribe)conversationUnsubscribe();
+ conversationUnsubscribe=db.collection("conversations").where("participants","array-contains",me.uid).onSnapshot(async snap=>{
+  const next={};
+  await Promise.all(snap.docs.map(async d=>{const data=d.data(),other=(data.participants||[]).find(x=>x!==me.uid);if(!other||data.lastSenderId===me.uid)return;try{const ms=await d.ref.collection("messages").orderBy("createdAt","desc").limit(100).get();next[other]=ms.docs.filter(m=>m.data().uid!==me.uid&&!(m.data().readBy||[]).includes(me.uid)).length}catch(e){}}));
+  unreadCounts=next;renderList();const total=Object.values(next).reduce((a,b)=>a+b,0);document.title=(total?"("+total+") ":"")+"NOOR Chat | Yaseenis";
+ },e=>console.warn("Unread watcher:",e.message));
+}
+
 async function loadUsers(){
  const s=await db.collection("chatProfiles").orderBy("name").get();
  usersCache=s.docs.map(d=>({id:d.id,name:d.data().name||"Member",username:d.data().username||""}));renderList();
@@ -159,9 +174,9 @@ $("sendForm").onsubmit=async e=>{
   const blocked=await db.collection("chatBlocks").doc(me.uid).get();
   if(blocked.exists){status("Your chat access is paused. Please contact an administrator.");return}
   let attachmentUrl="",attachmentName="",attachmentType="";if(file){if(file.size>50*1024*1024)throw new Error("Maximum attachment size is 50 MB.");attachmentName=file.name;attachmentType=file.type||"application/octet-stream";const path="noor-chat-media/"+me.uid+"/"+Date.now()+"_"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");const snap=await storage.ref(path).put(file);attachmentUrl=await snap.ref.getDownloadURL()}
-  const payload={uid:me.uid,name:profile.name||me.displayName||"Member",text:message,createdAt:firebase.firestore.FieldValue.serverTimestamp(),...(file?{attachmentUrl,attachmentName,attachmentType}:{})};
+  const payload={uid:me.uid,name:profile.name||me.displayName||"Member",text:message,readBy:[me.uid],createdAt:firebase.firestore.FieldValue.serverTimestamp(),...(file?{attachmentUrl,attachmentName,attachmentType}:{})};
   if(mode==="community")await db.collection("communityMessages").add(payload);
-  else{if(!activeConv)throw new Error("Select a person first.");const ref=db.collection("conversations").doc(activeConv);await ref.collection("messages").add(payload);await ref.update({updatedAt:firebase.firestore.FieldValue.serverTimestamp()})}
+  else{if(!activeConv)throw new Error("Select a person first.");const ref=db.collection("conversations").doc(activeConv);await ref.collection("messages").add(payload);await ref.update({updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastMessage:message||(file?"📎 "+file.name:""),lastMessageAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:me.uid})}
   $("messageInput").value="";$("fileInput").value="";status("");
  }catch(e){status("Message could not be sent: "+e.message)}
 };
@@ -212,7 +227,7 @@ auth.onAuthStateChanged(async u=>{
   const myChat=await db.collection("chatProfiles").doc(u.uid).get();
   if(myChat.exists&&myChat.data().username){profile.username=myChat.data().username;$("myHandle").textContent="@"+profile.username+" · Member";}
   else{await db.collection("chatProfiles").doc(u.uid).set({name:profile.name,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});$("usernameModal").classList.remove("hidden");}
-  await loadUsers();listenCommunity();
+  await loadUsers();watchUnreadConversations();listenCommunity();
  }catch(e){$("chatList").innerHTML='<div class="blocked">Chat setup could not load. Check Firestore Rules deployment and your account permissions.<br>'+safe(e.message)+'</div>'}
 });
 </script>
