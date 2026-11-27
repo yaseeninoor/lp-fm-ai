@@ -9,7 +9,7 @@ service cloud.firestore {
     }
     function isAdmin() { return role() in ['admin', 'superadmin']; }
     function isSuperAdmin() { return role() == 'superadmin'; }
-    function notBlocked() { return signedIn() && !exists(/databases/$(database)/documents/chatBlocks/$(request.auth.uid)); }
+    function notBlocked() { return signedIn() && (isAdmin() || !exists(/databases/$(database)/documents/chatBlocks/$(request.auth.uid))); }
 
     match /users/{uid} {
       allow create: if signedIn() && request.auth.uid == uid
@@ -56,12 +56,13 @@ service cloud.firestore {
 
     match /communityMessages/{messageId} {
       allow read: if signedIn();
-      allow create: if notBlocked()
-        && request.resource.data.keys().hasOnly(['uid','name','text','createdAt','attachmentUrl','attachmentName','attachmentType'])
+      allow create: if notBlocked() && isAdmin()
+        && request.resource.data.keys().hasOnly(['uid','name','text','readBy','createdAt','attachmentUrl','attachmentName','attachmentType','contact'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.name is string && request.resource.data.text is string
         && request.resource.data.text.size() <= 2000
-        && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data))
+        && request.resource.data.readBy is list && request.auth.uid in request.resource.data.readBy
+        && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data) || ('contact' in request.resource.data))
         && (!('attachmentUrl' in request.resource.data) ||
           (request.resource.data.attachmentUrl is string && request.resource.data.attachmentName is string && request.resource.data.attachmentType is string));
       allow delete: if isAdmin();
@@ -83,9 +84,10 @@ service cloud.firestore {
         allow create: if notBlocked() && signedIn() && request.auth.uid in parentParticipants()
           && request.resource.data.uid == request.auth.uid && request.resource.data.name is string
           && request.resource.data.text is string && request.resource.data.text.size() <= 2000
-          && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data))
-          && request.resource.data.keys().hasOnly(['uid','name','text','readBy','createdAt','attachmentUrl','attachmentName','attachmentType'])
-        && request.resource.data.readBy is list && request.auth.uid in request.resource.data.readBy;
+          && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data) || ('contact' in request.resource.data))
+          && request.resource.data.keys().hasOnly(['uid','name','text','readBy','createdAt','attachmentUrl','attachmentName','attachmentType','contact'])
+        && request.resource.data.readBy is list && request.auth.uid in request.resource.data.readBy
+          && (!('contact' in request.resource.data) || (request.resource.data.contact is map && request.resource.data.contact.name is string && request.resource.data.contact.phone is string));
         allow delete: if isAdmin();
         allow update: if signedIn() && request.auth.uid in parentParticipants() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['readBy']) && request.resource.data.readBy is list && request.auth.uid in request.resource.data.readBy;
       }
