@@ -64,7 +64,8 @@ service cloud.firestore {
         && request.resource.data.readBy is list && request.auth.uid in request.resource.data.readBy
         && (request.resource.data.text.size() > 0 || ('attachmentUrl' in request.resource.data) || ('contact' in request.resource.data))
         && (!('attachmentUrl' in request.resource.data) ||
-          (request.resource.data.attachmentUrl is string && request.resource.data.attachmentName is string && request.resource.data.attachmentType is string));
+          (request.resource.data.attachmentUrl is string && request.resource.data.attachmentName is string && request.resource.data.attachmentType is string))
+        && (!('contact' in request.resource.data) || (request.resource.data.contact is map && request.resource.data.contact.name is string && request.resource.data.contact.phone is string));
       allow delete: if isAdmin();
       allow update: if false;
     }
