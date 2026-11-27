@@ -23,18 +23,18 @@
  <section class="chatpane hidden" id="chatPane">
   <header class="chathead"><button class="iconbtn backbtn" id="backBtn" aria-label="Back to chats">‹</button><div class="avatar" id="targetAvatar">N</div><div><b id="chatTitle">NOOR Community</b><small id="chatSubtitle">Community conversation</small></div><div class="right"><button class="iconbtn" id="refreshBtn" title="Refresh">↻</button></div></header>
   <div class="messages" id="messages"><div class="empty">Select a conversation to start chatting.</div></div>
-  <div class="composerwrap"><div class="status" id="status" role="status"></div><form class="composer" id="sendForm"><input id="messageInput" maxlength="2000" autocomplete="off" placeholder="Type a message…" required><button class="send" type="submit" aria-label="Send message">➤</button></form></div>
+  <div class="composerwrap"><div class="status" id="status" role="status"></div><form class="composer" id="sendForm"><label class="iconbtn" for="fileInput" title="Attach photo, video, audio or PDF" style="color:#547468">＋</label><input id="fileInput" type="file" accept="image/*,video/*,audio/*,application/pdf,text/plain" hidden><input id="messageInput" maxlength="2000" autocomplete="off" placeholder="Type a message…" ><button class="send" type="submit" aria-label="Send message">➤</button></form></div>
  </section>
 </main>
 </div>
 <div class="modalback hidden" id="usernameModal"><section class="modal"><h2>Choose your NOOR username</h2><p>உங்கள் தனித்துவமான Username-ஐ தேர்வு செய்யுங்கள். மற்றவர்கள் இதன் மூலம் உங்களைத் தேடி Chat செய்யலாம்.</p><input id="usernameInput" maxlength="20" placeholder="e.g. yaseeninoor" autocomplete="off"><div class="hint" id="usernameHint">3–20 characters: a-z, 0-9, underscore</div><button class="primary" id="saveUsername">Save username</button></section></div>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
 <script>
 const cfg={apiKey:"AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",authDomain:"lp-store-23212.firebaseapp.com",projectId:"lp-store-23212",storageBucket:"lp-store-23212.firebasestorage.app",messagingSenderId:"200245726085",appId:"1:200245726085:web:846b39a873c06a1ebc12ec"};
 if(!firebase.apps.length)firebase.initializeApp(cfg);
-const auth=firebase.auth(),db=firebase.firestore(),$=id=>document.getElementById(id);
+const auth=firebase.auth(),db=firebase.firestore(),storage=firebase.storage(),$=id=>document.getElementById(id);
 let me=null,profile=null,mode="community",activeUid=null,activeConv=null,unsubscribe=null,usersCache=[],filter="all",usernameBusy=false;
 function status(t){$("status").textContent=t||""}
 function stopListen(){if(unsubscribe){unsubscribe();unsubscribe=null}}
@@ -50,7 +50,7 @@ function drawMessages(docs){
  docs.forEach(doc=>{
   const m=doc.data(),mine=m.uid===me.uid,el=document.createElement("div");el.className="bubble"+(mine?" mine":"");
   const tm=m.createdAt&&m.createdAt.toDate?m.createdAt.toDate().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"Sending…";
-  el.innerHTML=(mode==="community"&&!mine?'<div class="meta">'+safe(m.name||"Member")+'</div>':"")+'<div>'+safe(m.text)+'</div><span class="time">'+safe(tm)+(mine?" · ✓":"")+'</span>';
+  el.innerHTML=(mode==="community"&&!mine?'<div class="meta">'+safe(m.name||"Member")+'</div>':"")+(m.text?'<div>'+safe(m.text)+'</div>':"")+(m.attachmentUrl?'<div style="margin-top:6px"><a href="'+safe(m.attachmentUrl)+'" target="_blank" rel="noopener" style="color:#075e54;font-weight:700">📎 '+safe(m.attachmentName||"Open attachment")+'</a></div>':"")+'<span class="time">'+safe(tm)+(mine?" · ✓":"")+'</span>';
   if(profile&&["admin","superadmin"].includes(profile.role)&&mode==="community"){
    const actions=document.createElement("div");actions.className="moderation";
    const del=document.createElement("button");del.className="mini";del.textContent="Delete";del.onclick=()=>deleteMessage(doc.id);
@@ -103,10 +103,10 @@ $("sendForm").onsubmit=async e=>{
  try{
   const blocked=await db.collection("chatBlocks").doc(me.uid).get();
   if(blocked.exists){status("Your chat access is paused. Please contact an administrator.");return}
-  const payload={uid:me.uid,name:profile.name||me.displayName||"Member",text:message,createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+  let attachmentUrl="",attachmentName="",attachmentType="";if(file){if(file.size>50*1024*1024)throw new Error("Maximum attachment size is 50 MB.");attachmentName=file.name;attachmentType=file.type||"application/octet-stream";const path="noor-chat-media/"+me.uid+"/"+Date.now()+"_"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");const snap=await storage.ref(path).put(file);attachmentUrl=await snap.ref.getDownloadURL()}\n  const payload={uid:me.uid,name:profile.name||me.displayName||"Member",text:message,createdAt:firebase.firestore.FieldValue.serverTimestamp(),...(file?{attachmentUrl,attachmentName,attachmentType}:{})};
   if(mode==="community")await db.collection("communityMessages").add(payload);
   else{if(!activeConv)throw new Error("Select a person first.");const ref=db.collection("conversations").doc(activeConv);await ref.collection("messages").add(payload);await ref.update({updatedAt:firebase.firestore.FieldValue.serverTimestamp()})}
-  $("messageInput").value="";status("");
+  $("messageInput").value="";$("fileInput").value="";status("");
  }catch(e){status("Message could not be sent: "+e.message)}
 };
 $("searchInput").oninput=renderList;
