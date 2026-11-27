@@ -21,7 +21,7 @@
 <main class="main" id="main">
  <section class="welcome" id="welcome"><div class="big">☾</div><h2>Welcome to NOOR Chat</h2><p>உங்கள் சமூகத்துடன் உரையாடுங்கள். இடதுபுறத்தில் Community அல்லது ஒரு பயனரைத் தேர்வு செய்து செய்தி அனுப்பலாம்.</p></section>
  <section class="chatpane hidden" id="chatPane">
-  <header class="chathead"><button class="iconbtn backbtn" id="backBtn" aria-label="Back to chats">‹</button><div class="avatar" id="targetAvatar">N</div><div><b id="chatTitle">NOOR Community</b><small id="chatSubtitle">Community conversation</small></div><div class="right"><button class="iconbtn" id="refreshBtn" title="Refresh">↻</button></div></header>
+  <header class="chathead"><button class="iconbtn backbtn" id="backBtn" aria-label="Back to chats">‹</button><div class="avatar" id="targetAvatar">N</div><div><b id="chatTitle">NOOR Community</b><small id="chatSubtitle">Community conversation</small></div><div class="right"><button class="iconbtn hidden" id="audioCallBtn" title="Audio call">📞</button><button class="iconbtn hidden" id="videoCallBtn" title="Video call">📹</button><button class="iconbtn" id="refreshBtn" title="Refresh">↻</button></div></header>
   <div class="messages" id="messages"><div id="communityPosts" class="postzone hidden"></div><div id="chatMessages"><div class="empty">Select a conversation to start chatting.</div></div></div>
   <div class="composerwrap"><div id="adminPostComposer" class="postcomposer hidden"><h4>📢 Admin Community Post</h4><input id="postTitle" maxlength="160" placeholder="Post title (optional)" style="width:100%;height:38px;border:1px solid #e0e8e2;border-radius:8px;padding:0 10px;margin-bottom:7px"><textarea id="postBody" maxlength="10000" placeholder="Write an announcement or community post…"></textarea><div class="posttools"><input id="postFile" type="file" accept="image/*,video/*,audio/*,application/pdf"><button class="postbtn" id="publishPost" type="button">Publish post</button></div><div class="poststatus" id="postStatus"></div></div><div class="status" id="status" role="status"></div><form class="composer" id="sendForm"><div style="position:relative"><button class="iconbtn" id="attachBtn" type="button" title="Attach" style="color:#547468">＋</button><div id="attachMenu" class="menu-pop hidden" style="left:0;right:auto;bottom:52px;top:auto;width:190px"><button type="button" data-kind="image">🖼 Photos</button><button type="button" data-kind="video">🎬 Videos</button><button type="button" data-kind="document">📄 Documents / PDF</button><button type="button" data-kind="audio">🎵 Audio</button><button type="button" id="shareContact">👤 Contact</button></div></div><input id="fileInput" type="file" accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.vcf" hidden><input id="messageInput" maxlength="2000" autocomplete="off" placeholder="Type a message…" ><button class="send" type="submit" aria-label="Send message">➤</button></form></div>
  </section>
@@ -35,7 +35,7 @@
 const cfg={apiKey:"AIzaSyBDzbv1fTRpXfmj3Nz4svl7ALWWARBuY0o",authDomain:"lp-store-23212.firebaseapp.com",projectId:"lp-store-23212",storageBucket:"lp-store-23212.firebasestorage.app",messagingSenderId:"200245726085",appId:"1:200245726085:web:846b39a873c06a1ebc12ec"};
 if(!firebase.apps.length)firebase.initializeApp(cfg);
 const auth=firebase.auth(),db=firebase.firestore(),storage=firebase.storage(),$=id=>document.getElementById(id);
-let me=null,profile=null,mode="community",activeUid=null,activeConv=null,unsubscribe=null,postUnsubscribe=null,conversationUnsubscribe=null,usersCache=[],filter="all",usernameBusy=false,unreadCounts={},statusCache=[],selectedContact=null;
+let me=null,profile=null,mode="community",activeUid=null,activeConv=null,unsubscribe=null,postUnsubscribe=null,conversationUnsubscribe=null,usersCache=[],filter="all",usernameBusy=false,unreadCounts={},statusCache=[],selectedContact=null,incomingCallUnsub=null,currentIncomingCall=null;
 function status(t){$("status").textContent=t||""}
 function stopListen(){if(unsubscribe){unsubscribe();unsubscribe=null}if(postUnsubscribe){postUnsubscribe();postUnsubscribe=null}}
 function safe(t){return String(t||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -90,11 +90,11 @@ function renderList(){
  if(!list.children.length)list.innerHTML='<div class="empty">No chats or people found.</div>';
 }
 async function listenCommunity(){
- mode="community";activeUid=null;activeConv=null;openPane();stopListen();$("communityPosts").classList.remove("hidden");$("adminPostComposer").classList.toggle("hidden",!profile||!["admin","superadmin"].includes(profile.role));loadCommunityPosts();$("chatTitle").textContent="NOOR Community";$("targetAvatar").textContent="🌐";$("chatSubtitle").textContent="Group conversation · Members";$("messageInput").placeholder="Admin community message…";$("sendForm").classList.toggle("hidden",!profile||!["admin","superadmin"].includes(profile.role));status("");renderList();
+ mode="community";activeUid=null;activeConv=null;$("audioCallBtn").classList.add("hidden");$("videoCallBtn").classList.add("hidden");openPane();stopListen();$("communityPosts").classList.remove("hidden");$("adminPostComposer").classList.toggle("hidden",!profile||!["admin","superadmin"].includes(profile.role));loadCommunityPosts();$("chatTitle").textContent="NOOR Community";$("targetAvatar").textContent="🌐";$("chatSubtitle").textContent="Group conversation · Members";$("messageInput").placeholder="Admin community message…";$("sendForm").classList.toggle("hidden",!profile||!["admin","superadmin"].includes(profile.role));status("");renderList();
  unsubscribe=db.collection("communityMessages").orderBy("createdAt","asc").limitToLast(150).onSnapshot(s=>drawMessages(s.docs),e=>status("Could not load messages: "+e.message));
 }
 async function openPersonal(uid){
- mode="personal";activeUid=uid;activeConv=convId(me.uid,uid);openPane();stopListen();$("communityPosts").classList.add("hidden");$("adminPostComposer").classList.add("hidden");const target=usersCache.find(x=>x.id===uid);
+ mode="personal";activeUid=uid;activeConv=convId(me.uid,uid);$("audioCallBtn").classList.remove("hidden");$("videoCallBtn").classList.remove("hidden");openPane();stopListen();$("communityPosts").classList.add("hidden");$("adminPostComposer").classList.add("hidden");const target=usersCache.find(x=>x.id===uid);
  $("chatTitle").textContent=target?target.name:"Personal Chat";$("targetAvatar").textContent=initials(target&&target.name);$("chatSubtitle").textContent="Private conversation";$("messageInput").placeholder="Type a private message…";$("sendForm").classList.remove("hidden");status("");renderList();
  try{
   const ref=db.collection("conversations").doc(activeConv),snap=await ref.get();
@@ -250,6 +250,19 @@ document.addEventListener("click",e=>{if(!$("topMenu").contains(e.target)&&!$("m
 $("editUsernameMenu").onclick=e=>{e.preventDefault();$("topMenu").classList.add("hidden");$("usernameInput").value=profile.username||"";$("usernameModal").classList.remove("hidden")};
 $("logoutBtn").onclick=async()=>{if(confirm("Log out of NOOR Chat?")){await auth.signOut();location.href="login.html"}};
 
+function watchIncomingCalls(){
+ if(incomingCallUnsub)incomingCallUnsub();
+ incomingCallUnsub=db.collection("callSessions").where("calleeUid","==",me.uid).onSnapshot(s=>{
+  const now=Date.now();const d=s.docs.map(x=>({id:x.id,...x.data()})).find(x=>x.status==="ringing"&&(!x.createdAt||!x.createdAt.toDate||now-x.createdAt.toDate().getTime()<90000));
+  if(!d)return;
+  if(currentIncomingCall===d.id)return;
+  currentIncomingCall=d.id;$("incomingCallTitle").textContent=(d.callerName||"NOOR member")+" is calling";$("incomingCallType").textContent=d.callType==="video"?"Incoming video call":"Incoming audio call";$("incomingCallBox").classList.remove("hidden");
+ },e=>console.warn("Incoming call listener:",e.message));
+}
+$("audioCallBtn").onclick=()=>{if(activeUid)location.href="call.html?uid="+encodeURIComponent(activeUid)+"&type=audio"};
+$("videoCallBtn").onclick=()=>{if(activeUid)location.href="call.html?uid="+encodeURIComponent(activeUid)+"&type=video"};
+$("acceptCallBtn").onclick=()=>{if(currentIncomingCall)location.href="call.html?session="+encodeURIComponent(currentIncomingCall)};
+$("rejectCallBtn").onclick=async()=>{if(currentIncomingCall){try{await db.collection("callSessions").doc(currentIncomingCall).update({status:"rejected",endedAt:firebase.firestore.FieldValue.serverTimestamp()})}catch(e){status("Could not reject call: "+e.message)}}$("incomingCallBox").classList.add("hidden");currentIncomingCall=null};
 function normalizeHandle(v){return String(v||"").trim().toLowerCase().replace(/^@/,"")}
 function validHandle(v){return /^[a-z0-9_]{3,20}$/.test(v)}
 async function claimUsername(raw){
@@ -288,7 +301,7 @@ auth.onAuthStateChanged(async u=>{
   const myChat=await db.collection("chatProfiles").doc(u.uid).get();
   if(myChat.exists){const cp=myChat.data();profile.username=cp.username||"";profile.avatarUrl=cp.avatarUrl||"";if(profile.avatarUrl)$("myAvatar").innerHTML='<img src="'+safe(profile.avatarUrl)+'" alt="">';$("myHandle").textContent=(profile.username?"@"+profile.username+" · ":"")+(admin?"Verified admin":"Member");if(admin)db.collection("chatProfiles").doc(u.uid).set({verifiedAdmin:true},{merge:true}).catch(e=>console.warn("Admin badge sync",e.message));if(!profile.username)$("usernameModal").classList.remove("hidden");}
   else{await db.collection("chatProfiles").doc(u.uid).set({name:profile.name,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});$("usernameModal").classList.remove("hidden");}
-  await loadUsers();watchUnreadConversations();loadStatuses();listenCommunity();
+  await loadUsers();watchUnreadConversations();loadStatuses();watchIncomingCalls();listenCommunity();
  }catch(e){$("chatList").innerHTML='<div class="blocked">Chat setup could not load. Check Firestore Rules deployment and your account permissions.<br>'+safe(e.message)+'</div>'}
 });
 </script>
