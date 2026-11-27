@@ -36,7 +36,7 @@ function renderForm(){$("registerFields").classList.toggle("hidden",!registering
 $("registerBtn").onclick=()=>{registering=true;renderForm();clearMsg()};
 $("cancelRegister").onclick=()=>{registering=false;renderForm();clearMsg()};
 $("forgotBtn").onclick=async()=>{const email=$("email").value.trim();if(!email)return msg("முதலில் Email முகவரியை உள்ளிடுங்கள்.");try{await auth.sendPasswordResetEmail(email);msg("Password reset மின்னஞ்சல் அனுப்பப்பட்டது. Inbox-ஐச் சரிபார்க்கவும்.","ok")}catch(e){msg(friendly(e))}};
-function friendly(e){const map={"auth/invalid-credential":"Email அல்லது Password தவறாக உள்ளது.","auth/email-already-in-use":"இந்த Email-ல் ஏற்கனவே கணக்கு உள்ளது.","auth/invalid-email":"சரியான Email முகவரியை உள்ளிடுங்கள்.","auth/weak-password":"வலுவான Password பயன்படுத்துங்கள் (குறைந்தது 6 எழுத்துகள்).","auth/too-many-requests":"பலமுறை முயற்சி செய்துள்ளீர்கள். சிறிது நேரம் கழித்து முயற்சிக்கவும்.","auth/operation-not-allowed":"Firebase Authentication-ல் Email/Password முறையை Enable செய்யவும்.","permission-denied":"Firebase Firestore Rules அனுமதி மறுத்தது. Rules deploy செய்யப்பட்டுள்ளதா பார்க்கவும்.","auth/network-request-failed":"இணைய இணைப்பைச் சரிபார்க்கவும்."};return map[e.code]||e.message||"செயல்பாட்டை முடிக்க முடியவில்லை."}
+function friendly(e){const map={"auth/invalid-credential":"Email அல்லது Password தவறாக உள்ளது.","auth/email-already-in-use":"இந்த Email-ல் ஏற்கனவே கணக்கு உள்ளது.","auth/invalid-email":"சரியான Email முகவரியை உள்ளிடுங்கள்.","auth/weak-password":"வலுவான Password பயன்படுத்துங்கள் (குறைந்தது 6 எழுத்துகள்).","auth/too-many-requests":"பலமுறை முயற்சி செய்துள்ளீர்கள். சிறிது நேரம் கழித்து முயற்சிக்கவும்.","auth/operation-not-allowed":"Firebase Authentication-ல் Email/Password முறையை Enable செய்யவும்.","permission-denied":"Firebase Firestore Rules அனுமதி மறுத்தது. Rules deploy செய்யப்பட்டுள்ளதா பார்க்கவும்.","auth/network-request-failed":"இணைய இணைப்பைச் சரிபார்க்கவும்."};return map[e.code]||((e.code==="auth/email-already-in-use")?"இந்த Email-ல் கணக்கு ஏற்கனவே உள்ளது. Login பகுதியில் உள்நுழையுங்கள்.":(e.code==="auth/invalid-credential"?"Email அல்லது Password தவறு. ஏற்கனவே கணக்கு இருந்தால் சரியான Password-ஐப் பயன்படுத்துங்கள்.":(e.code==="permission-denied"?"Firebase Firestore அனுமதி மறுக்கப்பட்டது. Firestore Rules-ஐ சரிபார்க்கவும்.":(e.message||"செயல்பாட்டை முடிக்க முடியவில்லை."))))}
 async function roleOf(user){const token=await user.getIdTokenResult(true);const claims=token.claims||{};return claims.role||(claims.superadmin?"superadmin":claims.admin?"admin":"user")}
 $("authForm").addEventListener("submit",async e=>{e.preventDefault();if(busy)return;busy=true;const submit=$("submitBtn");submit.disabled=true;clearMsg();try{
  const email=$("email").value.trim().toLowerCase(),password=$("password").value;
@@ -45,13 +45,30 @@ $("authForm").addEventListener("submit",async e=>{e.preventDefault();if(busy)ret
   const fullName=$("fullName").value.trim(),phone=$("phone").value.trim();
   if(fullName.length<2)throw new Error("முழுப் பெயரை உள்ளிடுங்கள்.");
   if(!/^\+?[0-9()\-\s]{7,20}$/.test(phone))throw new Error("சரியான மொபைல் எண்ணை உள்ளிடுங்கள். Country code உடன் கொடுக்கவும்.");
-  const cred=await auth.createUserWithEmailAndPassword(email,password);
+  let cred,wasExisting=false;
+  try {
+   cred=await auth.createUserWithEmailAndPassword(email,password);
+  } catch(createError) {
+   if(createError.code!=="auth/email-already-in-use") throw createError;
+   // Recover accounts created previously when a later profile-save step failed.
+   cred=await auth.signInWithEmailAndPassword(email,password);
+   wasExisting=true;
+  }
   await cred.user.updateProfile({displayName:fullName});
-  await db.collection("users").doc(cred.user.uid).set({uid:cred.user.uid,fullName,phone,email,role:"user",createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  await db.collection("chatProfiles").doc(cred.user.uid).set({name:fullName,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  await cred.user.sendEmailVerification();
-  msg("கணக்கு உருவாக்கப்பட்டது. Email சரிபார்ப்பு இணைப்பை அனுப்பியுள்ளோம். உங்கள் கணக்கு User வகையில் உருவாக்கப்பட்டுள்ளது.","ok");
-  setTimeout(()=>location.assign("account.html"),1000);
+  await db.collection("users").doc(cred.user.uid).set({
+   uid:cred.user.uid,fullName,phone,email,role:"user",
+   ...(!wasExisting?{createdAt:firebase.firestore.FieldValue.serverTimestamp()}:{}),
+   updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  },{merge:true});
+  // Chat profile is optional; a chat-profile failure must not block account creation.
+  try {
+   await db.collection("chatProfiles").doc(cred.user.uid).set({name:fullName,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+  } catch(chatError) { console.warn("Noor chat profile setup skipped:",chatError.code,chatError.message); }
+  let verifyNote=" Email சரிபார்ப்பு மின்னஞ்சலை Inbox-இல் பார்க்கவும்.";
+  try { await cred.user.sendEmailVerification(); }
+  catch(verifyError) { console.warn("Email verification send failed:",verifyError.code,verifyError.message); verifyNote=" Email சரிபார்ப்பு மின்னஞ்சலை இப்போது அனுப்ப முடியவில்லை; கணக்கிலிருந்து மீண்டும் அனுப்பலாம்."; }
+  msg((wasExisting?"ஏற்கனவே உருவாக்கப்பட்ட உங்கள் கணக்கு மீட்டமைக்கப்பட்டது.":"கணக்கு வெற்றிகரமாக உருவாக்கப்பட்டது.")+verifyNote,"ok");
+  setTimeout(()=>location.assign("account.html"),1200);
  }else{
   const cred=await auth.signInWithEmailAndPassword(email,password),role=await roleOf(cred.user);
   if(mode==="admin"&&!["admin","superadmin"].includes(role)){await auth.signOut();throw Object.assign(new Error("இந்தக் கணக்கிற்கு Admin அனுமதி வழங்கப்படவில்லை."),{code:"role-denied"})}
