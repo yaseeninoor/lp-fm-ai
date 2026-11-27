@@ -87,7 +87,7 @@ async function openPersonal(uid){
  }catch(e){status("Could not open chat: "+e.message)}
 }
 async function loadUsers(){
- const s=await db.collection("chatProfiles").orderBy("name").limit(300).get();
+ const s=await db.collection("chatProfiles").orderBy("name").get();
  usersCache=s.docs.map(d=>({id:d.id,name:d.data().name||"Member",username:d.data().username||""}));renderList();
 }
 async function deleteMessage(id){
