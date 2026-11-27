@@ -28,8 +28,11 @@ service cloud.firestore {
     match /chatProfiles/{uid} {
       allow read: if signedIn();
       allow create, update: if signedIn() && request.auth.uid == uid
-        && request.resource.data.keys().hasOnly(['name','username','updatedAt'])
+        && request.resource.data.keys().hasOnly(['name','username','about','avatarUrl','verifiedAdmin','updatedAt'])
         && request.resource.data.name is string && request.resource.data.name.size() >= 2
+        && (!('about' in request.resource.data) || (request.resource.data.about is string && request.resource.data.about.size() <= 140))
+        && (!('avatarUrl' in request.resource.data) || (request.resource.data.avatarUrl is string && request.resource.data.avatarUrl.size() <= 2000))
+        && (!('verifiedAdmin' in request.resource.data) || (isAdmin() && request.resource.data.verifiedAdmin == true))
         && (!('username' in request.resource.data) ||
           (request.resource.data.username is string && request.resource.data.username.matches('^[a-z0-9_]{3,20}$')));
       allow delete: if isSuperAdmin();
